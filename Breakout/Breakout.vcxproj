@@ -147,12 +147,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\GameManager.cpp" />
+    <ClCompile Include="src\Ball.cpp" />
     <ClCompile Include="src\Buffer.cpp" />
     <ClCompile Include="src\ConsoleSettings.cpp" />
     <ClCompile Include="src\Paddle.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GameManager.h" />
+    <ClInclude Include="src\Direction.h" />
+    <ClInclude Include="src\Ball.h" />
     <ClInclude Include="src\Buffer.h" />
     <ClInclude Include="src\ConsoleSettings.h" />
     <ClInclude Include="src\Paddle.h" />

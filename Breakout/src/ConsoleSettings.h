@@ -8,7 +8,7 @@ private:
 public:
 	ConsoleSettings(int x = 0, int y = 0);
 
-	void setCurser(int x, int y);
+	void setCurser(int x, int y, bool visibility);
 
 	void setTextColour(const char* colour);
 	void consolePrint(const char* colour, const char* text);

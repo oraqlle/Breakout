@@ -1,4 +1,6 @@
 #include "ConsoleSettings.h"
+#include "Ball.h"
+#include "Paddle.h"
 
 class Buffer
 {
@@ -13,11 +15,13 @@ public:
 
 	char borderBuffer[100][100];
 
-
+	Ball* ball;
+	Paddle* player;
 	ConsoleSettings* Console;
 
 public:
-	Buffer(int &_w, int &_h, int posX, int posY, ConsoleSettings* _Console);
+	Buffer(int& _w, int& _h, Ball* _Ball, Paddle* _Player, 
+		ConsoleSettings* _Console);
 	~Buffer();
 
 	void EmptyFullBuffer();

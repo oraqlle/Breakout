@@ -1,12 +1,15 @@
 #include "Buffer.h"
 
 
-Buffer::Buffer(int &_w, int &_h, int posX, int posY, ConsoleSettings* _Console)
+Buffer::Buffer(int& _w, int& _h, Ball* _Ball, Paddle* _Player, 
+	ConsoleSettings* _Console)
 	: _width(_w), _height(_h)
 {
 	inner_w = _w - 3;
 	inner_h = _h - 2;
 
+	ball = new Ball(inner_w / 2, inner_h - 4);
+	player = new Paddle(inner_w / 2, inner_h - 3);
 	Console = _Console;
 }
 
@@ -73,16 +76,42 @@ void Buffer::CreateBorder()
 // Creates the main game buffer
 void Buffer::GameBuffer()
 {
+	int ballX = ball->getX();
+	int ballY = ball->getY();
+
+	int playerX = player->getX();
+	int playerY = player->getY();
+
 	for (int i = 0; i < inner_h; i++)
 	{
 		for (int j = 0; j < inner_w - 1; j++)
 		{
-
-			// Draws the ball
-			if (poX == j && posY == i)
+			if (ballX == j && ballY == i)
 			{
-				mainBuffer[ballx][bally] = { '\x20' };
+				mainBuffer[ballX][ballY] = { '\x20' };
 			}
+
+			else if (playerX - 2 == j && playerY == i)
+			{
+				mainBuffer[playerX][playerY] = { '\x20' };
+			}
+			else if (playerX - 1 == j && playerY == i)
+			{
+				mainBuffer[playerX][playerY] = { '\x20' };
+			}
+			else if (playerX == j && playerY == i)
+			{
+				mainBuffer[playerX][playerY] = { '\x20' };
+			}
+			else if (playerX + 1 == j && playerY == i)
+			{
+				mainBuffer[playerX][playerY] = { '\x20' };
+			}
+			else if (playerX + 2 == j && playerY == i)
+			{
+				mainBuffer[playerX][playerY] = { '\x20' };
+			}
+
 			else
 			{
 				mainBuffer[j][i] = { ' ' };
