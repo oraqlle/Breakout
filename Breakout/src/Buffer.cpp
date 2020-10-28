@@ -139,7 +139,7 @@ void Buffer::PrintGameBuffer()
 	GameBuffer();
 	for (int row = 0; row < inner_h; row++)
 	{
-		Console->setCurser(1, (row + 1));
+		Console->setCurser(1, (row + 1), false);
 		for (int column = 0; column < inner_w; column++)
 		{
 			printf("%c", mainBuffer[column][row]);
