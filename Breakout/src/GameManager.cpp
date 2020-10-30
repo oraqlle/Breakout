@@ -74,7 +74,51 @@ void GameManager::Input()
 
 void GameManager::Logic()
 {
+	int ballX = ball->getX();
+	int ballY = ball->getY();
 
+	int playerX = player->getX();
+	int playerY = player->getY();
+
+	for (int i = 0; i < 4; i++)
+		if (ballY == playerY + 1)
+			if (ballX == playerX + i)
+			{
+				eDir dir = ball->getDirection();
+				switch (dir)
+				{
+				case eDir::DOWNLEFT:
+					ball->chanegDir(eDir::UPRIGHT);
+					break;
+
+				case eDir::DOWNRIGHT:
+					ball->chanegDir(eDir::DOWNLEFT);
+					break;
+
+				case eDir::DOWN:
+					ball->chanegDir((eDir)((rand() % 3) + 1));
+					break;
+
+				default:
+					break;
+				}
+			}
+
+	// Bottom wall collision
+	if (ballY == inner_h - 1)
+		quit = true;
+
+	// Top wall collision
+	if (ballY == inner_h - inner_h)
+		ball->chanegDir(ball->getDirection() == eDir::UPRIGHT ? eDir::DOWNRIGHT : eDir::DOWNLEFT);
+
+	// Right wall collision and score change
+	if (ballX == inner_w - 1)
+		ball->chanegDir(ball->getDirection() == eDir::UPRIGHT ? eDir::DOWNRIGHT : eDir::DOWNLEFT);
+
+	// Left wall collision and score change
+	if (ballX == inner_w - inner_w)
+		ball->chanegDir(ball->getDirection() == eDir::UPRIGHT ? eDir::DOWNRIGHT : eDir::DOWNLEFT);
 }
 
 void GameManager::Run()

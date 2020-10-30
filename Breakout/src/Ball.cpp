@@ -54,6 +54,14 @@ void Ball::Move()
 		ballX++; ballY++;
 		break;
 
+	case eDir::UP:
+		ballY--;
+		break;
+
+	case eDir::DOWN:
+		ballY++;
+		break;
+
 	default:
 		break;
 	}

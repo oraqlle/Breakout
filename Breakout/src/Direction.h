@@ -1,4 +1,7 @@
 #pragma once
-enum class eDir { STOP = 0, LEFT = 1, UPLEFT = 2, DOWNLEFT = 3, 
-	RIGHT = 4, UPRIGHT = 5, DOWNRIGHT = 6, UP = 7, DOWN = 8 };
+enum class eDir
+{
+	STOP = 0, UPLEFT = 1, UP = 2, UPRIGHT = 3, LEFT = 4,
+	DOWNLEFT = 5, DOWN = 6, DOWNRIGHT = 7, RIGHT = 8
+};
 
