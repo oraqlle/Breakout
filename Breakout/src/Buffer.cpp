@@ -1,6 +1,5 @@
 #include "Buffer.h"
 
-
 Buffer::Buffer(int& _w, int& _h, Ball* _Ball, Paddle* _Player, 
 	ConsoleSettings* _Console)
 	: _width(_w), _height(_h)

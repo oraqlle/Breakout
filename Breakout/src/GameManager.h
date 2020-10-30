@@ -28,12 +28,11 @@ private:
 
 
 public:
-	GameManager();
 	GameManager(int w, int h);
 	~GameManager();
 private:
 
-	void ScoreUp(Paddle* player);
+	void ScoreUp();
 	void Input();
 	void Logic();
 

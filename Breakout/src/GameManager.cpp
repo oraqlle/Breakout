@@ -27,13 +27,42 @@ GameManager::~GameManager()
 }
 
 // Score Tracker
-void GameManager::ScoreUp(Paddle* player)
+void GameManager::ScoreUp()
 {
 	score += 10;
 
 	Console->setCurser(0, (height + 2), false);
 	printf("Score: %d\n", score);
+	Console->setCurser(0, (height + 3), false);
 
 	ball->Reset();
 	player->Reset();
+}
+
+void GameManager::Input()
+{
+
+}
+
+void GameManager::Logic()
+{
+
+}
+
+void GameManager::Run()
+{
+	mainBuffer->EmptyFullBuffer();
+	mainBuffer->PrintBorder();
+	while (!quit)
+	{
+		mainBuffer->PrintGameBuffer();
+		Input();
+		Logic();
+
+		Console->setCurser(0, (height + 2), false);
+		printf("Score: %d\n", score);
+		Console->setCurser(0, (height + 3), false);
+	}
+
+	Console->setCurser(0, (height + 4), false);
 }
