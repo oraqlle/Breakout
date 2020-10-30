@@ -8,6 +8,7 @@ private:
 	int ballX, ballY;
 	int originalBallX, originalBallY;
 	eDir ballDir;
+	eDir prevBallDir;
 
 public:
 	Ball(int posX, int posY);

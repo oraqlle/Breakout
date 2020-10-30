@@ -10,6 +10,8 @@ private:
 	int inner_w;
 	int inner_h;
 
+	const char c_border;
+
 public:
 	char mainBuffer[100][100];
 
@@ -20,7 +22,7 @@ public:
 	ConsoleSettings* Console;
 
 public:
-	Buffer(int& _w, int& _h, Ball* _Ball, Paddle* _Player, 
+	Buffer(int& _w, int& _h, char borderDesign, Ball* _Ball, Paddle* _Player, 
 		ConsoleSettings* _Console);
 	~Buffer();
 

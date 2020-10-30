@@ -1,8 +1,8 @@
 #include "Buffer.h"
 
-Buffer::Buffer(int& _w, int& _h, Ball* _Ball, Paddle* _Player, 
+Buffer::Buffer(int& _w, int& _h, char borderDesign, Ball* _Ball, Paddle* _Player,
 	ConsoleSettings* _Console)
-	: _width(_w), _height(_h)
+	: _width(_w), _height(_h), c_border(borderDesign)
 {
 	inner_w = _w - 3;
 	inner_h = _h - 2;
@@ -24,7 +24,7 @@ void Buffer::EmptyFullBuffer()
 	{
 		for (int column = 0; column < _width - 1; column++)
 		{
-			borderBuffer[column][row] = { ' ' };
+			borderBuffer[column][row] = { '\x20' };
 		}
 	}
 }
@@ -35,7 +35,7 @@ void Buffer::ClearGameBuffer()
 	{
 		for (int column = 0; column < inner_w; column++)
 		{
-			mainBuffer[column][row] = { ' ' };
+			mainBuffer[column][row] = { '\x20' };
 		}
 	}
 }
@@ -45,7 +45,7 @@ void Buffer::CreateBorder()
 {
 	for (int column = 0; column < _width - 1; column++)
 	{
-		borderBuffer[column][0] = { '\xB2' };
+		borderBuffer[column][0] = { c_border };
 	}
 
 	for (int row = 0; row < _height; row++)
@@ -54,12 +54,12 @@ void Buffer::CreateBorder()
 		{
 			if (column == 0)
 			{
-				borderBuffer[column][row] = { '\xB2' };
+				borderBuffer[column][row] = { c_border };
 			}
 
 			if (column == _width - 2)
 			{
-				borderBuffer[column][row] = { '\xB2' };
+				borderBuffer[column][row] = { c_border };
 				int offset = column + 1;
 				borderBuffer[offset][row] = { '\n' };
 			}
@@ -68,7 +68,7 @@ void Buffer::CreateBorder()
 
 	for (int column = 0; column < _width - 1; column++)
 	{
-		borderBuffer[column][(_height - 1)] = { '\xB2' };
+		borderBuffer[column][(_height - 1)] = { c_border };
 	}
 }
 
@@ -83,37 +83,53 @@ void Buffer::GameBuffer()
 
 	for (int i = 0; i < inner_h; i++)
 	{
-		for (int j = 0; j < inner_w - 1; j++)
+		for (int j = 0; j < inner_w; j++)
 		{
 			if (ballX == j && ballY == i)
 			{
-				mainBuffer[ballX][ballY] = { '\x20' };
+				mainBuffer[ballX][ballY] = { '@' };
 			}
 
+			else if (playerX - 4 == j && playerY == i)
+			{
+				mainBuffer[j][playerY] = { '\xDB' };
+			}
+			else if (playerX - 3 == j && playerY == i)
+			{
+				mainBuffer[j][playerY] = { '\xDB' };
+			}
 			else if (playerX - 2 == j && playerY == i)
 			{
-				mainBuffer[playerX][playerY] = { '\x20' };
+				mainBuffer[j][playerY] = { '\xDB' };
 			}
 			else if (playerX - 1 == j && playerY == i)
 			{
-				mainBuffer[playerX][playerY] = { '\x20' };
+				mainBuffer[j][playerY] = { '\xDB' };
 			}
 			else if (playerX == j && playerY == i)
 			{
-				mainBuffer[playerX][playerY] = { '\x20' };
+				mainBuffer[playerX][playerY] = { '\xDB' };
 			}
 			else if (playerX + 1 == j && playerY == i)
 			{
-				mainBuffer[playerX][playerY] = { '\x20' };
+				mainBuffer[j][playerY] = { '\xDB' };
 			}
 			else if (playerX + 2 == j && playerY == i)
 			{
-				mainBuffer[playerX][playerY] = { '\x20' };
+				mainBuffer[j][playerY] = { '\xDB' };
+			}
+			else if (playerX + 3 == j && playerY == i)
+			{
+				mainBuffer[j][playerY] = { '\xDB' };
+			}
+			else if (playerX + 4 == j && playerY == i)
+			{
+				mainBuffer[j][playerY] = { '\xDB' };
 			}
 
 			else
 			{
-				mainBuffer[j][i] = { ' ' };
+				mainBuffer[j][i] = { '\x20' };
 			}
 		}
 	}

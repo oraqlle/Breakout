@@ -18,7 +18,7 @@ GameManager::GameManager(int w, int h)
 	player = new Paddle(inner_w / 2, inner_h - 3);
 
 	Console = new ConsoleSettings();
-	mainBuffer = new Buffer(w, h, ball, player, Console);
+	mainBuffer = new Buffer(w, h, '\xB2', ball, player, Console);
 }
 
 GameManager::~GameManager()
@@ -41,7 +41,35 @@ void GameManager::ScoreUp()
 
 void GameManager::Input()
 {
+	ball->Move();
 
+	int BallX = ball->getX();
+	int BallY = ball->getY();
+
+	int PlayerX = player->getX();
+	int PlayerY = player->getY();
+
+	if (_kbhit)
+	{
+		char current = _getch();
+
+		if (current == left)
+			if (PlayerX > 0)
+				player->moveLeft();
+
+		if (current == right)
+			if (PlayerX < inner_w + 1)
+				player->moveRight();
+
+		if (ball->getDirection() == eDir::STOP)
+		{
+			ball->chanegDir(eDir::UP);
+			ball->Move();
+		}
+
+		if (current == 'q')
+			quit = true;
+	}
 }
 
 void GameManager::Logic()

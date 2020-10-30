@@ -7,6 +7,7 @@ Ball::Ball(int posX, int posY)
 	ballX = posX;
 	ballY = posY;
 	ballDir = eDir::STOP;
+	prevBallDir = ballDir;
 }
 
 void Ball::Reset()
@@ -14,6 +15,7 @@ void Ball::Reset()
 	ballX = originalBallX;
 	ballY = originalBallY;
 	ballDir = eDir::STOP;
+	prevBallDir = ballDir;
 }
 
 void Ball::chanegDir(eDir d)

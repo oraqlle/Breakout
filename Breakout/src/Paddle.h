@@ -17,7 +17,7 @@ public:
 	inline int getX() { return paddleX; }
 	inline int getY() { return paddleY; }
 
-	inline void moveUp() { paddleY--; }
-	inline void moveDown() { paddleY++; }
+	inline void moveLeft() { paddleX--; }
+	inline void moveRight() { paddleX++; }
 };
 
