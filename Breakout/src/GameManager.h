@@ -14,11 +14,13 @@ private:
 	int height;
 	int inner_w;
 	int inner_h;
-
+	int startX, startY;
+	int ballStartX, ballStartY;
 	int score;
 
 	char left, right;
 	bool quit;
+	bool start;
 
 	Ball* ball;
 	Paddle* player;
@@ -34,6 +36,7 @@ private:
 
 	void ScoreUp();
 	void Input();
+	void Start();
 	void Logic();
 
 public:

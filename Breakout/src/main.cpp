@@ -2,7 +2,7 @@
 
 int main()
 {
-	GameManager Runtime(75, 22);
+	GameManager Runtime(75, 28);
 	Runtime.Run();
 
 	return 0;

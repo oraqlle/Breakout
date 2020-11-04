@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\BrickBuffer.cpp" />
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\Ball.cpp" />
     <ClCompile Include="src\Buffer.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\BrickBuffer.h" />
     <ClInclude Include="src\GameManager.h" />
     <ClInclude Include="src\Direction.h" />
     <ClInclude Include="src\Ball.h" />

@@ -1,30 +1,25 @@
+#pragma once
 #include "ConsoleSettings.h"
 #include "Ball.h"
 #include "Paddle.h"
 
-class Buffer
+class BrickBuffer
 {
 private:
-	int _width;
-	int _height;
-	int inner_w;
-	int inner_h;
+	int _width, _height;
 
 	const char c_border;
 
 public:
-	char mainBuffer[100][100];
-
-	char borderBuffer[100][100];
+	char brickBuffer[100][100];
 
 	Ball* ball;
-	Paddle* player;
 	ConsoleSettings* Console;
 
 public:
-	Buffer(int& _w, int& _h, char borderDesign, Ball* _Ball,
-		Paddle* _Player, ConsoleSettings* _Console);
-	~Buffer();
+	BrickBuffer(int& _w, int& _h, char _brick, Ball* _Ball, 
+		ConsoleSettings* _Console);
+	~BrickBuffer();
 
 	void EmptyFullBuffer();
 	void CreateBorder();
@@ -34,3 +29,4 @@ public:
 	void GameBuffer();
 	void ClearGameBuffer();
 };
+

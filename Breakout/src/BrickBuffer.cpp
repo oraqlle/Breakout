@@ -1,24 +1,23 @@
-#include "Buffer.h"
+#include "BrickBuffer.h"
 
-Buffer::Buffer(int& _w, int& _h, char borderDesign, Ball* _Ball, 
-	Paddle* _Player, ConsoleSettings* _Console)
-	: _width(_w), _height(_h), c_border(borderDesign)
+BrickBuffer::BrickBuffer(int& _w, int& _h, char _brick, Ball* _Ball,
+	ConsoleSettings* _Console)
+	: _width(_w), _height(_h), c_brick(_brick)
 {
 	inner_w = _w - 3;
 	inner_h = _h - 2;
 
 	ball = _Ball;
-	player = _Player;
 	Console = _Console;
 }
 
-Buffer::~Buffer()
+BrickBuffer::~BrickBuffer()
 {
 	delete Console;
 }
 
 // Emptying Buffers
-void Buffer::EmptyFullBuffer()
+void BrickBuffer::EmptyFullBuffer()
 {
 	for (int row = 0; row < _height; row++)
 	{
@@ -29,7 +28,7 @@ void Buffer::EmptyFullBuffer()
 	}
 }
 
-void Buffer::ClearGameBuffer()
+void BrickBuffer::ClearGameBuffer()
 {
 	for (int row = 0; row < inner_h; row++)
 	{
@@ -41,7 +40,7 @@ void Buffer::ClearGameBuffer()
 }
 
 // Creates the border buffer
-void Buffer::CreateBorder()
+void BrickBuffer::CreateBorder()
 {
 	for (int column = 0; column < _width - 1; column++)
 	{
@@ -73,7 +72,7 @@ void Buffer::CreateBorder()
 }
 
 // Creates the main game buffer
-void Buffer::GameBuffer()
+void BrickBuffer::GameBuffer()
 {
 	int ballX = ball->getX();
 	int ballY = ball->getY();
@@ -168,7 +167,7 @@ void Buffer::GameBuffer()
 }
 
 // Printing Buffers
-void Buffer::PrintBorder()
+void BrickBuffer::PrintBorder()
 {
 	CreateBorder();
 	for (int row = 0; row < _height; row++)
@@ -181,7 +180,7 @@ void Buffer::PrintBorder()
 	}
 }
 
-void Buffer::PrintGameBuffer()
+void BrickBuffer::PrintGameBuffer()
 {
 	GameBuffer();
 	for (int row = 0; row < inner_h; row++)
