@@ -147,7 +147,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\BrickBuffer.cpp" />
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\Ball.cpp" />
     <ClCompile Include="src\Buffer.cpp" />
@@ -156,13 +155,15 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\BrickBuffer.h" />
     <ClInclude Include="src\GameManager.h" />
     <ClInclude Include="src\Direction.h" />
     <ClInclude Include="src\Ball.h" />
     <ClInclude Include="src\Buffer.h" />
     <ClInclude Include="src\ConsoleSettings.h" />
     <ClInclude Include="src\Paddle.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\Basic_Breakout_Layout.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,8 @@
+#include <string>
 #include "ConsoleSettings.h"
 #include "Ball.h"
 #include "Paddle.h"
+#include "BrickBuffer.h"
 
 class Buffer
 {
@@ -10,15 +12,16 @@ private:
 	int inner_w;
 	int inner_h;
 
-	const char c_border;
+	char c_border;
 
 public:
 	char mainBuffer[100][100];
-
 	char borderBuffer[100][100];
+	char brickBuffer[100][100];
 
 	Ball* ball;
 	Paddle* player;
+	BrickBuffer* b_Brick;
 	ConsoleSettings* Console;
 
 public:
@@ -30,6 +33,8 @@ public:
 	void CreateBorder();
 	void PrintBorder();
 	void PrintGameBuffer();
+	void CreateBricks();
+	void LoadBricks();
 
 	void GameBuffer();
 	void ClearGameBuffer();

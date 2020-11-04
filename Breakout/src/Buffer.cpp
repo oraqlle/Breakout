@@ -7,6 +7,7 @@ Buffer::Buffer(int& _w, int& _h, char borderDesign, Ball* _Ball,
 	inner_w = _w - 3;
 	inner_h = _h - 2;
 
+	b_Brick = new BrickBuffer(_w, _h, _Console);
 	ball = _Ball;
 	player = _Player;
 	Console = _Console;
@@ -14,7 +15,7 @@ Buffer::Buffer(int& _w, int& _h, char borderDesign, Ball* _Ball,
 
 Buffer::~Buffer()
 {
-	delete Console;
+	delete ball, player, Console;
 }
 
 // Emptying Buffers
@@ -87,7 +88,7 @@ void Buffer::GameBuffer()
 		{
 			if (ballX == j && ballY == i)
 			{
-				mainBuffer[ballX][ballY] = { '@' };
+				mainBuffer[ballX][ballY] = { 'O' };
 			}
 
 			else if (playerX == j && playerY == i)
@@ -167,6 +168,17 @@ void Buffer::GameBuffer()
 	}
 }
 
+void Buffer::CreateBricks()
+{
+	for (int i = ((_height + 1) - _height); i < (_height - 19); i++)
+	{
+		for (int j = ((_width + 3) - _width); j < (_width - 5); j++)
+		{
+			mainBuffer[j][i] = { '#' };
+		}
+	}
+}
+
 // Printing Buffers
 void Buffer::PrintBorder()
 {
@@ -184,6 +196,7 @@ void Buffer::PrintBorder()
 void Buffer::PrintGameBuffer()
 {
 	GameBuffer();
+	CreateBricks();
 	for (int row = 0; row < inner_h; row++)
 	{
 		Console->setCurser(1, (row + 1), false);
