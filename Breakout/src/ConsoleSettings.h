@@ -12,5 +12,7 @@ public:
 
 	void setTextColour(const char* colour);
 	void consolePrint(const char* colour, const char* text);
+
+	void ClearConsole();
 };
 

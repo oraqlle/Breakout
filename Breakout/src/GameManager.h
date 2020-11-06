@@ -21,6 +21,7 @@ private:
 	char left, right;
 	bool quit;
 	bool start;
+	bool endgame;
 
 	Ball* ball;
 	Paddle* player;
@@ -38,6 +39,8 @@ private:
 	void Input();
 	void Start();
 	void Logic();
+	void GameOver();
+	void Restart(const char& _key);
 
 public:
 	void Run();

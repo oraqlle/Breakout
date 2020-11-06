@@ -7,7 +7,6 @@ Buffer::Buffer(int& _w, int& _h, char borderDesign, Ball* _Ball,
 	inner_w = _w - 3;
 	inner_h = _h - 2;
 
-	b_Brick = new BrickBuffer(_w, _h, _Console);
 	ball = _Ball;
 	player = _Player;
 	Console = _Console;
@@ -172,7 +171,7 @@ void Buffer::CreateBricks()
 {
 	for (int i = ((_height + 1) - _height); i < (_height - 19); i++)
 	{
-		for (int j = ((_width + 3) - _width); j < (_width - 5); j++)
+		for (int j = ((_width + 2) - _width); j < (_width - 5); j++)
 		{
 			mainBuffer[j][i] = { '#' };
 		}

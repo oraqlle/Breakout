@@ -2,7 +2,6 @@
 #include "ConsoleSettings.h"
 #include "Ball.h"
 #include "Paddle.h"
-#include "BrickBuffer.h"
 
 class Buffer
 {
@@ -21,7 +20,6 @@ public:
 
 	Ball* ball;
 	Paddle* player;
-	BrickBuffer* b_Brick;
 	ConsoleSettings* Console;
 
 public:
@@ -34,7 +32,6 @@ public:
 	void PrintBorder();
 	void PrintGameBuffer();
 	void CreateBricks();
-	void LoadBricks();
 
 	void GameBuffer();
 	void ClearGameBuffer();

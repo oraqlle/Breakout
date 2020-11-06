@@ -56,36 +56,52 @@ void ConsoleSettings::consolePrint(const char* colour, const char* text)
 	if (colour == "Blue")
 	{
 		SetConsoleTextAttribute(hOut, 9);
-		std:: cout << text << std::endl;
+		printf(text);
 	}
 	else if (colour == "Green")
 	{
 		SetConsoleTextAttribute(hOut, 10);
-		std:: cout << text << std::endl;
+		std::cout << text;
 	}
 	else if (colour == "Cyan")
 	{
 		SetConsoleTextAttribute(hOut, 11);
-		std:: cout << text << std::endl;
+		printf(text);
 	}
 	else if (colour == "Red")
 	{
 		SetConsoleTextAttribute(hOut, 12);
-		std:: cout << text << std::endl;
+		printf(text);
 	}
 	else if (colour == "Pink")
 	{
 		SetConsoleTextAttribute(hOut, 13);
-		std:: cout << text << std::endl;
+		printf(text);
 	}
 	else if (colour == "Yellow")
 	{
 		SetConsoleTextAttribute(hOut, 14);
-		std:: cout << text << std::endl;
+		printf(text);
 	}
 	else if (colour == "White")
 	{
 		SetConsoleTextAttribute(hOut, 15);
-		std:: cout << text << std::endl;
+		printf(text);
 	}
+}
+
+void ConsoleSettings::ClearConsole()
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	int columns, rows;
+
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+	columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+	rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+
+	setCurser(0, 0, false);
+	for (int i = 0; i < rows + 1; i++)
+		for (int j = 0; j < columns + 1; j++)
+			printf("\x20");
+	setCurser(0, 0, false);
 }

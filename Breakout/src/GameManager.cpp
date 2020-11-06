@@ -6,6 +6,7 @@ GameManager::GameManager(int w, int h)
 
 	quit = false;
 	start = false;
+	endgame = false;
 
 	left = 'a'; right = 'd';
 
@@ -43,6 +44,24 @@ void GameManager::ScoreUp()
 
 	ball->Reset();
 	player->Reset();
+}
+
+void GameManager::Restart(const char& _key)
+{
+	if (_key == 'Y' || _key == 'y')
+	{
+		mainBuffer->EmptyFullBuffer();
+		quit = false;
+		start = false;
+		ball->Reset();
+
+		Console->setCurser(0, 0, false);
+		Console->ClearConsole();
+	}
+	else if (_key == 'N' || _key == 'n')
+	{
+		endgame = true;
+	}
 }
 
 void GameManager::Input()
@@ -137,32 +156,55 @@ void GameManager::Logic()
 		ball->chanegDir(ball->getDirection() == eDir::UPLEFT ? eDir::UPRIGHT : eDir::DOWNRIGHT);
 }
 
-void GameManager::Run()
+void GameManager::GameOver()
 {
-	mainBuffer->EmptyFullBuffer();
-	mainBuffer->PrintBorder();
-
-	while (!start)
-	{
-		Console->setCurser(((width / 2) - 9), (height - 16), false);
-		Console->consolePrint("Cyan", "Press S to start");
-		Start();
-		Console->setTextColour("White");
-	}
-
-	while (!quit)
-	{
-		mainBuffer->PrintGameBuffer();
-		Input();
-		Logic();
-
-		Console->setCurser((width + 5), (height - 24), false);
-		printf("Score: %d\n", score);
-		//Console->setCurser((width + 5), (height - 26), false);
-	}
-
 	Console->setCurser((width + 5), (height - 23), false);
 	Console->consolePrint("Red", "Game Over");
-	Console->setCurser(0, (height + 1), false);
-	Console->setTextColour("White");
+
+	Console->setCurser((width + 5), (height - 22), false);
+	Console->consolePrint("Cyan", "Play Again?");
+
+	Console->setCurser((width + 5), (height - 21), false);
+	Console->consolePrint("White", "[Y/N]: ");
+
+	char playAgain;
+	#pragma warning(suppress : 4996)
+	scanf("%c", &playAgain);
+
+	Restart(playAgain);
+}
+
+void GameManager::Run()
+{
+	while (!endgame)
+	{
+		Console->setCurser(0, 0, false);
+		mainBuffer->EmptyFullBuffer();
+		mainBuffer->PrintBorder();
+
+		while (!start)
+		{
+			Console->setCurser(((width / 2) - 9), (height - 16), false);
+			Console->consolePrint("Cyan", "Press S to start");
+			Start();
+			Console->setTextColour("White");
+		}
+
+		while (!quit)
+		{
+			mainBuffer->PrintGameBuffer();
+			Input();
+			Logic();
+
+			Console->setCurser((width + 5), (height - 24), false);
+			printf("Score: %d\n", score);
+			//Console->setCurser((width + 5), (height - 26), false);
+		}
+
+		GameOver();
+	
+		Console->setCurser(0, (height + 1), false);
+		Console->setTextColour("White");
+
+	}
 }
