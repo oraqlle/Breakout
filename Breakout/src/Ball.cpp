@@ -20,8 +20,6 @@ void Ball::Reset()
 
 void Ball::randomDir()
 {
-	// ballDir = (eDir)(rand() % 8 + 1);
-
 	if (ballDir == eDir::UP)
 		ballDir = eDir::DOWN;
 	else if (ballDir == eDir::UPLEFT)
