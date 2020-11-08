@@ -6,6 +6,7 @@ Buffer::Buffer(int& _w, int& _h, char borderDesign, Ball* _Ball,
 {
 	inner_w = _w - 3;
 	inner_h = _h - 2;
+	init = false;
 
 	ball = _Ball;
 	player = _Player;
@@ -89,7 +90,6 @@ void Buffer::GameBuffer()
 			{
 				mainBuffer[ballX][ballY] = { 'O' };
 			}
-
 			else if (playerX == j && playerY == i)
 			{
 				mainBuffer[j][playerY] = { '\xDB' };
@@ -158,6 +158,50 @@ void Buffer::GameBuffer()
 			{
 				mainBuffer[j][playerY] = { '\xDB' };
 			}
+			else if (playerX + 17 == j && playerY == i)
+			{
+				mainBuffer[j][playerY] = { '\xDB' };
+			}
+			else if (playerX + 17 == j && playerY == i)
+			{
+				mainBuffer[j][playerY] = { '\xDB' };
+			}
+			else if (playerX + 18 == j && playerY == i)
+			{
+				mainBuffer[j][playerY] = { '\xDB' };
+			}
+			else if (playerX + 19 == j && playerY == i)
+			{
+				mainBuffer[j][playerY] = { '\xDB' };
+			}
+			else if (playerX + 20 == j && playerY == i)
+			{
+				mainBuffer[j][playerY] = { '\xDB' };
+			}
+			else if (playerX + 21 == j && playerY == i)
+			{
+				mainBuffer[j][playerY] = { '\xDB' };
+			}
+			else if (playerX + 22 == j && playerY == i)
+			{
+				mainBuffer[j][playerY] = { '\xDB' };
+			}
+			else if (playerX + 23 == j && playerY == i)
+			{
+				mainBuffer[j][playerY] = { '\xDB' };
+			}
+			else if (playerX + 24 == j && playerY == i)
+			{
+				mainBuffer[j][playerY] = { '\xDB' };
+			}
+			else if (playerX + 25 == j && playerY == i)
+			{
+			mainBuffer[j][playerY] = { '\xDB' };
+			}
+			else if (playerX + 26 == j && playerY == i)
+			{
+			mainBuffer[j][playerY] = { '\xDB' };
+			}
 
 			else
 			{
@@ -167,6 +211,7 @@ void Buffer::GameBuffer()
 	}
 }
 
+// Creates the bricks in the main buffer
 void Buffer::CreateBricks()
 {
 	for (int i = ((_height + 1) - _height); i < (_height - 19); i++)
@@ -176,6 +221,13 @@ void Buffer::CreateBricks()
 			mainBuffer[j][i] = { '#' };
 		}
 	}
+}
+
+// Sets a value to the main game buffer and the bricks buffer
+void Buffer::SetBuffer(int& _col, int& _row, const char& _val)
+{
+	mainBuffer[_col][_row] = { _val };
+	prevBuffer[_col][_row] = { _val };
 }
 
 // Printing Buffers
@@ -194,14 +246,21 @@ void Buffer::PrintBorder()
 
 void Buffer::PrintGameBuffer()
 {
+	/*if (init == false)
+	{
+		CreateBricks();
+		init = true;
+	}*/
+
 	GameBuffer();
-	CreateBricks();
 	for (int row = 0; row < inner_h; row++)
 	{
 		Console->setCurser(1, (row + 1), false);
 		for (int column = 0; column < inner_w; column++)
 		{
-			printf("%c", mainBuffer[column][row]);
+			char z = mainBuffer[column][row];
+			printf("%c", z);
+			prevBuffer[column][row] = z;
 		}
 	}
 	ClearGameBuffer();

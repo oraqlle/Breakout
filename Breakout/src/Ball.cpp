@@ -2,25 +2,32 @@
 
 Ball::Ball(int posX, int posY)
 {
+	srand((unsigned int)time(NULL));
 	originalBallX = posX;
 	originalBallY = posY;
 	ballX = posX;
 	ballY = posY;
 	ballDir = eDir::STOP;
-	prevBallDir = ballDir;
+	resetBallDir = eDir::STOP;
 }
 
 void Ball::Reset()
 {
 	ballX = originalBallX;
 	ballY = originalBallY;
-	ballDir = eDir::STOP;
-	
+	ballDir = eDir::STOP;	
 }
 
-void Ball::chanegDir(eDir d)
+void Ball::randomDir()
 {
-	ballDir = d;
+	// ballDir = (eDir)(rand() % 8 + 1);
+
+	if (ballDir == eDir::UP)
+		ballDir = eDir::DOWN;
+	else if (ballDir == eDir::UPLEFT)
+		ballDir = eDir::DOWNLEFT;
+	else if (ballDir == eDir::UPRIGHT)
+		ballDir = eDir::DOWNRIGHT;
 }
 
 void Ball::Move()

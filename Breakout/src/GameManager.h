@@ -17,6 +17,7 @@ private:
 	int startX, startY;
 	int ballStartX, ballStartY;
 	int score;
+	int highscore;
 
 	char left, right;
 	bool quit;
@@ -25,7 +26,6 @@ private:
 
 	Ball* ball;
 	Paddle* player;
-
 	ConsoleSettings* Console;
 	Buffer* mainBuffer;
 
@@ -35,12 +35,19 @@ public:
 	~GameManager();
 private:
 
+	
 	void ScoreUp();
-	void Input();
-	void Start();
-	void Logic();
+	void HighScore(int& _score);
+
 	void GameOver();
 	void Restart(const char& _key);
+	void Start();
+
+	void BrickCollision(int& ballX, int& ballY);
+	void PaddleCollision(int& ballX, int& ballY, int& playerX, 
+		int& playerY);
+	void Input();
+	void Logic();
 
 public:
 	void Run();

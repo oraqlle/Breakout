@@ -2,7 +2,7 @@
 
 GameManager::GameManager(int w, int h)
 {
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 
 	quit = false;
 	start = false;
@@ -10,13 +10,14 @@ GameManager::GameManager(int w, int h)
 
 	left = 'a'; right = 'd';
 
-	score = 0;
+	score = 00;
+	highscore = 00;
 
 	width = w; height = h;
 	inner_w = w - 3;
 	inner_h = h - 2;
 
-	startX = ((inner_w / 2) - 8);
+	startX = ((inner_w / 2) - 13);
 	startY = inner_h - 3;
 	ballStartX = inner_w / 2;
 	ballStartY = inner_h - 6;
@@ -28,6 +29,7 @@ GameManager::GameManager(int w, int h)
 	mainBuffer = new Buffer(w, h, '\xB2', ball, player, Console);
 }
 
+// Destructor
 GameManager::~GameManager()
 {
 	delete ball, player, Console, mainBuffer;
@@ -37,15 +39,19 @@ GameManager::~GameManager()
 void GameManager::ScoreUp()
 {
 	score += 10;
+	Console->setCurser((width + 5), (height - 24), false);
+	printf("Score: %d | High Score: %d", score, highscore);
 
-	Console->setCurser(0, (height + 2), false);
-	printf("Score: %d\n", score);
-	Console->setCurser(0, (height + 3), false);
-
-	ball->Reset();
-	player->Reset();
+	HighScore(score);
 }
 
+// Highscore Tracker
+void GameManager::HighScore(int& _score)
+{
+	_score > highscore ? highscore = _score : NULL;
+}
+
+// Restarts the Game
 void GameManager::Restart(const char& _key)
 {
 	if (_key == 'Y' || _key == 'y')
@@ -54,9 +60,12 @@ void GameManager::Restart(const char& _key)
 		quit = false;
 		start = false;
 		ball->Reset();
+		player->Reset();
+		score = 0;
 
 		Console->setCurser(0, 0, false);
 		Console->ClearConsole();
+		mainBuffer->init = false;
 	}
 	else if (_key == 'N' || _key == 'n')
 	{
@@ -64,6 +73,85 @@ void GameManager::Restart(const char& _key)
 	}
 }
 
+// Runs when the player loses or quits
+void GameManager::GameOver()
+{
+	mainBuffer->PrintGameBuffer();
+	Console->setCurser((width + 5), (height - 23), false);
+	Console->consolePrint("Red", "Game Over");
+
+	Console->setCurser((width + 5), (height - 22), false);
+	Console->consolePrint("Cyan", "Play Again?");
+
+	Console->setCurser((width + 5), (height - 21), false);
+	Console->consolePrint("White", "[Y/N]: ");
+
+	char playAgain;
+	#pragma warning(suppress : 4996)
+	scanf("%c", &playAgain);
+
+	Restart(playAgain);
+}
+
+// Very Simple Start Screen
+void GameManager::Start()
+{
+	if (_kbhit())
+	{
+		char current = _getch();
+		if (current == 's' || current == 'S')
+			start = true;
+	}
+}
+
+// Checks Buffer if their are Bricks at the Ball's location
+void GameManager::BrickCollision(int& _ballX, int& _ballY)
+{
+	for (int i = 0; i < inner_h; i++)
+	{
+		for (int j = 0; j < inner_w; j++)
+		{
+			char _val = mainBuffer->ScanBuffer(j, i);
+			if ((_val == '#') && (_ballX == j && _ballY == i))
+			{
+				mainBuffer->SetBuffer(j, i, '\x20');
+				ScoreUp();
+				ball->randomDir();
+			}
+		}
+	}
+}
+
+// Checks if the ball has collided with the paddle
+void GameManager::PaddleCollision(int& _ballX, int& _ballY, 
+	int& _playerX, int& _playerY)
+{
+	for (int i = 0; i < 26; i++)
+		if (_ballY == _playerY - 1)
+			if (_ballX == _playerX + i)
+			{
+				eDir dir = ball->getDirection();
+				switch (dir)
+				{
+				case eDir::DOWNLEFT:
+					ball->chanegDir(eDir::UPRIGHT);
+					break;
+
+				case eDir::DOWNRIGHT:
+					ball->chanegDir(eDir::DOWNLEFT);
+					break;
+
+				case eDir::DOWN:
+					ball->chanegDir((eDir)((rand() % 3) + 1));
+					break;
+
+				default:
+					break;
+				}
+			}
+}
+
+// User Input
 void GameManager::Input()
 {
 	ball->Move();
@@ -93,20 +181,14 @@ void GameManager::Input()
 		}
 
 		if (current == 'q')
+		{
 			quit = true;
+			endgame = true;
+		}
 	}
 }
 
-void GameManager::Start()
-{
-	if (_kbhit())
-	{
-		char current = _getch();
-		if (current == 's')
-			start = true;
-	}
-}
-
+// Basic Logic for collisions
 void GameManager::Logic()
 {
 	int ballX = ball->getX();
@@ -115,29 +197,11 @@ void GameManager::Logic()
 	int playerX = player->getX();
 	int playerY = player->getY();
 
-	for (int i = 0; i < 15; i++)
-		if (ballY == playerY - 1)
-			if (ballX == playerX + i)
-			{
-				eDir dir = ball->getDirection();
-				switch (dir)
-				{
-				case eDir::DOWNLEFT:
-					ball->chanegDir(eDir::UPRIGHT);
-					break;
+	// Paddle Collison
+	PaddleCollision(ballX, ballY, playerX, playerY);
 
-				case eDir::DOWNRIGHT:
-					ball->chanegDir(eDir::DOWNLEFT);
-					break;
-
-				case eDir::DOWN:
-					ball->chanegDir((eDir)((rand() % 3) + 1));
-					break;
-
-				default:
-					break;
-				}
-			}
+	// Brick Collisions
+	BrickCollision(ballX, ballY);
 
 	// Bottom wall collision
 	if (ballY == inner_h)
@@ -156,24 +220,7 @@ void GameManager::Logic()
 		ball->chanegDir(ball->getDirection() == eDir::UPLEFT ? eDir::UPRIGHT : eDir::DOWNRIGHT);
 }
 
-void GameManager::GameOver()
-{
-	Console->setCurser((width + 5), (height - 23), false);
-	Console->consolePrint("Red", "Game Over");
-
-	Console->setCurser((width + 5), (height - 22), false);
-	Console->consolePrint("Cyan", "Play Again?");
-
-	Console->setCurser((width + 5), (height - 21), false);
-	Console->consolePrint("White", "[Y/N]: ");
-
-	char playAgain;
-	#pragma warning(suppress : 4996)
-	scanf("%c", &playAgain);
-
-	Restart(playAgain);
-}
-
+// Main Runtime method
 void GameManager::Run()
 {
 	while (!endgame)
@@ -181,6 +228,8 @@ void GameManager::Run()
 		Console->setCurser(0, 0, false);
 		mainBuffer->EmptyFullBuffer();
 		mainBuffer->PrintBorder();
+		Console->setCurser((width + 5), (height - 24), false);
+		printf("Score: %d | High Score: %d", score, highscore);
 
 		while (!start)
 		{
@@ -197,8 +246,7 @@ void GameManager::Run()
 			Logic();
 
 			Console->setCurser((width + 5), (height - 24), false);
-			printf("Score: %d\n", score);
-			//Console->setCurser((width + 5), (height - 26), false);
+			printf("Score: %d | High Score: %d", score, highscore);
 		}
 
 		GameOver();

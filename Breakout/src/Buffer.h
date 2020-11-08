@@ -10,14 +10,17 @@ private:
 	int _height;
 	int inner_w;
 	int inner_h;
-
+	
 	char c_border;
 
 public:
+	bool init;
+
 	char mainBuffer[100][100];
 	char borderBuffer[100][100];
-	char brickBuffer[100][100];
+	char prevBuffer[100][100];
 
+private:
 	Ball* ball;
 	Paddle* player;
 	ConsoleSettings* Console;
@@ -35,4 +38,9 @@ public:
 
 	void GameBuffer();
 	void ClearGameBuffer();
+
+	inline char ScanBuffer(int& _col, int& _row) const
+	{ return prevBuffer[_col][_row]; }
+
+	void SetBuffer(int& _col, int& _row, const char& _val);
 };
