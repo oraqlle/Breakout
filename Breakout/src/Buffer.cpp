@@ -87,126 +87,94 @@ void Buffer::GameBuffer()
 		for (int j = 0; j < inner_w; j++)
 		{
 			if (ballX == j && ballY == i)
-			{
 				mainBuffer[ballX][ballY] = { 'O' };
-			}
+
 			else if (playerX == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 1 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 2 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 3 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 4 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 5 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 6 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 7 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 8 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 9 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 10 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 11 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 12 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 13 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 14 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 15 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 16 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 17 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 17 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 18 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 19 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 20 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 21 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 22 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 23 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 24 == j && playerY == i)
-			{
 				mainBuffer[j][playerY] = { '\xDB' };
-			}
+
 			else if (playerX + 25 == j && playerY == i)
-			{
-			mainBuffer[j][playerY] = { '\xDB' };
-			}
+				mainBuffer[j][playerY] = { '\xDB' };
+
 			else if (playerX + 26 == j && playerY == i)
-			{
-			mainBuffer[j][playerY] = { '\xDB' };
-			}
+				mainBuffer[j][playerY] = { '\xDB' };
 
 			else
-			{
 				mainBuffer[j][i] = { '\x20' };
-			}
 		}
 	}
 }
@@ -215,13 +183,19 @@ void Buffer::GameBuffer()
 void Buffer::CreateBricks()
 {
 	for (int i = ((_height + 1) - _height); i < (_height - 19); i++)
-	{
 		for (int j = ((_width + 2) - _width); j < (_width - 5); j++)
-		{
 			mainBuffer[j][i] = { '#' };
-		}
-	}
 }
+
+// Loads the bricks
+void Buffer::LoadBricks()
+{
+	for (int i = ((_height + 1) - _height); i < (_height - 19); i++)
+		for (int j = ((_width + 2) - _width); j < (_width - 5); j++)
+			if (prevBuffer[j][i] == '#')
+				mainBuffer[j][i] = prevBuffer[j][i];
+}
+
 
 // Sets a value to the main game buffer and the bricks buffer
 void Buffer::SetBuffer(int& _col, int& _row, const char& _val)
@@ -244,15 +218,18 @@ void Buffer::PrintBorder()
 	}
 }
 
+// Prints only the game buffer
 void Buffer::PrintGameBuffer()
 {
-	/*if (init == false)
+	GameBuffer();
+
+	if (!init)
 	{
 		CreateBricks();
 		init = true;
-	}*/
+	}
 
-	GameBuffer();
+	LoadBricks();
 	for (int row = 0; row < inner_h; row++)
 	{
 		Console->setCurser(1, (row + 1), false);

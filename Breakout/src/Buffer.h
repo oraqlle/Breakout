@@ -20,7 +20,6 @@ public:
 	char borderBuffer[100][100];
 	char prevBuffer[100][100];
 
-private:
 	Ball* ball;
 	Paddle* player;
 	ConsoleSettings* Console;
@@ -31,14 +30,19 @@ public:
 	~Buffer();
 
 	void EmptyFullBuffer();
+
 	void CreateBorder();
 	void PrintBorder();
-	void PrintGameBuffer();
-	void CreateBricks();
 
 	void GameBuffer();
+	void PrintGameBuffer();
 	void ClearGameBuffer();
 
+private:
+	void CreateBricks();
+	void LoadBricks();
+
+public:
 	inline char ScanBuffer(int& _col, int& _row) const
 	{ return prevBuffer[_col][_row]; }
 

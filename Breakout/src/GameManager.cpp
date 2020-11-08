@@ -134,11 +134,11 @@ void GameManager::PaddleCollision(int& _ballX, int& _ballY,
 				switch (dir)
 				{
 				case eDir::DOWNLEFT:
-					ball->chanegDir(eDir::UPRIGHT);
+					ball->chanegDir(eDir::UPLEFT);
 					break;
 
 				case eDir::DOWNRIGHT:
-					ball->chanegDir(eDir::DOWNLEFT);
+					ball->chanegDir(eDir::UPRIGHT);
 					break;
 
 				case eDir::DOWN:
