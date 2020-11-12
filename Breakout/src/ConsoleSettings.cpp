@@ -42,7 +42,7 @@ void ConsoleSettings::setCurser(posxy* curserPos, bool visibility)
 	SetConsoleCursorPosition(hOut, coord);
 }
 
-void ConsoleSettings::setTextColour(const char* colour)
+void ConsoleSettings::textColour(const char* colour)
 {
 	static const HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -59,6 +59,10 @@ void ConsoleSettings::setTextColour(const char* colour)
 	else if (colour == "Yellow")
 		SetConsoleTextAttribute(hOut, 14);
 	else if (colour == "White")
+		SetConsoleTextAttribute(hOut, 15);
+	else if (colour == "Black")
+		SetConsoleTextAttribute(hOut, 0);
+	else 
 		SetConsoleTextAttribute(hOut, 15);
 }
 
@@ -97,11 +101,23 @@ void ConsoleSettings::consolePrint(const char* colour, const char* text)
 		SetConsoleTextAttribute(hOut, 14);
 		printf(text);
 	}
+	else if (colour == "Black")
+	{
+		SetConsoleTextAttribute(hOut, 0);
+		printf(text);
+	}
 	else if (colour == "White")
 	{
 		SetConsoleTextAttribute(hOut, 15);
 		printf(text);
 	}
+	else 
+	{
+		SetConsoleTextAttribute(hOut, 15);
+		printf(text);
+	}
+
+	SetConsoleTextAttribute(hOut, 15);
 }
 
 void ConsoleSettings::Log(int x, int y, const char* colour,
@@ -126,7 +142,7 @@ void ConsoleSettings::Log(int x, int y, const char* colour,
 	else if (colour == "Green")
 	{
 		SetConsoleTextAttribute(hOut, 10);
-		std::cout << text;
+		printf(text);
 	}
 	else if (colour == "Cyan")
 	{
@@ -146,6 +162,11 @@ void ConsoleSettings::Log(int x, int y, const char* colour,
 	else if (colour == "Yellow")
 	{
 		SetConsoleTextAttribute(hOut, 14);
+		printf(text);
+	}
+	else if (colour == "Black")
+	{
+		SetConsoleTextAttribute(hOut, 0);
 		printf(text);
 	}
 	else if (colour == "White")
@@ -184,7 +205,7 @@ void ConsoleSettings::Log(posxy* curser, const char* colour,
 	else if (colour == "Green")
 	{
 		SetConsoleTextAttribute(hOut, 10);
-		std::cout << text;
+		printf(text);
 	}
 	else if (colour == "Cyan")
 	{
@@ -204,6 +225,11 @@ void ConsoleSettings::Log(posxy* curser, const char* colour,
 	else if (colour == "Yellow")
 	{
 		SetConsoleTextAttribute(hOut, 14);
+		printf(text);
+	}
+	else if (colour == "Black")
+	{
+		SetConsoleTextAttribute(hOut, 0);
 		printf(text);
 	}
 	else if (colour == "White")

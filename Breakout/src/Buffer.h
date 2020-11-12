@@ -3,32 +3,37 @@
 #include "Ball.h"
 #include "Paddle.h"
 #include "posxy.h"
+#include "rectangle.h"
 
 class Buffer
 {
-private:
-	int _width;
-	int _height;
-	int inner_w;
-	int inner_h;
-	
+private:	
 	char c_border;
 
 public:
 	bool init;
+	
+	char mainBuffer[100][100] = { '\x00' };
+	char borderBuffer[100][100] = { '\x00' };
+	char prevBuffer[100][100] = { '\x00' };
+	char emptyBuffer[100][100] = { '\x00' };
 
-	char mainBuffer[100][100];
-	char borderBuffer[100][100];
-	char prevBuffer[100][100];
-	char emptyBuffer[100][100];
+	rectangle* _Border;
+	rectangle* _Gameboard;
+	rectangle* _BrickSize;
+
+	posxy* _null;
+	posxy* _endline;
+
 
 	Ball* ball;
 	Paddle* player;
 	ConsoleSettings* Console;
 
 public:
-	Buffer(int& _w, int& _h, char borderDesign, Ball* _Ball,
-		Paddle* _Player, ConsoleSettings* _Console);
+	Buffer(rectangle* _border, rectangle* _gameboard,
+		char borderDesign, Ball* _Ball, Paddle* _Player,
+		ConsoleSettings* _Console);
 	~Buffer();
 
 	void EmptyFullBuffer();

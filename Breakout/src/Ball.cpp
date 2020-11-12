@@ -4,7 +4,8 @@ Ball::Ball(posxy* _ballStart)
 {
 	srand((unsigned int)time(NULL));
 
-	originalPos = (*_ballStart);
+	originalPosX = _ballStart->x;
+	originalPosY = _ballStart->y;
 	ballPos = _ballStart;
 
 	ballDir = eDir::STOP;
@@ -13,7 +14,8 @@ Ball::Ball(posxy* _ballStart)
 
 void Ball::Reset()
 {
-	ballPos = &originalPos;
+	ballPos->x = originalPosX;
+	ballPos->y = originalPosY;
 	ballDir = eDir::STOP;	
 }
 
@@ -43,7 +45,7 @@ void Ball::Move()
 		return;
 
 	case eDir::UPLEFT:
-		ballPos--;
+		ballPos->x--, ballPos->y--;
 		break;
 
 	case eDir::DOWNLEFT:

@@ -6,12 +6,13 @@ class Paddle
 {
 private:
 	posxy* paddlePos;
-	posxy originalPos;
+	int originalPosX;
+	int originalPosY;
 
 public:
 	Paddle(posxy* _paddleStart);
 
-	inline void Reset() { paddlePos = &originalPos; }
+	void Reset();
 
 	inline int getX() { return paddlePos->x; }
 	inline int getY() { return paddlePos->y; }

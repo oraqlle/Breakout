@@ -1,29 +1,39 @@
 #include "Buffer.h"
 
-Buffer::Buffer(int& _w, int& _h, char borderDesign, Ball* _Ball, 
-	Paddle* _Player, ConsoleSettings* _Console)
-	: _width(_w), _height(_h), c_border(borderDesign)
+Buffer::Buffer(rectangle* _border, rectangle* _gameboard, 
+	char borderDesign, Ball* _Ball, Paddle* _Player, 
+	ConsoleSettings* _Console)
+	: c_border(borderDesign)
 {
-	inner_w = _w - 3;
-	inner_h = _h - 2;
 	init = false;
+
+	// Game Sizes
+	_Border = _border;
+	_Gameboard = _gameboard;
+	_BrickSize = new rectangle{ (_Border->w - 5), (_Border->h - 19) };
+
+	// Text Positions
+	_null = new posxy{ 0, 0 };
+	_endline = new posxy{ 0, (_Border->h + 1) };
 
 	ball = _Ball;
 	player = _Player;
 	Console = _Console;
 }
 
+// Destructor
 Buffer::~Buffer()
 {
+	delete _Border, _Gameboard, _BrickSize, _null, _endline;
 	delete ball, player, Console;
 }
 
 // Creates the Empty Buffer for Pause Screen
 void Buffer::CreateEmptyBuffer()
 {
-	for (int row = 0; row < inner_h; row++)
+	for (int row = 0; row < _Gameboard->h; row++)
 	{
-		for (int column = 0; column < inner_w; column++)
+		for (int column = 0; column < _Gameboard->w; column++)
 		{
 			mainBuffer[column][row] = { '\x20' };
 		}
@@ -33,8 +43,8 @@ void Buffer::CreateEmptyBuffer()
 // Prints the Empty Buffer
 void Buffer::PrintEmptyBuffer()
 {
-	for (int row = 0; row < inner_h; row++)
-		for (int column = 0; column < inner_w; column++)
+	for (int row = 0; row < _Gameboard->h; row++)
+		for (int column = 0; column < _Gameboard->w; column++)
 		{
 			char z = emptyBuffer[column][row];
 			printf("%c", z);
@@ -44,20 +54,21 @@ void Buffer::PrintEmptyBuffer()
 // Emptying Buffers
 void Buffer::EmptyFullBuffer()
 {
-	for (int row = 0; row < _height; row++)
+	for (int row = 0; row < _Border->h; row++)
 	{
-		for (int column = 0; column < _width - 1; column++)
+		for (int column = 0; column < (_Border->w - 1); column++)
 		{
 			borderBuffer[column][row] = { '\x20' };
 		}
 	}
 }
 
+// Clears only the game buffer
 void Buffer::ClearGameBuffer()
 {
-	for (int row = 0; row < inner_h; row++)
+	for (int row = 0; row < _Gameboard->h; row++)
 	{
-		for (int column = 0; column < inner_w; column++)
+		for (int column = 0; column < _Gameboard->w; column++)
 		{
 			mainBuffer[column][row] = { '\x20' };
 		}
@@ -67,21 +78,21 @@ void Buffer::ClearGameBuffer()
 // Creates the border buffer
 void Buffer::CreateBorder()
 {
-	for (int column = 0; column < _width - 1; column++)
+	for (int column = 0; column < (_Border->w - 1); column++)
 	{
 		borderBuffer[column][0] = { c_border };
 	}
 
-	for (int row = 0; row < _height; row++)
+	for (int row = 0; row < _Border->h; row++)
 	{
-		for (int column = 0; column < _width - 1; column++)
+		for (int column = 0; column < _Border->w - 1; column++)
 		{
 			if (column == 0)
 			{
 				borderBuffer[column][row] = { c_border };
 			}
 
-			if (column == _width - 2)
+			if (column == (_Border->w - 2))
 			{
 				borderBuffer[column][row] = { c_border };
 				int offset = column + 1;
@@ -90,9 +101,9 @@ void Buffer::CreateBorder()
 		}
 	}
 
-	for (int column = 0; column < _width - 1; column++)
+	for (int column = 0; column < (_Border->w - 1); column++)
 	{
-		borderBuffer[column][(inner_h + 1)] = { c_border };
+		borderBuffer[column][(_Gameboard->h + 1)] = { c_border };
 	}
 }
 
@@ -105,9 +116,9 @@ void Buffer::GameBuffer()
 	int playerX = player->getX();
 	int playerY = player->getY();
 
-	for (int i = 0; i < inner_h; i++)
+	for (int i = 0; i < _Gameboard->h; i++)
 	{
-		for (int j = 0; j < inner_w; j++)
+		for (int j = 0; j < _Gameboard->w; j++)
 		{
 			if (ballX == j && ballY == i)
 				mainBuffer[ballX][ballY] = { 'O' };
@@ -205,20 +216,19 @@ void Buffer::GameBuffer()
 // Creates the bricks in the main buffer
 void Buffer::CreateBricks()
 {
-	for (int i = ((_height + 1) - _height); i < (_height - 19); i++)
-		for (int j = ((_width + 2) - _width); j < (_width - 5); j++)
+	for (int i = 1; i < _BrickSize->h; i++)
+		for (int j = 2; j < _BrickSize->w; j++)
 			mainBuffer[j][i] = { '#' };
 }
 
 // Loads the bricks
 void Buffer::LoadBricks()
 {
-	for (int i = ((_height + 1) - _height); i < (_height - 19); i++)
-		for (int j = ((_width + 2) - _width); j < (_width - 5); j++)
+	for (int i = 1; i < _BrickSize->h; i++)
+		for (int j = 2; j < _BrickSize->w; j++)
 			if (prevBuffer[j][i] == '#')
 				mainBuffer[j][i] = prevBuffer[j][i];
 }
-
 
 // Sets a value to the main game buffer and the bricks buffer
 void Buffer::SetBuffer(int& _col, int& _row, const char& _val)
@@ -231,9 +241,9 @@ void Buffer::SetBuffer(int& _col, int& _row, const char& _val)
 void Buffer::PrintBorder()
 {
 	CreateBorder();
-	for (int row = 0; row < _height; row++)
+	for (int row = 0; row < _Border->h; row++)
 	{
-		for (int column = 0; column < _width; column++)
+		for (int column = 0; column < _Border->w; column++)
 		{
 			char z = borderBuffer[column][row];
 			printf("%c", z);
@@ -253,10 +263,10 @@ void Buffer::PrintGameBuffer()
 	}
 
 	LoadBricks();
-	for (int row = 0; row < inner_h; row++)
+	for (int row = 0; row < _Gameboard->h; row++)
 	{
 		Console->setCurser(1, (row + 1), false);
-		for (int column = 0; column < inner_w; column++)
+		for (int column = 0; column < _Gameboard->w; column++)
 		{
 			char z = mainBuffer[column][row];
 			printf("%c", z);

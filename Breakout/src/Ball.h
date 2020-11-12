@@ -8,11 +8,13 @@
 class Ball
 {
 private:
+	int originalPosX;
+	int originalPosY;
 
 	eDir ballDir;
 	eDir resetBallDir;
+
 	posxy* ballPos;
-	posxy originalPos;
 
 public:
 	Ball(posxy* _BallStart);

@@ -12,21 +12,41 @@
 class GameManager
 {
 private:
-	
 	int score;
 	int highscore;
 
 	bool quit;
 	bool start;
+	bool restartKey;
 	bool endgame;
 	bool pause;
-	bool controlMenu;
 
 	rectangle* _Border;
 	rectangle* _Gameboard;
 
+	posxy* _null;
+	posxy* _endline;
 
 	posxy* _ScorePos;
+	posxy* _StartText;
+
+	posxy* _GameOver;
+	posxy* _PlayAgain;
+	posxy* _YesNo;
+
+	posxy* _ControlText;
+	posxy* _Line2;
+	posxy* _aLeft;
+	posxy* _dRight;
+	posxy* _ePause;
+	posxy* _qQuit;
+
+	posxy* _PauseText;
+	posxy* _Line1;
+	posxy* _Continue;
+	posxy* _Restart;
+	posxy* _Quit;
+
 	posxy* _StartPos;
 	posxy* _BallStart;
 
@@ -56,6 +76,7 @@ private:
 		int& playerY);
 	void Input();
 	void PauseInput();
+	void ClearPause();
 	void ControlMenu();
 	void Logic();
 

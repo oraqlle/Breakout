@@ -3,5 +3,12 @@
 Paddle::Paddle(posxy* _paddleStart)
 {
 	paddlePos = _paddleStart;
-	originalPos = { _paddleStart->x, _paddleStart->y };
+	originalPosX = _paddleStart->x;
+	originalPosY = _paddleStart->y;
+}
+
+void Paddle::Reset()
+{
+	paddlePos->x = originalPosX;
+	paddlePos->y = originalPosY;
 }
