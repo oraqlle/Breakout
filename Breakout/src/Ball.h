@@ -2,24 +2,28 @@
 #include <Windows.h>
 #include <time.h>
 #include "Direction.h"
+#include "posxy.h"
+#include "rectangle.h"
 
 class Ball
 {
 private:
-	int ballX, ballY;
-	int originalBallX, originalBallY;
+
 	eDir ballDir;
 	eDir resetBallDir;
+	posxy* ballPos;
+	posxy originalPos;
 
 public:
-	Ball(int posX, int posY);
+	Ball(posxy* _BallStart);
 	void Reset();
 
 	void randomDir();
 	inline void chanegDir(eDir d) { ballDir = d; }
 
-	inline int getX() { return ballX; }
-	inline int getY() { return ballY; }
+	inline int getX() { return ballPos->x; }
+	inline int getY() { return ballPos->y; }
+	inline posxy getPos() { return (*ballPos); }
 	inline eDir getDirection() { return ballDir; }
 
 	void Move();

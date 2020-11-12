@@ -2,29 +2,34 @@
 
 GameManager::GameManager(int w, int h)
 {
+	// rand() seed
 	srand((unsigned int)time(NULL));
 
+	// Control booleans
 	quit = false;
 	start = false;
 	endgame = false;
 	pause = false;
 	controlMenu = false;
-
+	
+	// scores
 	score = 00;
 	highscore = 00;
 
-	width = w; height = h;
-	inner_w = w - 3;
-	inner_h = h - 2;
+	// Game Sizes
+	_Border = new rectangle{ w, h };
+	_Gameboard = new rectangle{ (w - 3), (h - 2) };
 
-	startX = ((inner_w / 2) - 13);
-	startY = inner_h - 3;
-	ballStartX = inner_w / 2;
-	ballStartY = inner_h - 6;
+	// Ball and Player Positions
+	_StartPos = new posxy{ ((_Gameboard->w / 2) - 13), (_Gameboard->h - 3) };
+	_BallStart = new posxy{ (_Gameboard->w / 2), (_Gameboard->h - 6) };
+	
+	// Text Positions
+	_ScorePos = new posxy{ (_Border->w + 5), (_Border->h- 24) };
 
-	ball = new Ball(ballStartX, ballStartY);
-	player = new Paddle(startX, startY);
-
+	// External Objects
+	ball = new Ball(_BallStart);
+	player = new Paddle(_StartPos);
 	Console = new ConsoleSettings();
 	mainBuffer = new Buffer(w, h, '\xB2', ball, player, Console);
 }
@@ -39,7 +44,7 @@ GameManager::~GameManager()
 void GameManager::ScoreUp()
 {
 	score += 10;
-	Console->setCurser((width + 5), (height - 24), false);
+	Console->setCurser(_ScorePos, false);
 	printf("Score: %d | High Score: %d", score, highscore);
 
 	HighScore(score);
@@ -114,7 +119,7 @@ void GameManager::Start()
 	if (_kbhit())
 	{
 		char current = _getch();
-		current == 'y' || current == 'Y' ? start = true : NULL;
+		current == 's' || current == 'S' ? start = true : NULL;
 	}
 }
 
@@ -283,24 +288,26 @@ void GameManager::Run()
 		mainBuffer->EmptyFullBuffer();
 		mainBuffer->CreateEmptyBuffer();
 		mainBuffer->PrintBorder();
-		Console->setCurser((width + 5), (height - 24), false);
+		Console->setCurser((width + 5), (height - 25), false);
 		printf("Score: %d | High Score: %d", score, highscore);
 
 		while (!start)
 		{
-			Console->setCurser(((width / 2) - 9), (height - 16), false);
-			Console->consolePrint("Cyan", "Start (S)");
+			Console->Log((width + 5), (height - 23), "Cyan", 
+				"Start (S)", false);
 			Start();
 			Console->setTextColour("White");
 		}
 
 		while (!quit)
 		{
+			Console->Log((width + 5), (height - 19), "White",
+				"         ", false);
 			mainBuffer->PrintGameBuffer();
 			Input();
 			Logic();
 
-			Console->setCurser((width + 5), (height - 24), false);
+			Console->setCurser((width + 5), (height - 25), false);
 			printf("Score: %d | High Score: %d", score, highscore);
 		}
 
@@ -317,26 +324,10 @@ void GameManager::PrintTest()
 	mainBuffer->EmptyFullBuffer();
 	mainBuffer->CreateEmptyBuffer();
 	mainBuffer->PrintBorder();
-	Console->setCurser((width + 5), (height - 24), false);
+	/*Console->setCurser((width + 5), (height - 24), false);
+	printf("Score: %d | High Score: %d", score, highscore);*/
+
+	posxy _ScorePos = { (width + 5), (height - 24) };
+	Console->setCurser(&_ScorePos, false);
 	printf("Score: %d | High Score: %d", score, highscore);
-
-	Console->Log((width + 5), (height - 18), "Yellow", 
-		"Game Paused:", false);
-
-	Console->Log((width + 5), (height - 17), "Yellow",
-		"------------", false);
-
-	Console->Log((width + 5), (height - 16), "Cyan", 
-		">> Continue (Esc)", false);
-
-	Console->Log((width + 5), (height - 15), "Cyan", 
-		">> Controls (C)", false);
-
-	Console->Log((width + 5), (height - 14), "Cyan", 
-		">> Restart (R)", false);
-
-	Console->Log((width + 5), (height - 13), "Cyan", 
-		">> Quit (Q)", false);
-
-	Console->setCurser(0, (height + 1), false);	
 }

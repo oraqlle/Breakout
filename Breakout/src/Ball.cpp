@@ -1,20 +1,19 @@
 #include "Ball.h"
 
-Ball::Ball(int posX, int posY)
+Ball::Ball(posxy* _ballStart)
 {
 	srand((unsigned int)time(NULL));
-	originalBallX = posX;
-	originalBallY = posY;
-	ballX = posX;
-	ballY = posY;
+
+	originalPos = (*_ballStart);
+	ballPos = _ballStart;
+
 	ballDir = eDir::STOP;
 	resetBallDir = eDir::STOP;
 }
 
 void Ball::Reset()
 {
-	ballX = originalBallX;
-	ballY = originalBallY;
+	ballPos = &originalPos;
 	ballDir = eDir::STOP;	
 }
 
@@ -36,35 +35,35 @@ void Ball::Move()
 		break;
 
 	case eDir::LEFT:
-		ballX--;
+		ballPos->x--;
 		break;
 
 	case eDir::RIGHT:
-		ballX++;
+		ballPos->x++;
 		return;
 
 	case eDir::UPLEFT:
-		ballX--; ballY--;
+		ballPos--;
 		break;
 
 	case eDir::DOWNLEFT:
-		ballX--; ballY++;
+		ballPos->x--; ballPos->y++;
 		break;
 
 	case eDir::UPRIGHT:
-		ballX++; ballY--;
+		ballPos->x++; ballPos->y--;
 		break;
 
 	case eDir::DOWNRIGHT:
-		ballX++; ballY++;
+		ballPos->x++; ballPos->y++;
 		break;
 
 	case eDir::UP:
-		ballY--;
+		ballPos->y--;
 		break;
 
 	case eDir::DOWN:
-		ballY++;
+		ballPos->y++;
 		break;
 
 	default:

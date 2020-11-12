@@ -6,16 +6,13 @@
 #include "Buffer.h"
 #include "Ball.h"
 #include "Paddle.h"
+#include "posxy.h"
+#include "rectangle.h"
 
 class GameManager
 {
 private:
-	int width;
-	int height;
-	int inner_w;
-	int inner_h;
-	int startX, startY;
-	int ballStartX, ballStartY;
+	
 	int score;
 	int highscore;
 
@@ -24,6 +21,14 @@ private:
 	bool endgame;
 	bool pause;
 	bool controlMenu;
+
+	rectangle* _Border;
+	rectangle* _Gameboard;
+
+
+	posxy* _ScorePos;
+	posxy* _StartPos;
+	posxy* _BallStart;
 
 	Ball* ball;
 	Paddle* player;

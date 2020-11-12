@@ -2,6 +2,7 @@
 #include "ConsoleSettings.h"
 #include "Ball.h"
 #include "Paddle.h"
+#include "posxy.h"
 
 class Buffer
 {
