@@ -7,8 +7,8 @@ GameManager::GameManager(int w, int h)
 	quit = false;
 	start = false;
 	endgame = false;
-
-	left = 'a'; right = 'd';
+	pause = false;
+	controlMenu = false;
 
 	score = 00;
 	highscore = 00;
@@ -51,7 +51,22 @@ void GameManager::HighScore(int& _score)
 	_score > highscore ? highscore = _score : NULL;
 }
 
-// Restarts the Game
+// Restarts the Game (in pause menu)
+void GameManager::Restart()
+{
+	mainBuffer->EmptyFullBuffer();
+	quit = false;
+	start = false;
+	ball->Reset();
+	player->Reset();
+	score = 0;
+
+	Console->setCurser(0, 0, false);
+	Console->ClearConsole();
+	mainBuffer->init = false;
+}
+
+// Restarts the Game (if player loses)
 void GameManager::Restart(const char& _key)
 {
 	if (_key == 'Y' || _key == 'y')
@@ -99,8 +114,43 @@ void GameManager::Start()
 	if (_kbhit())
 	{
 		char current = _getch();
-		if (current == 's' || current == 'S')
-			start = true;
+		current == 'y' || current == 'Y' ? start = true : NULL;
+	}
+}
+
+void GameManager::Pause()
+{
+	while (!pause)
+	{
+
+		Console->Log((width + 5), (height - 18), "Yellow",
+			"Game Paused:", false);
+
+		Console->Log((width + 5), (height - 17), "Yellow",
+			"------------", false);
+
+		Console->Log((width + 5), (height - 16), "Cyan",
+			">> Continue (Esc)", false);
+
+		Console->Log((width + 5), (height - 15), "Cyan",
+			">> Controls (C)", false);
+
+		Console->Log((width + 5), (height - 14), "Cyan",
+			">> Restart (R)", false);
+
+		Console->Log((width + 5), (height - 13), "Cyan",
+			">> Quit (Q)", false);
+
+		Console->setCurser(0, (height + 1), false);
+
+		if (_kbhit())
+		{
+			char current = _getch();
+			current == '\x1B' ? pause = true : NULL;
+			current == 'c' || current == 'C' ? controlMenu = true : NULL;
+			current == 'r' || current == 'R' ? pause = true : NULL;
+			current == 'q' || current == 'Q' ? quit = true : NULL;
+		}
 	}
 }
 
@@ -108,7 +158,6 @@ void GameManager::Start()
 void GameManager::BrickCollision(int& _ballX, int& _ballY)
 {
 	for (int i = 0; i < inner_h; i++)
-	{
 		for (int j = 0; j < inner_w; j++)
 		{
 			char _val = mainBuffer->ScanBuffer(j, i);
@@ -119,7 +168,6 @@ void GameManager::BrickCollision(int& _ballX, int& _ballY)
 				ball->randomDir();
 			}
 		}
-	}
 }
 
 // Checks if the ball has collided with the paddle
@@ -166,11 +214,11 @@ void GameManager::Input()
 	{
 		char current = _getch();
 
-		if (current == left)
+		if (current == 'a' || current == 'A')
 			if (PlayerX > 0)
 				player->moveLeft();
 
-		if (current == right)
+		if (current == 'd' || current == 'D')
 			if (PlayerX < inner_w)
 				player->moveRight();
 
@@ -180,10 +228,16 @@ void GameManager::Input()
 			ball->Move();
 		}
 
-		if (current == 'q')
+		if (current == 'q' || current == 'Q')
 		{
 			quit = true;
 			endgame = true;
+		}
+
+		if (current == '\x1B')
+		{
+			pause = true;
+			Pause();
 		}
 	}
 }
@@ -227,6 +281,7 @@ void GameManager::Run()
 	{
 		Console->setCurser(0, 0, false);
 		mainBuffer->EmptyFullBuffer();
+		mainBuffer->CreateEmptyBuffer();
 		mainBuffer->PrintBorder();
 		Console->setCurser((width + 5), (height - 24), false);
 		printf("Score: %d | High Score: %d", score, highscore);
@@ -234,7 +289,7 @@ void GameManager::Run()
 		while (!start)
 		{
 			Console->setCurser(((width / 2) - 9), (height - 16), false);
-			Console->consolePrint("Cyan", "Press S to start");
+			Console->consolePrint("Cyan", "Start (S)");
 			Start();
 			Console->setTextColour("White");
 		}
@@ -253,6 +308,35 @@ void GameManager::Run()
 	
 		Console->setCurser(0, (height + 1), false);
 		Console->setTextColour("White");
-
 	}
+}
+
+void GameManager::PrintTest()
+{
+	Console->setCurser(0, 0, false);
+	mainBuffer->EmptyFullBuffer();
+	mainBuffer->CreateEmptyBuffer();
+	mainBuffer->PrintBorder();
+	Console->setCurser((width + 5), (height - 24), false);
+	printf("Score: %d | High Score: %d", score, highscore);
+
+	Console->Log((width + 5), (height - 18), "Yellow", 
+		"Game Paused:", false);
+
+	Console->Log((width + 5), (height - 17), "Yellow",
+		"------------", false);
+
+	Console->Log((width + 5), (height - 16), "Cyan", 
+		">> Continue (Esc)", false);
+
+	Console->Log((width + 5), (height - 15), "Cyan", 
+		">> Controls (C)", false);
+
+	Console->Log((width + 5), (height - 14), "Cyan", 
+		">> Restart (R)", false);
+
+	Console->Log((width + 5), (height - 13), "Cyan", 
+		">> Quit (Q)", false);
+
+	Console->setCurser(0, (height + 1), false);	
 }

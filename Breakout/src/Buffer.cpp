@@ -18,6 +18,29 @@ Buffer::~Buffer()
 	delete ball, player, Console;
 }
 
+// Creates the Empty Buffer for Pause Screen
+void Buffer::CreateEmptyBuffer()
+{
+	for (int row = 0; row < inner_h; row++)
+	{
+		for (int column = 0; column < inner_w; column++)
+		{
+			mainBuffer[column][row] = { '\x20' };
+		}
+	}
+}
+
+// Prints the Empty Buffer
+void Buffer::PrintEmptyBuffer()
+{
+	for (int row = 0; row < inner_h; row++)
+		for (int column = 0; column < inner_w; column++)
+		{
+			char z = emptyBuffer[column][row];
+			printf("%c", z);
+		}
+}
+
 // Emptying Buffers
 void Buffer::EmptyFullBuffer()
 {

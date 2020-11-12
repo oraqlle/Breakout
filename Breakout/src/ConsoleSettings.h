@@ -12,6 +12,8 @@ public:
 
 	void setTextColour(const char* colour);
 	void consolePrint(const char* colour, const char* text);
+	void Log(int x, int y, const char* colour,
+		const char* text, bool visibility);
 
 	void ClearConsole();
 };

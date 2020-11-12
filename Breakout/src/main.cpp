@@ -2,8 +2,12 @@
 
 int main()
 {
-	GameManager Runtime(76, 28);
-	Runtime.Run();
+	GameManager* Runtime;
+	Runtime = new GameManager(76, 28);
+	Runtime->Run();
+	//Runtime->PrintTest();
+
+	delete Runtime;
 
 	return 0;
 }

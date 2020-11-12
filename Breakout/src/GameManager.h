@@ -19,10 +19,11 @@ private:
 	int score;
 	int highscore;
 
-	char left, right;
 	bool quit;
 	bool start;
 	bool endgame;
+	bool pause;
+	bool controlMenu;
 
 	Ball* ball;
 	Paddle* player;
@@ -40,16 +41,21 @@ private:
 	void HighScore(int& _score);
 
 	void GameOver();
+	void Restart();
 	void Restart(const char& _key);
 	void Start();
+	void Pause();
 
 	void BrickCollision(int& ballX, int& ballY);
 	void PaddleCollision(int& ballX, int& ballY, int& playerX, 
 		int& playerY);
 	void Input();
+	void PauseInput();
+	void ControlMenu();
 	void Logic();
 
 public:
 	void Run();
+	void PrintTest();
 };
 

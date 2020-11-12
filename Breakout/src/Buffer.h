@@ -19,6 +19,7 @@ public:
 	char mainBuffer[100][100];
 	char borderBuffer[100][100];
 	char prevBuffer[100][100];
+	char emptyBuffer[100][100];
 
 	Ball* ball;
 	Paddle* player;
@@ -31,9 +32,11 @@ public:
 
 	void EmptyFullBuffer();
 
+	void CreateEmptyBuffer();
 	void CreateBorder();
 	void PrintBorder();
-
+	
+	void PrintEmptyBuffer();
 	void GameBuffer();
 	void PrintGameBuffer();
 	void ClearGameBuffer();
