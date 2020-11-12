@@ -14,6 +14,7 @@ GameManager::GameManager(int w, int h)
 	restartKey = false;
 	endgame = false;
 	pause = false;
+	fromPauseMenu = false;
 	
 	// scores
 	score = 00;
@@ -96,6 +97,7 @@ void GameManager::Restart()
 	endgame = false;
 	pause = false;
 	restartKey = false;
+	fromPauseMenu = false;
 
 	ball->Reset();
 	player->Reset();
@@ -118,6 +120,7 @@ void GameManager::Restart(const char& _key)
 		endgame = false;
 		pause = false;
 		restartKey = false;
+		fromPauseMenu = false;
 
 		ball->Reset();
 		player->Reset();
@@ -203,11 +206,11 @@ void GameManager::Pause()
 
 		Console->Log(_Line1, "Yellow", "------------", false);
 
-		Console->Log(_Continue, "Cyan", ">> Continue (E)", false);
+		Console->Log(_Continue, "White", ">> Continue (E)", false);
 
-		Console->Log(_Restart, "Cyan", ">> Restart (R)", false);
+		Console->Log(_Restart, "White", ">> Restart (R)", false);
 
-		Console->Log(_Quit, "Cyan", ">> Quit (Q)", false);
+		Console->Log(_Quit, "White", ">> Quit (Q)", false);
 
 		Console->setCurser(_endline, false);
 	
@@ -236,6 +239,8 @@ void GameManager::PauseInput()
 			pause = false;
 			quit = true;
 			endgame = true;
+			restartKey = false;
+			fromPauseMenu = true;
 		}
 	}
 }
@@ -394,16 +399,20 @@ void GameManager::Run()
 			Console->setCurser(_ScorePos, false);
 			Console->textColour("Blue");
 			printf("Score: %d | High Score: %d", score, highscore);
+			Console->textColour("White");
 		}
 
 		if (restartKey)
 			Restart();
+		else if (fromPauseMenu)
+			break;
 		else 
 			GameOver();
-	
-		Console->setCurser(_endline, false);
-		Console->textColour("White");
 	}
+
+	Console->Log(_GameOver, "Red", "Game Over!", false);
+	Console->setCurser(_endline, false);
+	Console->textColour("White");
 }
 
 void GameManager::PrintTest()

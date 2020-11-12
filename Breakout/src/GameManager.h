@@ -20,6 +20,7 @@ private:
 	bool restartKey;
 	bool endgame;
 	bool pause;
+	bool fromPauseMenu;
 
 	rectangle* _Border;
 	rectangle* _Gameboard;
