@@ -149,7 +149,7 @@ void GameManager::GameOver()
 
 	char playAgain;
 	#pragma warning(suppress : 4996)
-	scanf("%c", &playAgain);
+	int temp = scanf("%c", &playAgain);
 
 	Restart(playAgain);
 }

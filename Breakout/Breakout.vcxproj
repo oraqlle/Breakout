@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\FileStream.cpp" />
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\Ball.cpp" />
     <ClCompile Include="src\Buffer.cpp" />
@@ -166,6 +167,7 @@
     <Text Include="src\Basic_Breakout_Layout.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\FileStream.h" />
     <ClInclude Include="src\Ball.h" />
     <ClInclude Include="src\Buffer.h" />
     <ClInclude Include="src\ConsoleSettings.h" />
