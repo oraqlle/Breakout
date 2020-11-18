@@ -1,23 +1,24 @@
 #pragma once
 #include <Windows.h>
+#include "posxy.h"
 
 class Paddle
 {
 private:
-	int paddleX, paddleY;
-	int originalPaddleX, originalPaddleY;
+	posxy* paddlePos;
+	int originalPosX;
+	int originalPosY;
 
 public:
-	Paddle();
+	Paddle(posxy* _paddleStart);
 
-	Paddle(int posX, int posY);
+	void Reset();
 
-	inline void Reset() { paddleX = originalPaddleX; paddleY = originalPaddleY; }
+	inline int getX() { return paddlePos->x; }
+	inline int getY() { return paddlePos->y; }
+	inline posxy getPos() { return (*paddlePos); }
 
-	inline int getX() { return paddleX; }
-	inline int getY() { return paddleY; }
-
-	inline void moveLeft() { paddleX -= 2; }
-	inline void moveRight() { paddleX += 2; }
+	inline void moveLeft() { paddlePos->x -= 2; }
+	inline void moveRight() { paddlePos->x += 2; }
 };
 

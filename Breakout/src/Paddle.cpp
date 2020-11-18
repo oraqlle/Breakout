@@ -1,14 +1,14 @@
 #include "Paddle.h"
-Paddle::Paddle()
+
+Paddle::Paddle(posxy* _paddleStart)
 {
-	paddleX = paddleY = 0;
-	originalPaddleX = originalPaddleY = 0;
+	paddlePos = _paddleStart;
+	originalPosX = _paddleStart->x;
+	originalPosY = _paddleStart->y;
 }
 
-Paddle::Paddle(int posX, int posY)
+void Paddle::Reset()
 {
-	originalPaddleX = posX;
-	originalPaddleY = posY;
-	paddleX = posX;
-	paddleY = posY;
+	paddlePos->x = originalPosX;
+	paddlePos->y = originalPosY;
 }
