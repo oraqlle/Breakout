@@ -1,19 +1,26 @@
-#pragma once
-#include <fstream>
+#pragma 
 #include <stdio.h>
-
 
 class FileStream
 {
 private:
-	#define MAX 100
+	#define bufferMAX 100
+	#define pathMAX 20
 	#define cstring const char*
 
 	FILE* file;
+	FILE* fHighScore;
+
+	cstring nHighScore;
+	cstring nCurrentSave;
+	cstring fLevelName;
 
 public:
-	FileStream(cstring _fname, cstring _mode, cstring _pname, int& _highscore);
-	FileStream(cstring _fname, cstring _mode, char input[MAX][MAX]);
+	FileStream();
 	~FileStream();
+
+	void HighScore(cstring _pname, int& _highscore);
+	void OffloadLevel(char input[bufferMAX][bufferMAX]);
+	void LoadLevel(cstring _fname, char output[bufferMAX][bufferMAX]);
 };
 

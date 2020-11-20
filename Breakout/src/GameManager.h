@@ -6,6 +6,7 @@
 #include "Buffer.h"
 #include "Ball.h"
 #include "Paddle.h"
+#include "FileStream.h"
 #include "posxy.h"
 #include "rectangle.h"
 
@@ -55,6 +56,7 @@ private:
 	Paddle* player;
 	ConsoleSettings* Console;
 	Buffer* mainBuffer;
+	FileStream* fstream;
 
 
 public:
@@ -84,5 +86,6 @@ private:
 public:
 	void Run();
 	void PrintTest();
+	void Test();
 };
 

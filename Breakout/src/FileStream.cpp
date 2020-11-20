@@ -1,24 +1,42 @@
 #include "FileStream.h"
 
-FileStream::FileStream(cstring _fname, cstring _mode, cstring _pname, int& _highscore)
-{
-	file = fopen(_fname, _mode);
-	int temp = fscanf(file, "Name: %s\t\tScore: %d\n", _pname, &_highscore);
-
-}
-
-FileStream::FileStream(cstring _fname, cstring _mode, char input[MAX][MAX])
-{
-	file = fopen(_fname, _mode);
-
-	for (int i = 0; i < MAX; i++)
-		for (int j = 0; j < MAX; j++)
-			int temp = fscanf(file, "%c", &input[j][i]);
-
-	fclose(file);
-}
+FileStream::FileStream()
+	: nHighScore("..\\disc\\highscore.txt"), 
+	nCurrentSave("..\\disc\\tempSave.txt") {}
 
 FileStream::~FileStream()
 {
 	delete file;
+}
+
+void FileStream::HighScore(cstring _pname, int& _highscore)
+{
+	fHighScore = fopen(nHighScore, "a+");
+	int temp = fscanf(file, "Name: %s\t\tScore: %d\n", _pname, &_highscore);
+	fclose(fHighScore);
+}
+
+void FileStream::OffloadLevel(char input[bufferMAX][bufferMAX])
+{
+	file = fopen(nCurrentSave, "w");
+
+	for (int i = 0; i < bufferMAX; i++)
+		for (int j = 0; j < bufferMAX; j++)
+			int temp = fputc(input[j][i], file);
+
+	fclose(file);
+}
+
+void FileStream::LoadLevel(cstring _fname, char output[bufferMAX][bufferMAX])
+{
+	file = fopen(_fname, "r");
+
+	for (int i = 0; i < bufferMAX; i++)
+		for (int j = 0; j < bufferMAX; j++)
+		{
+			int z = fgetc(file);
+			output[j][i] = (char)z;
+		}
+
+	fclose(file);
 }

@@ -58,6 +58,7 @@ GameManager::GameManager(int w, int h)
 	player = new Paddle(_StartPos);
 	Console = new ConsoleSettings();
 	mainBuffer = new Buffer(_Border, _Gameboard, '\xB2', ball, player, Console);
+	fstream = new FileStream();
 }
 
 // Destructor
@@ -425,4 +426,9 @@ void GameManager::PrintTest()
 	
 	Console->Log(_PauseText, "Yellow", "Game Paused:", false);
 	Console->Log((_PauseText + 1), "Yellow", "------------", false);
+}
+
+void GameManager::Test()
+{
+
 }
