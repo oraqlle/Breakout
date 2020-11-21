@@ -1,4 +1,4 @@
-#include "Paddle.h"
+#include "..\headers\Paddle.h"
 
 Paddle::Paddle(posxy* _paddleStart)
 {

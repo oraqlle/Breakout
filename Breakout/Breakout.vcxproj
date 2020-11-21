@@ -164,18 +164,19 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="src\Basic_Breakout_Layout.txt" />
+    <Text Include="disc\Base_Layout.txt" />
+    <Text Include="disc\Test_Layout.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\FileStream.h" />
-    <ClInclude Include="src\Ball.h" />
-    <ClInclude Include="src\Buffer.h" />
-    <ClInclude Include="src\ConsoleSettings.h" />
-    <ClInclude Include="src\Direction.h" />
-    <ClInclude Include="src\GameManager.h" />
-    <ClInclude Include="src\Paddle.h" />
-    <ClInclude Include="src\posxy.h" />
-    <ClInclude Include="src\rectangle.h" />
+    <ClInclude Include="headers\FileStream.h" />
+    <ClInclude Include="headers\Ball.h" />
+    <ClInclude Include="headers\Buffer.h" />
+    <ClInclude Include="headers\ConsoleSettings.h" />
+    <ClInclude Include="headers\Direction.h" />
+    <ClInclude Include="headers\GameManager.h" />
+    <ClInclude Include="headers\Paddle.h" />
+    <ClInclude Include="headers\posxy.h" />
+    <ClInclude Include="headers\rectangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

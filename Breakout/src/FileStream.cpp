@@ -1,4 +1,4 @@
-#include "FileStream.h"
+#include "..\headers\FileStream.h"
 
 FileStream::FileStream()
 	: nHighScore("..\\disc\\highscore.txt"), 

@@ -1,4 +1,4 @@
-#include "Ball.h"
+#include "..\headers\Ball.h"
 
 Ball::Ball(posxy* _ballStart)
 {

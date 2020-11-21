@@ -1,4 +1,4 @@
-#include "Buffer.h"
+#include "..\headers\Buffer.h"
 
 Buffer::Buffer(rectangle* _border, rectangle* _gameboard, 
 	char borderDesign, Ball* _Ball, Paddle* _Player, 
