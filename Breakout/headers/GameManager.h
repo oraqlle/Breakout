@@ -1,14 +1,5 @@
 #pragma once
-#include <iostream>
-#include <conio.h>
-#include <time.h>
-#include "ConsoleSettings.h"
-#include "Buffer.h"
-#include "Ball.h"
-#include "Paddle.h"
-#include "FileStream.h"
-#include "posxy.h"
-#include "rectangle.h"
+#include "..\include\include.h"
 
 class GameManager
 {
@@ -16,6 +7,7 @@ private:
 	int score;
 	int highscore;
 
+	bool run;
 	bool quit;
 	bool start;
 	bool restartKey;
@@ -28,6 +20,7 @@ private:
 
 	posxy* _null;
 	posxy* _endline;
+	posxy* _midpoint;
 
 	posxy* _ScorePos;
 	posxy* _StartText;

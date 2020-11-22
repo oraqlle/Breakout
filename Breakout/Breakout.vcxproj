@@ -168,6 +168,7 @@
     <Text Include="disc\Test_Layout.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="headers\defines.h" />
     <ClInclude Include="headers\FileStream.h" />
     <ClInclude Include="headers\Ball.h" />
     <ClInclude Include="headers\Buffer.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="headers\Paddle.h" />
     <ClInclude Include="headers\posxy.h" />
     <ClInclude Include="headers\rectangle.h" />
+    <ClInclude Include="include\include.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,13 +1,10 @@
 #pragma 
 #include <stdio.h>
+#include "defines.h"
 
 class FileStream
 {
 private:
-	#define bufferMAX 100
-	#define pathMAX 20
-	#define cstring const char*
-
 	FILE* file;
 	FILE* fHighScore;
 

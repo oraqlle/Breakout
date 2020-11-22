@@ -9,6 +9,7 @@ GameManager::GameManager(int w, int h)
 	const int oset = w + 5;
 
 	// Control booleans
+	run = true;
 	quit = false;
 	start = false;
 	restartKey = false;
@@ -28,9 +29,10 @@ GameManager::GameManager(int w, int h)
 	_StartPos = new posxy{ ((_Gameboard->w / 2) - 13), (_Gameboard->h - 3) };
 	_BallStart = new posxy{ (_Gameboard->w / 2), (_Gameboard->h - 6) };
 	
-	// Endpoints
+	// Endpoints and Midpoint
 	_null = new posxy{ 0, 0 };
 	_endline = new posxy{ 0, (_Border->h + 1) };
+	_midpoint = new posxy{ (w / 2), (h / 2) };
 
 	// Text Positions
 	_ScorePos = new posxy{ oset, (h- 24) };
@@ -64,11 +66,11 @@ GameManager::GameManager(int w, int h)
 // Destructor
 GameManager::~GameManager()
 {
-	delete _Border, _Gameboard, _StartPos, _BallStart, _null, _endline;
-	delete _ScorePos, _StartText, _GameOver, _PlayAgain, _YesNo;
-	delete _ControlText, _Line2, _aLeft, _dRight, _ePause, _qQuit;
-	delete _PauseText, _Line1, _Continue, _Restart, _Quit;
-	delete ball, player, Console, mainBuffer;
+	delete _Border, _Gameboard, _StartPos, _BallStart, _null, _endline, 
+		_ScorePos, _StartText, _GameOver, _PlayAgain, _YesNo, 
+		_ControlText, _Line2, _aLeft, _dRight, _ePause, _qQuit, 
+		_PauseText, _Line1, _Continue, _Restart, _Quit, 
+		ball, player, Console, mainBuffer;
 }
 
 // Score Tracker
@@ -369,51 +371,56 @@ void GameManager::Logic()
 // Main Runtime method
 void GameManager::Run()
 {
-	while (!endgame)
+	while (run)
 	{
-		Console->setCurser(_null, false);
-		mainBuffer->EmptyFullBuffer();
-		mainBuffer->CreateEmptyBuffer();
-		mainBuffer->PrintBorder();
-		mainBuffer->PrintGameBuffer();
+		Console->setCurser(_midpoint, NULL);
 
-		ControlMenu();
-		Console->setCurser(_ScorePos, false);
-		Console->textColour("Blue");
-		printf("Score: %d | High Score: %d", score, highscore);
-
-		while (!start)
+		while (!endgame)
 		{
-			Console->Log(_StartText, "Pink", "Start (S)", false);
-			Start();
-		}
-
-		while (!quit)
-		{
-			Console->Log(_StartText, "Black", "Start (S)", false);
-			Console->Log(_endline, "White", "\x20", false);
+			Console->setCurser(_null, false);
+			mainBuffer->EmptyFullBuffer();
+			mainBuffer->CreateEmptyBuffer();
+			mainBuffer->PrintBorder();
 			mainBuffer->PrintGameBuffer();
-			Input();
-			Logic();
 
 			ControlMenu();
 			Console->setCurser(_ScorePos, false);
 			Console->textColour("Blue");
 			printf("Score: %d | High Score: %d", score, highscore);
-			Console->textColour("White");
+
+			while (!start)
+			{
+				Console->Log(_StartText, "Pink", "Start (S)", false);
+				Start();
+			}
+
+			while (!quit)
+			{
+				Console->Log(_StartText, "Black", "Start (S)", false);
+				Console->Log(_endline, "White", "\x20", false);
+				mainBuffer->PrintGameBuffer();
+				Input();
+				Logic();
+
+				ControlMenu();
+				Console->setCurser(_ScorePos, false);
+				Console->textColour("Blue");
+				printf("Score: %d | High Score: %d", score, highscore);
+				Console->textColour("White");
+			}
+
+			if (restartKey)
+				Restart();
+			else if (fromPauseMenu)
+				break;
+			else
+				GameOver();
 		}
 
-		if (restartKey)
-			Restart();
-		else if (fromPauseMenu)
-			break;
-		else 
-			GameOver();
+		Console->Log(_GameOver, "Red", "Game Over!", false);
+		Console->setCurser(_endline, false);
+		Console->textColour("White");
 	}
-
-	Console->Log(_GameOver, "Red", "Game Over!", false);
-	Console->setCurser(_endline, false);
-	Console->textColour("White");
 }
 
 void GameManager::PrintTest()
