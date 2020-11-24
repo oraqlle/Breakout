@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 #include "ConsoleSettings.h"
 #include "Ball.h"
@@ -5,7 +7,7 @@
 #include "posxy.h"
 #include "rectangle.h"
 
-class Buffer
+class BufferStream
 {
 private:	
 	char c_border;
@@ -31,10 +33,10 @@ public:
 	ConsoleSettings* Console;
 
 public:
-	Buffer(rectangle* _border, rectangle* _gameboard,
+	BufferStream(rectangle* _border, rectangle* _gameboard,
 		char borderDesign, Ball* _Ball, Paddle* _Player,
 		ConsoleSettings* _Console);
-	~Buffer();
+	~BufferStream();
 
 	void EmptyFullBuffer();
 

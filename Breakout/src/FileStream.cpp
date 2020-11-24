@@ -1,42 +1,53 @@
 #include "..\headers\FileStream.h"
 
-FileStream::FileStream()
-	: nHighScore("..\\disc\\highscore.txt"), 
-	nCurrentSave("..\\disc\\tempSave.txt") {}
+FileStream::FileStream(
+	BufferStream* _Buffer
+)
+{
+	Buffer = _Buffer;
+}
 
 FileStream::~FileStream()
 {
-	delete file;
+	delete Buffer;
 }
 
-void FileStream::HighScore(cstring _pname, int& _highscore)
+void FileStream::HighScore(FILE* _fptr, cstring _fname, cstring _pname, int& _highscore)
 {
-	fHighScore = fopen(nHighScore, "a+");
-	int temp = fscanf(file, "Name: %s\t\tScore: %d\n", _pname, &_highscore);
-	fclose(fHighScore);
+	#pragma warning(suppress : 4996)
+	_fptr = fopen(_fname, "a+");
+	int temp = fprintf(_fptr, "Name: %s\t\tScore: %d\n", _pname, _highscore);
+	fclose(_fptr);
 }
 
-void FileStream::OffloadLevel(char input[bufferMAX][bufferMAX])
+void FileStream::OffloadLevel(FILE* _fptr, cstring _fname)
 {
-	file = fopen(nCurrentSave, "w");
+	#pragma warning(suppress : 4996)
+	_fptr = fopen(_fname, "w");
 
 	for (int i = 0; i < bufferMAX; i++)
 		for (int j = 0; j < bufferMAX; j++)
-			int temp = fputc(input[j][i], file);
+			int temp = fputc(Buffer->borderBuffer[j][i], _fptr);
 
-	fclose(file);
+	fclose(_fptr);
 }
 
-void FileStream::LoadLevel(cstring _fname, char output[bufferMAX][bufferMAX])
+void FileStream::LoadLevel(FILE* _fptr, cstring _fname, rectangle* _board)
 {
-	file = fopen(_fname, "r");
+	#pragma warning(suppress : 4996)
+	_fptr = fopen("C:\\Dev\\MyGame\\Breakout\\Breakout\\disc\\title.txt.txt", "r");
 
-	for (int i = 0; i < bufferMAX; i++)
-		for (int j = 0; j < bufferMAX; j++)
+	if (_fptr == NULL)
+		perror("Error has Occured! File Cannot Be Opened");
+	else
+		printf("File Opened Successfully!");
+
+	for (int i = 0; i < _board->h; i++)
+		for (int j = 0; j < _board->w; j++)
 		{
-			int z = fgetc(file);
-			output[j][i] = (char)z;
+			char temp = fgetc(_fptr);
+			Buffer->borderBuffer[j][i] = temp;
 		}
 
-	fclose(file);
+	fclose(_fptr);
 }

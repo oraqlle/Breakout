@@ -158,7 +158,7 @@
     <ClCompile Include="src\FileStream.cpp" />
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\Ball.cpp" />
-    <ClCompile Include="src\Buffer.cpp" />
+    <ClCompile Include="src\BufferStream.cpp" />
     <ClCompile Include="src\ConsoleSettings.cpp" />
     <ClCompile Include="src\Paddle.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -166,12 +166,13 @@
   <ItemGroup>
     <Text Include="disc\Base_Layout.txt" />
     <Text Include="disc\Test_Layout.txt" />
+    <Text Include="disc\title.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\defines.h" />
     <ClInclude Include="headers\FileStream.h" />
     <ClInclude Include="headers\Ball.h" />
-    <ClInclude Include="headers\Buffer.h" />
+    <ClInclude Include="headers\BufferStream.h" />
     <ClInclude Include="headers\ConsoleSettings.h" />
     <ClInclude Include="headers\Direction.h" />
     <ClInclude Include="headers\GameManager.h" />

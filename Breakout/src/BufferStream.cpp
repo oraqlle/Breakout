@@ -1,6 +1,6 @@
-#include "..\headers\Buffer.h"
+#include "..\headers\BufferStream.h"
 
-Buffer::Buffer(rectangle* _border, rectangle* _gameboard, 
+BufferStream::BufferStream(rectangle* _border, rectangle* _gameboard, 
 	char borderDesign, Ball* _Ball, Paddle* _Player, 
 	ConsoleSettings* _Console)
 	: c_border(borderDesign)
@@ -22,14 +22,14 @@ Buffer::Buffer(rectangle* _border, rectangle* _gameboard,
 }
 
 // Destructor
-Buffer::~Buffer()
+BufferStream::~BufferStream()
 {
 	delete _Border, _Gameboard, _BrickSize, _null, _endline;
 	delete ball, player, Console;
 }
 
 // Creates the Empty Buffer for Pause Screen
-void Buffer::CreateEmptyBuffer()
+void BufferStream::CreateEmptyBuffer()
 {
 	for (int row = 0; row < _Gameboard->h; row++)
 	{
@@ -41,7 +41,7 @@ void Buffer::CreateEmptyBuffer()
 }
 
 // Prints the Empty Buffer
-void Buffer::PrintEmptyBuffer()
+void BufferStream::PrintEmptyBuffer()
 {
 	for (int row = 0; row < _Gameboard->h; row++)
 		for (int column = 0; column < _Gameboard->w; column++)
@@ -52,7 +52,7 @@ void Buffer::PrintEmptyBuffer()
 }
 
 // Emptying Buffers
-void Buffer::EmptyFullBuffer()
+void BufferStream::EmptyFullBuffer()
 {
 	for (int row = 0; row < _Border->h; row++)
 	{
@@ -64,7 +64,7 @@ void Buffer::EmptyFullBuffer()
 }
 
 // Clears only the game buffer
-void Buffer::ClearGameBuffer()
+void BufferStream::ClearGameBuffer()
 {
 	for (int row = 0; row < _Gameboard->h; row++)
 	{
@@ -76,7 +76,7 @@ void Buffer::ClearGameBuffer()
 }
 
 // Creates the border buffer
-void Buffer::CreateBorder()
+void BufferStream::CreateBorder()
 {
 	for (int column = 0; column < (_Border->w - 1); column++)
 	{
@@ -108,7 +108,7 @@ void Buffer::CreateBorder()
 }
 
 // Creates the main game buffer
-void Buffer::GameBuffer()
+void BufferStream::GameBuffer()
 {
 	int ballX = ball->getX();
 	int ballY = ball->getY();
@@ -214,7 +214,7 @@ void Buffer::GameBuffer()
 }
 
 // Creates the bricks in the main buffer
-void Buffer::CreateBricks()
+void BufferStream::CreateBricks()
 {
 	for (int i = 1; i < _BrickSize->h; i++)
 		for (int j = 2; j < _BrickSize->w; j++)
@@ -222,7 +222,7 @@ void Buffer::CreateBricks()
 }
 
 // Loads the bricks
-void Buffer::LoadBricks()
+void BufferStream::LoadBricks()
 {
 	for (int i = 1; i < _BrickSize->h; i++)
 		for (int j = 2; j < _BrickSize->w; j++)
@@ -231,14 +231,14 @@ void Buffer::LoadBricks()
 }
 
 // Sets a value to the main game buffer and the bricks buffer
-void Buffer::SetBuffer(int& _col, int& _row, const char& _val)
+void BufferStream::SetBuffer(int& _col, int& _row, const char& _val)
 {
 	mainBuffer[_col][_row] = { _val };
 	prevBuffer[_col][_row] = { _val };
 }
 
 // Printing Buffers
-void Buffer::PrintBorder()
+void BufferStream::PrintBorder()
 {
 	CreateBorder();
 	for (int row = 0; row < _Border->h; row++)
@@ -252,7 +252,7 @@ void Buffer::PrintBorder()
 }
 
 // Prints only the game buffer
-void Buffer::PrintGameBuffer()
+void BufferStream::PrintGameBuffer()
 {
 	GameBuffer();
 

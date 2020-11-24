@@ -1,6 +1,9 @@
 #include "..\headers\GameManager.h"
 
-GameManager::GameManager(int w, int h)
+GameManager::GameManager(
+	int w, 
+	int h
+)
 {
 	// rand() seed
 	srand((unsigned int)time(NULL));
@@ -10,8 +13,9 @@ GameManager::GameManager(int w, int h)
 
 	// Control booleans
 	run = true;
+	InStartMenu = true;
 	quit = false;
-	start = false;
+	PressedStart = false;
 	restartKey = false;
 	endgame = false;
 	pause = false;
@@ -34,9 +38,13 @@ GameManager::GameManager(int w, int h)
 	_endline = new posxy{ 0, (_Border->h + 1) };
 	_midpoint = new posxy{ (w / 2), (h / 2) };
 
+	// Start Menu Text Positions
+	_Title = new posxy{ 4, 3 };
+	_StartText1 = new posxy{ 11, (h / 2) };
+
 	// Text Positions
 	_ScorePos = new posxy{ oset, (h- 24) };
-	_StartText = new posxy{ oset, (h - 23) };
+	_StartText2 = new posxy{ oset, (h - 23) };
 
 	_GameOver = new posxy{ oset, (h - 23) };
 	_PlayAgain = new posxy{ oset, (h - 22) };
@@ -55,22 +63,29 @@ GameManager::GameManager(int w, int h)
 	_Restart = new posxy{ oset, (h - 9) };
 	_Quit = new posxy{ oset, (h - 8) };
 
+	//File Names - "C:\Dev\MyGames\Breakout\Breakout\disc\title.txt"
+	nTitle = "C:/Dev/MyGame/Breakout/Breakout/disc/title.txt";
+	nTemp = "../disc/temp.txt";
+	nBaselevel = "../disc/Base_Layout.txt";
+	nLevel_1 = "../disc/Level_1.txt";
+	nHighScore = "../disc/HighScore.txt";
+
 	// External Objects
 	ball = new Ball(_BallStart);
 	player = new Paddle(_StartPos);
 	Console = new ConsoleSettings();
-	mainBuffer = new Buffer(_Border, _Gameboard, '\xB2', ball, player, Console);
-	fstream = new FileStream();
+	Buffer = new BufferStream(_Border, _Gameboard, '\xB2', ball, player, Console);
+	fstream = new FileStream(Buffer);
 }
 
 // Destructor
 GameManager::~GameManager()
 {
 	delete _Border, _Gameboard, _StartPos, _BallStart, _null, _endline, 
-		_ScorePos, _StartText, _GameOver, _PlayAgain, _YesNo, 
+		_ScorePos, _StartText1, _StartText2, _GameOver, _PlayAgain, _YesNo, 
 		_ControlText, _Line2, _aLeft, _dRight, _ePause, _qQuit, 
 		_PauseText, _Line1, _Continue, _Restart, _Quit, 
-		ball, player, Console, mainBuffer;
+		ball, player, Console, Buffer, fstream;
 }
 
 // Score Tracker
@@ -85,18 +100,36 @@ void GameManager::ScoreUp()
 }
 
 // Highscore Tracker
-void GameManager::HighScore(int& _score)
+void GameManager::HighScore(
+	int& _score
+)
 {
 	_score > highscore ? highscore = _score : NULL;
+}
+
+// Start Menu
+void GameManager::StartMenu()
+{
+	Console->Log(_StartText1, "Cyan", "Press 'Enter' to Start", false);
+
+	if (_kbhit())
+	{
+		char kbchar = _getch();
+
+		if (kbchar == '\n')
+		{
+			InStartMenu = false;
+		}
+	}
 }
 
 // Restarts the Game (in pause menu)
 void GameManager::Restart()
 {
-	mainBuffer->EmptyFullBuffer();
+	Buffer->EmptyFullBuffer();
 
 	quit = false;
-	start = false;
+	PressedStart = false;
 	endgame = false;
 	pause = false;
 	restartKey = false;
@@ -108,18 +141,20 @@ void GameManager::Restart()
 
 	Console->setCurser(_null, false);
 	Console->ClearConsole();
-	mainBuffer->init = false;
+	Buffer->init = false;
 }
 
 // Restarts the Game (if player loses)
-void GameManager::Restart(const char& _key)
+void GameManager::Restart(
+	const char& _key
+)
 {
 	if (_key == 'Y' || _key == 'y')
 	{
-		mainBuffer->EmptyFullBuffer();
+		Buffer->EmptyFullBuffer();
 
 		quit = false;
-		start = false;
+		PressedStart = false;
 		endgame = false;
 		pause = false;
 		restartKey = false;
@@ -131,7 +166,7 @@ void GameManager::Restart(const char& _key)
 
 		Console->setCurser(_null, false);
 		Console->ClearConsole();
-		mainBuffer->init = false;
+		Buffer->init = false;
 	}
 	else if (_key == 'N' || _key == 'n')
 	{
@@ -142,7 +177,7 @@ void GameManager::Restart(const char& _key)
 // Runs when the player loses or quits
 void GameManager::GameOver()
 {
-	mainBuffer->PrintGameBuffer();
+	Buffer->PrintGameBuffer();
 
 	Console->Log(_GameOver, "Red", "Game Over!", false);
 
@@ -163,7 +198,7 @@ void GameManager::Start()
 	if (_kbhit())
 	{
 		char current = _getch();
-		current == 's' || current == 'S' ? start = true : NULL;
+		current == 's' || current == 'S' ? PressedStart = true : NULL;
 	}
 }
 
@@ -249,15 +284,18 @@ void GameManager::PauseInput()
 }
 
 // Checks Buffer if their are Bricks at the Ball's location
-void GameManager::BrickCollision(int& _ballX, int& _ballY)
+void GameManager::BrickCollision(
+	int& _ballX, 
+	int& _ballY
+)
 {
 	for (int i = 0; i < _Gameboard->h; i++)
 		for (int j = 0; j < _Gameboard->w; j++)
 		{
-			char _val = mainBuffer->ScanBuffer(j, i);
+			char _val = Buffer->ScanBuffer(j, i);
 			if ((_val == '#') && (_ballX == j && _ballY == i))
 			{
-				mainBuffer->SetBuffer(j, i, '\x20');
+				Buffer->SetBuffer(j, i, '\x20');
 				ScoreUp();
 				ball->randomDir();
 			}
@@ -265,8 +303,12 @@ void GameManager::BrickCollision(int& _ballX, int& _ballY)
 }
 
 // Checks if the ball has collided with the paddle
-void GameManager::PaddleCollision(int& _ballX, int& _ballY, 
-	int& _playerX, int& _playerY)
+void GameManager::PaddleCollision(
+	int& _ballX, 
+	int& _ballY, 
+	int& _playerX, 
+	int& _playerY
+)
 {
 	for (int i = 0; i < 26; i++)
 		if (_ballY == _playerY - 1)
@@ -373,32 +415,38 @@ void GameManager::Run()
 {
 	while (run)
 	{
-		Console->setCurser(_midpoint, NULL);
+		Console->ClearConsole();
+		Console->setCurser(_null, false);
+
+		while (InStartMenu)
+		{
+
+		}
 
 		while (!endgame)
 		{
 			Console->setCurser(_null, false);
-			mainBuffer->EmptyFullBuffer();
-			mainBuffer->CreateEmptyBuffer();
-			mainBuffer->PrintBorder();
-			mainBuffer->PrintGameBuffer();
+			Buffer->EmptyFullBuffer();
+			Buffer->CreateEmptyBuffer();
+			Buffer->PrintBorder();
+			Buffer->PrintGameBuffer();
 
 			ControlMenu();
 			Console->setCurser(_ScorePos, false);
 			Console->textColour("Blue");
 			printf("Score: %d | High Score: %d", score, highscore);
 
-			while (!start)
+			while (!PressedStart)
 			{
-				Console->Log(_StartText, "Pink", "Start (S)", false);
+				Console->Log(_StartText2, "Pink", "Start (S)", false);
 				Start();
 			}
 
 			while (!quit)
 			{
-				Console->Log(_StartText, "Black", "Start (S)", false);
+				Console->Log(_StartText2, "Black", "Start (S)", false);
 				Console->Log(_endline, "White", "\x20", false);
-				mainBuffer->PrintGameBuffer();
+				Buffer->PrintGameBuffer();
 				Input();
 				Logic();
 
@@ -426,9 +474,9 @@ void GameManager::Run()
 void GameManager::PrintTest()
 {
 	Console->setCurser(_null, false);
-	mainBuffer->EmptyFullBuffer();
-	mainBuffer->CreateEmptyBuffer();
-	mainBuffer->PrintBorder();
+	Buffer->EmptyFullBuffer();
+	Buffer->CreateEmptyBuffer();
+	Buffer->PrintBorder();
 	Console->setCurser(_endline, false);
 	
 	Console->Log(_PauseText, "Yellow", "Game Paused:", false);
@@ -437,5 +485,7 @@ void GameManager::PrintTest()
 
 void GameManager::Test()
 {
-
+	Buffer->EmptyFullBuffer();
+	fstream->LoadLevel(fTitle, nTitle, _Border);
+	Buffer->PrintBorder();
 }
