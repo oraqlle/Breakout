@@ -76,5 +76,11 @@
     <Text Include="disc\Test_Layout.txt" />
     <Text Include="disc\Base_Layout.txt" />
     <Text Include="disc\title.txt" />
+    <Text Include="disc\test.txt" />
+    <Text Include="disc\HighScore.txt" />
+    <Text Include="persistant\HighScore.txt" />
+    <Text Include="persistant\Base_Layout.txt" />
+    <Text Include="persistant\Test_Layout.txt" />
+    <Text Include="persistant\title.txt" />
   </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@
 #include "Paddle.h"
 #include "posxy.h"
 #include "rectangle.h"
+#include "defines.h"
 
 class BufferStream
 {
@@ -15,10 +16,11 @@ private:
 public:
 	bool init;
 	
-	char mainBuffer[100][100] = { '\x00' };
-	char borderBuffer[100][100] = { '\x00' };
-	char prevBuffer[100][100] = { '\x00' };
-	char emptyBuffer[100][100] = { '\x00' };
+	char mainBuffer[bufferMAX][bufferMAX] = { '\x00' };
+	char borderBuffer[bufferMAX][bufferMAX] = { '\x00' };
+	char prevBuffer[bufferMAX][bufferMAX] = { '\x00' };
+	char emptyBuffer[bufferMAX][bufferMAX] = { '\x00' };
+	char _buffer[bufferMAX][bufferMAX] = { '\x00' };
 
 	rectangle* _Border;
 	rectangle* _Gameboard;
@@ -37,6 +39,8 @@ public:
 		char borderDesign, Ball* _Ball, Paddle* _Player,
 		ConsoleSettings* _Console);
 	~BufferStream();
+
+	void PrintBuffer(rectangle* _dimensions);
 
 	void EmptyFullBuffer();
 

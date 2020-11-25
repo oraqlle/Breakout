@@ -64,11 +64,11 @@ GameManager::GameManager(
 	_Quit = new posxy{ oset, (h - 8) };
 
 	//File Names - "C:\Dev\MyGames\Breakout\Breakout\disc\title.txt"
-	nTitle = "C:/Dev/MyGame/Breakout/Breakout/disc/title.txt";
-	nTemp = "../disc/temp.txt";
-	nBaselevel = "../disc/Base_Layout.txt";
-	nLevel_1 = "../disc/Level_1.txt";
-	nHighScore = "../disc/HighScore.txt";
+	nTitle = "./disc/title.txt";
+	nTemp = "./disc/temp.txt";
+	nBaselevel = "./disc/Base_Layout.txt";
+	nLevel_1 = "./disc/Level_1.txt";
+	nHighScore = "./disc/HighScore.txt";
 
 	// External Objects
 	ball = new Ball(_BallStart);
@@ -486,6 +486,7 @@ void GameManager::PrintTest()
 void GameManager::Test()
 {
 	Buffer->EmptyFullBuffer();
-	fstream->LoadLevel(fTitle, nTitle, _Border);
-	Buffer->PrintBorder();
+	//Console->setCurser(_Title, false);
+	int buffer_size = fstream->LoadFile(fTitle, nTitle, _Border);
+	Buffer->PrintBuffer(_Border);
 }

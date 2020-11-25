@@ -12,7 +12,12 @@ FileStream::~FileStream()
 	delete Buffer;
 }
 
-void FileStream::HighScore(FILE* _fptr, cstring _fname, cstring _pname, int& _highscore)
+void FileStream::HighScore(
+	FILE* _fptr, 
+	cstring _fname, 
+	cstring _pname, 
+	int& _highscore
+)
 {
 	#pragma warning(suppress : 4996)
 	_fptr = fopen(_fname, "a+");
@@ -20,10 +25,13 @@ void FileStream::HighScore(FILE* _fptr, cstring _fname, cstring _pname, int& _hi
 	fclose(_fptr);
 }
 
-void FileStream::OffloadLevel(FILE* _fptr, cstring _fname)
+void FileStream::OffloadFile(
+	FILE* _fptr, 
+	cstring _fname
+)
 {
 	#pragma warning(suppress : 4996)
-	_fptr = fopen(_fname, "w");
+	_fptr = fopen(_fname, "w+");
 
 	for (int i = 0; i < bufferMAX; i++)
 		for (int j = 0; j < bufferMAX; j++)
@@ -32,22 +40,51 @@ void FileStream::OffloadLevel(FILE* _fptr, cstring _fname)
 	fclose(_fptr);
 }
 
-void FileStream::LoadLevel(FILE* _fptr, cstring _fname, rectangle* _board)
+int FileStream::LoadFile(
+	FILE* _fptr, 
+	cstring _fname, 
+	rectangle* _dimensions
+)
 {
+	int _size = 0;
+
 	#pragma warning(suppress : 4996)
-	_fptr = fopen("C:\\Dev\\MyGame\\Breakout\\Breakout\\disc\\title.txt.txt", "r");
+	_fptr = fopen(_fname, "r");
 
-	if (_fptr == NULL)
-		perror("Error has Occured! File Cannot Be Opened");
-	else
-		printf("File Opened Successfully!");
-
-	for (int i = 0; i < _board->h; i++)
-		for (int j = 0; j < _board->w; j++)
+	#ifndef TESTLOG
+	{
+		if (_fptr == NULL)
+			perror("Error has Occured! File Cannot Be Opened");
+		else
 		{
-			char temp = fgetc(_fptr);
-			Buffer->borderBuffer[j][i] = temp;
+			printf("File Opened Successfully!\n");
+
+			for (int i = 0; i < _dimensions->h; i++)
+				for (int j = 0; j < _dimensions->w; j++)
+				{
+					int temp = fgetc(_fptr);
+					Buffer->_buffer[j][i] = (char)temp;
+					_size++;
+				}
 		}
+	}
+	#else
+		{
+			for (int i = 0; i < _dimensions->h; i++)
+				for (int j = 0; j < _dimensions->w; j++)
+				{
+					int temp = fgetc(_fptr);
+					Buffer->_buffer[j][i] = (char)temp;
+					_size++;
+				}
+		}
+	#endif /* TESTLOG */
+
+
+
+	
 
 	fclose(_fptr);
+
+	return _size;
 }

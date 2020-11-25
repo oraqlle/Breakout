@@ -28,6 +28,16 @@ BufferStream::~BufferStream()
 	delete ball, player, Console;
 }
 
+void BufferStream::PrintBuffer(rectangle* _dimensions)
+{
+	for (int i = 0; i < _dimensions->h; i++)
+		for (int j = 0; j < _dimensions->w; j++)
+		{
+			char z = _buffer[j][i];
+			printf("%c", z);
+		}
+}
+
 // Creates the Empty Buffer for Pause Screen
 void BufferStream::CreateEmptyBuffer()
 {

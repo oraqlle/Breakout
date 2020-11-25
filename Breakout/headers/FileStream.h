@@ -21,15 +21,15 @@ public:
 		int& _highscore
 	);
 
-	void OffloadLevel(
+	void OffloadFile(
 		FILE* _fptr, 
 		cstring _fname
 	);
 	
-	void LoadLevel(
+	int LoadFile(
 		FILE* _fptr, 
 		cstring _fname, 
-		rectangle* _board
+		rectangle* _dimensions
 	);
 };
 

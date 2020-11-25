@@ -7,3 +7,5 @@
 #define cstring const char*
 
 #define FULL 1
+
+#define TESTLOG true
