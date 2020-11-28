@@ -3,9 +3,9 @@
 int main()
 {
 	GameManager Runtime(76, 28);
-	Runtime.Run();
-	Runtime.PrintTest();
-	//Runtime.Test();
+	//Runtime.Run();
+	//Runtime.PrintTest();
+	Runtime.Test();
 
 	return 0;
 }

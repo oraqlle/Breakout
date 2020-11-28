@@ -82,5 +82,6 @@
     <Text Include="persistant\Base_Layout.txt" />
     <Text Include="persistant\Test_Layout.txt" />
     <Text Include="persistant\title.txt" />
+    <Text Include="disc\temp.txt" />
   </ItemGroup>
 </Project>

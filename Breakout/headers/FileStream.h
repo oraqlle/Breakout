@@ -12,7 +12,29 @@ public:
 	FileStream(
 		BufferStream* _Buffer
 	);
+
 	~FileStream();
+
+	void writef(
+		FILE* _fptr,
+		cstring _fname,
+		cstring _text
+	);
+
+	int readf(
+		FILE* _fptr,
+		cstring _fname,
+		char arr[]
+	);
+
+	inline FILE* openf(
+		cstring _fname,
+		cstring _mode
+	);
+
+	inline void closef(
+		FILE* _fptr
+	);
 
 	void HighScore(
 		FILE* _fptr, 
@@ -23,7 +45,9 @@ public:
 
 	void OffloadFile(
 		FILE* _fptr, 
-		cstring _fname
+		cstring _fname,
+		char arr[][BUFFERMAX],
+		rectangle* dimensions
 	);
 	
 	int LoadFile(
@@ -32,4 +56,3 @@ public:
 		rectangle* _dimensions
 	);
 };
-

@@ -166,6 +166,7 @@
   <ItemGroup>
     <Text Include="disc\Base_Layout.txt" />
     <Text Include="disc\HighScore.txt" />
+    <Text Include="disc\temp.txt" />
     <Text Include="disc\test.txt" />
     <Text Include="disc\Test_Layout.txt" />
     <Text Include="disc\title.txt" />

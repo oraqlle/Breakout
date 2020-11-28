@@ -68,7 +68,7 @@ void BufferStream::EmptyFullBuffer()
 	{
 		for (int column = 0; column < (_Border->w - 1); column++)
 		{
-			borderBuffer[column][row] = { '\x20' };
+			_buffer[column][row] = { '\x20' };
 		}
 	}
 }

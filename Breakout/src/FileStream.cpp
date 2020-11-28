@@ -12,6 +12,52 @@ FileStream::~FileStream()
 	delete Buffer;
 }
 
+void FileStream::writef(
+	FILE* _fptr,
+	cstring _fname,
+	cstring _text
+)
+{
+	#pragma warning(suppress : 4996)
+	_fptr = fopen(_fname, "a+");
+	int temp = fprintf(_fptr, _text);
+	fclose(_fptr);
+}
+
+int FileStream::readf(
+	FILE* _fptr,
+	cstring _fname,
+	char arr[]
+)
+{
+	int _size = 0;
+
+	for (int i = 0; i < BUFFERMAX; i++)
+	{
+			int temp = fgetc(_fptr);
+			arr[i] = (char)temp;
+			_size++;
+	}
+
+	fclose(_fptr);
+	return _size;
+}
+
+inline FILE* FileStream::openf(
+	cstring _fname,
+	cstring _mode
+)
+{
+	return fopen(_fname, _mode);
+}
+
+inline void FileStream::closef(
+	FILE* _fptr
+)
+{
+	fclose(_fptr);
+}
+
 void FileStream::HighScore(
 	FILE* _fptr, 
 	cstring _fname, 
@@ -27,15 +73,17 @@ void FileStream::HighScore(
 
 void FileStream::OffloadFile(
 	FILE* _fptr, 
-	cstring _fname
+	cstring _fname,
+	char arr[][BUFFERMAX],
+	rectangle* dimensions
 )
 {
 	#pragma warning(suppress : 4996)
 	_fptr = fopen(_fname, "w+");
 
-	for (int i = 0; i < bufferMAX; i++)
-		for (int j = 0; j < bufferMAX; j++)
-			int temp = fputc(Buffer->borderBuffer[j][i], _fptr);
+	for (int i = 0; i < dimensions->h; i++)
+		for (int j = 0; j < dimensions->w; j++)
+			int temp = fputc(arr[j][i], _fptr);
 
 	fclose(_fptr);
 }
@@ -80,11 +128,6 @@ int FileStream::LoadFile(
 		}
 	#endif /* TESTLOG */
 
-
-
-	
-
 	fclose(_fptr);
-
 	return _size;
 }

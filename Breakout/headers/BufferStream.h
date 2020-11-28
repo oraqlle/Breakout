@@ -16,11 +16,11 @@ private:
 public:
 	bool init;
 	
-	char mainBuffer[bufferMAX][bufferMAX] = { '\x00' };
-	char borderBuffer[bufferMAX][bufferMAX] = { '\x00' };
-	char prevBuffer[bufferMAX][bufferMAX] = { '\x00' };
-	char emptyBuffer[bufferMAX][bufferMAX] = { '\x00' };
-	char _buffer[bufferMAX][bufferMAX] = { '\x00' };
+	char mainBuffer[BUFFERMAX][BUFFERMAX] = { '\x00' };
+	char borderBuffer[BUFFERMAX][BUFFERMAX] = { '\x00' };
+	char prevBuffer[BUFFERMAX][BUFFERMAX] = { '\x00' };
+	char emptyBuffer[BUFFERMAX][BUFFERMAX] = { '\x00' };
+	char _buffer[BUFFERMAX][BUFFERMAX] = { '\x00' };
 
 	rectangle* _Border;
 	rectangle* _Gameboard;

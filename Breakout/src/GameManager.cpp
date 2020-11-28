@@ -486,7 +486,10 @@ void GameManager::PrintTest()
 void GameManager::Test()
 {
 	Buffer->EmptyFullBuffer();
-	//Console->setCurser(_Title, false);
 	int buffer_size = fstream->LoadFile(fTitle, nTitle, _Border);
 	Buffer->PrintBuffer(_Border);
+
+	fstream->OffloadFile(fTemp, nTemp);
+	Buffer->EmptyFullBuffer();
+	int buffer_size = fstream->LoadFile(fTemp, nTemp, _Border);
 }
