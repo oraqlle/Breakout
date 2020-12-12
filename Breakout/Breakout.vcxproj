@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Log.cpp" />
     <ClCompile Include="src\FileStream.cpp" />
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\Ball.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="headers\posxy.h" />
     <ClInclude Include="headers\rectangle.h" />
     <ClInclude Include="include\include.h" />
+    <ClInclude Include="headers\Log.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

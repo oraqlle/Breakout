@@ -8,43 +8,54 @@
 #include "rectangle.h"
 #include "defines.h"
 
+template<class _Ty>
 class BufferStream
 {
-private:	
-	char c_border;
+private:
+	_Ty c_border;
 
 public:
 	bool init;
+
+	int max_height;
+	int max_width;
 	
-	char mainBuffer[BUFFERMAX][BUFFERMAX] = { '\x00' };
+	/*char mainBuffer[BUFFERMAX][BUFFERMAX] = { '\x00' };
 	char borderBuffer[BUFFERMAX][BUFFERMAX] = { '\x00' };
-	char prevBuffer[BUFFERMAX][BUFFERMAX] = { '\x00' };
-	char emptyBuffer[BUFFERMAX][BUFFERMAX] = { '\x00' };
-	char _buffer[BUFFERMAX][BUFFERMAX] = { '\x00' };
+	char prevBuffer[BUFFERMAX][BUFFERMAX] = { '\x00' };*/
 
-	rectangle* _Border;
-	rectangle* _Gameboard;
-	rectangle* _BrickSize;
+	_Ty null_buffer[BUFFERMAX][BUFFERMAX] = { 0 };
+	_Ty buffer[BUFFERMAX][BUFFERMAX] = { '\x00' };
 
+	rectangle* dimensions;
 	posxy* _null;
 	posxy* _endline;
-
-
 	Ball* ball;
 	Paddle* player;
 	ConsoleSettings* Console;
 
 public:
-	BufferStream(rectangle* _border, rectangle* _gameboard,
-		char borderDesign, Ball* _Ball, Paddle* _Player,
-		ConsoleSettings* _Console);
+	
+	BufferStream(
+		_Ty borderDesign,
+		Ball* _Ball,
+		Paddle* _Player,
+		ConsoleSettings* _Console,
+		rectangle* _Dimensions
+	);
+
 	~BufferStream();
 
-	void PrintBuffer(rectangle* _dimensions);
+	void buffer_printf(
+		_Ty mtrx[][BUFFERMAX]
+	);
 
-	void EmptyFullBuffer();
+	void print_null_buffer();
 
-	void CreateEmptyBuffer();
+	void empty_buffer(
+		_Ty mtrx[][BUFFERMAX]
+	);
+
 	void CreateBorder();
 	void PrintBorder();
 	
@@ -58,8 +69,15 @@ private:
 	void LoadBricks();
 
 public:
-	inline char ScanBuffer(int& _col, int& _row) const
+	inline char buffer_scanf(
+		int& _col, 
+		int& _row
+	) const
 	{ return prevBuffer[_col][_row]; }
 
-	void SetBuffer(int& _col, int& _row, const char& _val);
+	void set_buffer(
+		int& _col, 
+		int& _row, 
+		const char& _val
+	);
 };

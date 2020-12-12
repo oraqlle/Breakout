@@ -1,20 +1,27 @@
 #include "..\headers\BufferStream.h"
 
-BufferStream::BufferStream(rectangle* _border, rectangle* _gameboard, 
-	char borderDesign, Ball* _Ball, Paddle* _Player, 
-	ConsoleSettings* _Console)
+#define TEMPLATE template<class _Ty>
+
+template<class _Ty>
+BufferStream<_Ty>::BufferStream(
+	_Ty borderDesign, 
+	Ball* _Ball, 
+	Paddle* _Player, 
+	ConsoleSettings* _Console, 
+	rectangle* _Dimensions
+)
 	: c_border(borderDesign)
 {
 	init = false;
 
 	// Game Sizes
-	_Border = _border;
-	_Gameboard = _gameboard;
-	_BrickSize = new rectangle{ (_Border->w - 5), (_Border->h - 19) };
+	dimensions = _Dimensions;
+	max_height = dimensions->h;
+	max_width = dimensions->w;
 
 	// Text Positions
 	_null = new posxy{ 0, 0 };
-	_endline = new posxy{ 0, (_Border->h + 1) };
+	_endline = new posxy{ 0, (_Dimensions->h + 1) };
 
 	ball = _Ball;
 	player = _Player;
@@ -22,59 +29,55 @@ BufferStream::BufferStream(rectangle* _border, rectangle* _gameboard,
 }
 
 // Destructor
-BufferStream::~BufferStream()
+template<class _Ty>
+BufferStream<_Ty>::~BufferStream()
 {
-	delete _Border, _Gameboard, _BrickSize, _null, _endline;
-	delete ball, player, Console;
+	delete dimensions, _null, _endline, ball, player, Console;
 }
 
-void BufferStream::PrintBuffer(rectangle* _dimensions)
+
+template<class _Ty>
+void BufferStream<_Ty>::buffer_printf(
+	_Ty mtrx[][BUFFERMAX]
+)
 {
-	for (int i = 0; i < _dimensions->h; i++)
-		for (int j = 0; j < _dimensions->w; j++)
+	for (int row = 0; row < max_height; row++)
+		for (int column = 0; column < max_width; column++)
 		{
-			char z = _buffer[j][i];
-			printf("%c", z);
+			_Ty z = mtrx[column][row];
+			printf("%")
 		}
 }
 
-// Creates the Empty Buffer for Pause Screen
-void BufferStream::CreateEmptyBuffer()
-{
-	for (int row = 0; row < _Gameboard->h; row++)
-	{
-		for (int column = 0; column < _Gameboard->w; column++)
-		{
-			mainBuffer[column][row] = { '\x20' };
-		}
-	}
-}
 
 // Prints the Empty Buffer
-void BufferStream::PrintEmptyBuffer()
+template<class _Ty>
+void BufferStream<_Ty>::print_null_buffer()
 {
-	for (int row = 0; row < _Gameboard->h; row++)
-		for (int column = 0; column < _Gameboard->w; column++)
+	for (int row = 0; row < dimensions->h; row++)
+		for (int column = 0; column < dimensions->w; column++)
 		{
-			char z = emptyBuffer[column][row];
+			char z = null_buffer[column][row];
 			printf("%c", z);
 		}
 }
 
-// Emptying Buffers
-void BufferStream::EmptyFullBuffer()
+
+// Creates the Empty Buffer for Pause Screen
+template<class _Ty>
+void BufferStream<_Ty>::empty_buffer(
+	_Ty mtrx[][BUFFERMAX]
+)
 {
-	for (int row = 0; row < _Border->h; row++)
-	{
-		for (int column = 0; column < (_Border->w - 1); column++)
-		{
-			_buffer[column][row] = { '\x20' };
-		}
-	}
+	for (int row = 0; row < max_height; row++)
+		for (int column = 0; column < max_width; column++)
+			buffer[column][row] = { '\x20' };
 }
 
+
 // Clears only the game buffer
-void BufferStream::ClearGameBuffer()
+template<class _Ty>
+void BufferStream<_Ty>::ClearGameBuffer()
 {
 	for (int row = 0; row < _Gameboard->h; row++)
 	{
@@ -85,8 +88,10 @@ void BufferStream::ClearGameBuffer()
 	}
 }
 
+
 // Creates the border buffer
-void BufferStream::CreateBorder()
+template<class _Ty>
+void BufferStream<_Ty>::CreateBorder()
 {
 	for (int column = 0; column < (_Border->w - 1); column++)
 	{
@@ -117,8 +122,10 @@ void BufferStream::CreateBorder()
 	}
 }
 
+
 // Creates the main game buffer
-void BufferStream::GameBuffer()
+template<class _Ty>
+void BufferStream<_Ty>::GameBuffer()
 {
 	int ballX = ball->getX();
 	int ballY = ball->getY();
@@ -223,16 +230,20 @@ void BufferStream::GameBuffer()
 	}
 }
 
+
 // Creates the bricks in the main buffer
-void BufferStream::CreateBricks()
+template<class _Ty>
+void BufferStream<_Ty>::CreateBricks()
 {
 	for (int i = 1; i < _BrickSize->h; i++)
 		for (int j = 2; j < _BrickSize->w; j++)
 			mainBuffer[j][i] = { '#' };
 }
 
+
 // Loads the bricks
-void BufferStream::LoadBricks()
+template<class _Ty>
+void BufferStream<_Ty>::LoadBricks()
 {
 	for (int i = 1; i < _BrickSize->h; i++)
 		for (int j = 2; j < _BrickSize->w; j++)
@@ -240,15 +251,19 @@ void BufferStream::LoadBricks()
 				mainBuffer[j][i] = prevBuffer[j][i];
 }
 
+
 // Sets a value to the main game buffer and the bricks buffer
-void BufferStream::SetBuffer(int& _col, int& _row, const char& _val)
+template<class _Ty>
+void BufferStream<_Ty>::set_buffer(int& _col, int& _row, const char& _val)
 {
 	mainBuffer[_col][_row] = { _val };
 	prevBuffer[_col][_row] = { _val };
 }
 
+
 // Printing Buffers
-void BufferStream::PrintBorder()
+template<class _Ty>
+void BufferStream<_Ty>::PrintBorder()
 {
 	CreateBorder();
 	for (int row = 0; row < _Border->h; row++)
@@ -261,8 +276,10 @@ void BufferStream::PrintBorder()
 	}
 }
 
+
 // Prints only the game buffer
-void BufferStream::PrintGameBuffer()
+template<class _Ty>
+void BufferStream<_Ty>::PrintGameBuffer()
 {
 	GameBuffer();
 

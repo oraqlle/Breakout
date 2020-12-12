@@ -1,5 +1,6 @@
 #pragma once
 #include "..\include\include.h"
+#include <vector>
 
 class GameManager
 {
@@ -18,6 +19,7 @@ private:
 
 	rectangle* _Border;
 	rectangle* _Gameboard;
+	rectangle* _Bricks;
 
 	posxy* _null;
 	posxy* _endline;

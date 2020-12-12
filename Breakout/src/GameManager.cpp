@@ -28,6 +28,7 @@ GameManager::GameManager(
 	// Game Sizes
 	_Border = new rectangle{ w, h };
 	_Gameboard = new rectangle{ (w - 3), (h - 2) };
+	_Bricks = new rectangle{ (_Border->w - 5), (_Border->h - 19) };
 
 	// Ball and Player Positions
 	_StartPos = new posxy{ ((_Gameboard->w / 2) - 13), (_Gameboard->h - 3) };
