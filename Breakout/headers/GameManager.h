@@ -114,6 +114,8 @@ private:
 		int& playerX, 
 		int& playerY
 	);
+
+	void _Init_();
 	void Input();
 	void PauseInput();
 	void ClearPause();

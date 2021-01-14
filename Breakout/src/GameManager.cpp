@@ -111,10 +111,7 @@ GameManager::~GameManager()
 void GameManager::ScoreUp()
 {
 	score += 10;
-	xcon::set_curser(*_ScorePos);
-	xcon::text_colour(BLUE);
-	printf("Score: %d | High Score: %d", score, highscore);
-
+	xcon::f_console_print(*_ScorePos, BLUE, "Score: %d | High Score: %d", score, highscore);
 	HighScore(score);
 }
 
@@ -127,76 +124,23 @@ void GameManager::HighScore(
 }
 
 // Runs when the player loses or quits
-void GameManager::GameOver()
-{
-	//Buffer->PrintGameBuffer();
-
-	xcon::console_print(*_GameOver, RED, "Game Over!");
-
-	xcon::console_print(*_PlayAgain, GREEN, "Play Again");
-
-	xcon::console_print(*_YesNo, WHITE, "[Y/N]: ");
-
-	char playAgain;
-	#pragma warning(suppress : 4996)
-	int temp = scanf("%c", &playAgain);
-
-	//Restart(playAgain);
-}
-
-// Dispays the Controls
-void GameManager::ControlMenu()
-{
-	xcon::console_print(*_ControlText, YELLOW, "Controls:");
-
-	xcon::console_print(*_Line2, YELLOW, "------------");
-
-	xcon::console_print(*_aLeft, CYAN, "a - Moves Paddle Left");
-
-	xcon::console_print(*_dRight, CYAN, "d - Moves Paddle Right");
-
-	xcon::console_print(*_ePause, CYAN, "e - Pause Game");
-
-	xcon::console_print(*_qQuit, CYAN, "q - Quit Game");
-
-	xcon::set_curser(*_endline);
-}
-
-void GameManager::ClearPause()
-{
-	xcon::console_print(*_PauseText, BLACK, "Game Paused:");
-
-	xcon::console_print(*_Line1, BLACK, "------------");
-
-	xcon::console_print(*_Continue, BLACK, ">> Continue (E)");
-
-	xcon::console_print(*_Restart, BLACK, ">> Restart (R)");
-
-	xcon::console_print(*_Quit, BLACK, ">> Quit (Q)");
-
-	xcon::set_curser(*_endline);
-}
-
-//void GameManager::Pause()
+//void GameManager::GameOver()
 //{
-//	while (pause)
-//	{
+//	//Buffer->PrintGameBuffer();
 //
-//		xcon::console_print(*_PauseText, YELLOW, "Game Paused:");
+//	xcon::console_print(*_GameOver, RED, "Game Over!");
 //
-//		xcon::console_print(*_Line1, YELLOW, "------------");
+//	xcon::console_print(*_PlayAgain, GREEN, "Play Again");
 //
-//		xcon::console_print(*_Continue, WHITE, ">> Continue (E)");
+//	xcon::console_print(*_YesNo, WHITE, "[Y/N]: ");
 //
-//		xcon::console_print(*_Restart, WHITE, ">> Restart (R)");
+//	char playAgain;
+//	#pragma warning(suppress : 4996)
+//	int temp = scanf("%c", &playAgain);
 //
-//		xcon::console_print(*_Quit, WHITE, ">> Quit (Q)");
-//
-//		xcon::set_curser(*_endline);
-//	
-//		//PauseInput();
-//	}
+//	//Restart(playAgain);
 //}
+
 
 // Checks Buffer if their are Bricks at the Ball's location
 void GameManager::BrickCollision(
@@ -288,7 +232,7 @@ void GameManager::Input()
 		if (current == 'e' || current == 'E')
 		{
 			pause = true;
-			//Pause();
+			quit_game = true;
 		}
 	}
 }
@@ -369,10 +313,10 @@ void GameManager::ControlsMenu(colour_t val)
 	xcon::console_print(((_Screen->w / 2) - 4), (_Screen->h - 18), val, "Controls:");
 	xcon::console_print(((_Screen->w / 2) - 14), (_Screen->h - 17), val, "-----------------------------");
 
-	xcon::console_print(((_Screen->w / 2) - 7), (_Screen->h - 16), val, "Move Left   (A)");
-	xcon::console_print(((_Screen->w / 2) - 7), (_Screen->h - 15), val, "Move Right  (D)");
-	xcon::console_print(((_Screen->w / 2) - 7), (_Screen->h - 14), val, "Pause       (E)");
-	xcon::console_print(((_Screen->w / 2) - 7), (_Screen->h - 13), val, "Quit Game   (Q)");
+	xcon::console_print(((_Screen->w / 2) - 7), (_Screen->h - 16), val, "Move Left           (A)");
+	xcon::console_print(((_Screen->w / 2) - 7), (_Screen->h - 15), val, "Move Right          (D)");
+	xcon::console_print(((_Screen->w / 2) - 7), (_Screen->h - 14), val, "Pause               (E)");
+	xcon::console_print(((_Screen->w / 2) - 11), (_Screen->h - 13), val, "Quit Current Game   (Q)");
 
 	xcon::console_print(((_Screen->w / 2) - 14), (_Screen->h - 10), val, "-----------------------------");
 	xcon::console_print(((_Screen->w / 2) - 5), (_Screen->h - 7), val, "Return  (X)");
@@ -424,7 +368,7 @@ void GameManager::PauseMenu(colour_t val)
 
 	xcon::console_print(((_Screen->w / 2) - 14), ((_Screen->h / 2) + 5), val, "-----------------------------");
 	xcon::console_print(((_Screen->w / 2) - 10), ((_Screen->h / 2) + 6), val, "Quit to Main Menu (X)");
-	xcon::console_print(((_Screen->w / 2) - 7), ((_Screen->h / 2) + 7), val, "Quit Game (Q)");
+	xcon::console_print(((_Screen->w / 2) - 11), ((_Screen->h / 2) + 7), val, "Quit Current Game (Q)");
 
 	if (_kbhit())
 	{
@@ -467,11 +411,18 @@ void GameManager::GameWindow(colour_t val)
 
 }
 
+void GameManager::_Init_()
+{
+
+}
+
 
 // Main Runtime method
 void GameManager::Run()
 {
 	xcon::clear_console();
+
+	_Init_();
 
 	do
 	{				
