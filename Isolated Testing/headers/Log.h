@@ -3,19 +3,13 @@
 #include <string>
 
 template<typename ... Args>
-class Log
-{
-private:
-
-public:
-	Log(
+void Log(
 		char const* const _format,
 		Args const & ... args
 	) noexcept;
-};
 
 template<typename _Ty>
-_Ty Arguments(_Ty val) noexcept { return val; }
+_Ty Argument(_Ty val) noexcept { return val; }
 
 template<typename _Ty>
-_Ty const* Arguments(std::basic_string<_Ty> const& val) noexcept { return val.c_str(); }
+_Ty const* Argument(std::basic_string<_Ty> const& val) noexcept { return val.c_str(); }

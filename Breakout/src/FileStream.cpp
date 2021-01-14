@@ -131,3 +131,47 @@ int FileStream::LoadFile(
 	fclose(_fptr);
 	return _size;
 }
+
+int FileStream::LoadFile(
+	FILE* _fptr, 
+	cstring _fname, 
+	rectangle* _dimensions
+)
+{
+	int _size = 0;
+
+	#pragma warning(suppress : 4996)
+	_fptr = fopen(_fname, "r");
+
+	#ifndef TESTLOG
+	{
+		if (_fptr == NULL)
+			perror("Error has Occured! File Cannot Be Opened");
+		else
+		{
+			printf("File Opened Successfully!\n");
+
+			for (int i = 0; i < _dimensions->h; i++)
+				for (int j = 0; j < _dimensions->w; j++)
+				{
+					int temp = fgetc(_fptr);
+					Buffer->_buffer[j][i] = (char)temp;
+					_size++;
+				}
+		}
+	}
+	#else
+		{
+			for (int i = 0; i < _dimensions->h; i++)
+				for (int j = 0; j < _dimensions->w; j++)
+				{
+					int temp = fgetc(_fptr);
+					Buffer->_buffer[j][i] = (char)temp;
+					_size++;
+				}
+		}
+	#endif /* TESTLOG */
+
+	fclose(_fptr);
+	return _size;
+}

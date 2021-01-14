@@ -1,10 +1,10 @@
 #include "..\headers\Log.h"
 
 template<typename ... Args>
-Log<Args...>::Log(
+void Log(
 	char const* const _format,
 	Args const & ... args
 ) noexcept
 {
-	printf(_format, Argumants(args) ...)
+	printf(_format, Argument(args) ...);
 }

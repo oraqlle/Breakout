@@ -1,7 +1,5 @@
 #include "..\headers\BufferStream.h"
 
-#define TEMPLATE template<class _Ty>
-
 template<class _Ty>
 BufferStream<_Ty>::BufferStream(
 	_Ty borderDesign, 
