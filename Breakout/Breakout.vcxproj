@@ -158,8 +158,6 @@
     <ClCompile Include="src\FileStream.cpp" />
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\Ball.cpp" />
-    <ClCompile Include="src\BufferStream.cpp" />
-    <ClCompile Include="src\ConsoleSettings.cpp" />
     <ClCompile Include="src\Paddle.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
@@ -179,13 +177,8 @@
     <ClInclude Include="headers\defines.h" />
     <ClInclude Include="headers\FileStream.h" />
     <ClInclude Include="headers\Ball.h" />
-    <ClInclude Include="headers\BufferStream.h" />
-    <ClInclude Include="headers\ConsoleSettings.h" />
-    <ClInclude Include="headers\Direction.h" />
     <ClInclude Include="headers\GameManager.h" />
     <ClInclude Include="headers\Paddle.h" />
-    <ClInclude Include="headers\posxy.h" />
-    <ClInclude Include="headers\rectangle.h" />
     <ClInclude Include="include\include.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

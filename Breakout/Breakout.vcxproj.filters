@@ -21,9 +21,6 @@
     <ClCompile Include="src\Paddle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ConsoleSettings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Ball.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -33,15 +30,9 @@
     <ClCompile Include="src\FileStream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\BufferStream.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\Ball.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\ConsoleSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\FileStream.h">
@@ -53,22 +44,10 @@
     <ClInclude Include="headers\Paddle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="headers\rectangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\posxy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\Direction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\include.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\defines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\BufferStream.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
