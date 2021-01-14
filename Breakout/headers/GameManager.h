@@ -8,18 +8,23 @@ private:
 	int score;
 	int highscore;
 
-	bool run;
-	bool InStartMenu;
-	bool PressedStart;
-	bool restartKey;
-	bool endgame;
-	bool pause;
-	bool fromPauseMenu;
-	bool quit;
+	int s_columns, s_rows;
 
-	core::rectangle<size_t>* _Border;
-	core::rectangle<size_t>* _Gameboard;
-	core::rectangle<size_t>* _Bricks;
+	bool runtime;
+	bool main_menu;
+	//bool PressedStart;
+	//bool restartKey;
+	bool c_menu;
+	bool l_menu;
+	bool pause;
+	bool post_game;
+	//bool fromPauseMenu;
+	bool quit_game;
+
+	core::rectangle<int>* _Screen;
+	core::rectangle<int>* _Border;
+	core::rectangle<int>* _Gameboard;
+	core::rectangle<int>* _Bricks;
 
 	core::posxy* _null;
 	core::posxy* _endline;
@@ -52,11 +57,11 @@ private:
 	core::posxy* _BallStart;
 
 	// File Pointers
-	FILE* fTitle;
+	/*FILE* fTitle;
 	FILE* fTemp;
 	FILE* fBaseLevel;
 	FILE* fLevel_1;
-	FILE* fHighScore;
+	FILE* fHighScore;*/
 
 	//File Names
 	cstring nTitle;
@@ -67,8 +72,12 @@ private:
 
 	Ball* ball;
 	Paddle* player;
-	core::Matrix<char>* Buffer;
-	FileStream* fstream;
+	//FileStream* fstream;
+
+	core::Matrix<char>* Screen;
+	core::Matrix<char>* Border;
+	core::Matrix<char>* GameBuff;
+	core::Matrix<char>* Bricks;
 
 
 public:
@@ -93,7 +102,7 @@ private:
 		const char& _key
 	);
 	void Start();
-	void Pause();
+	//void Pause();
 
 	void BrickCollision(
 		int& ballX, 
@@ -110,6 +119,13 @@ private:
 	void ClearPause();
 	void ControlMenu();
 	void Logic();
+
+	void MainMenu(colour_t val);
+	void ControlsMenu(colour_t val);
+	void LeaderboardMenu(colour_t val);
+	void PauseMenu(colour_t val);
+	void EndScreen(colour_t val);
+	void GameWindow(colour_t val);
 
 public:
 	void Run();

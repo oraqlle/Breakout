@@ -64,7 +64,7 @@ void Ball::Move()
 		ballPos->y--;
 		break;
 
-	case eDir::DOWN:
+	case core::eDir::DOWN:
 		ballPos->y++;
 		break;
 
