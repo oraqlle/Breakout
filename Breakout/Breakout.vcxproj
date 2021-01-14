@@ -96,6 +96,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>"C:\Core-Libraries\Cpp-Libs\core\include";"C:\Core-Libraries\Cpp-Libs\MPL\include";"C:\Core-Libraries\Cpp-Libs\xcon\include"</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -112,6 +113,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>"C:\Core-Libraries\Cpp-Libs\core\include";"C:\Core-Libraries\Cpp-Libs\MPL\include";"C:\Core-Libraries\Cpp-Libs\xcon\include"</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,6 +130,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>"C:\Core-Libraries\Cpp-Libs\core\include";"C:\Core-Libraries\Cpp-Libs\MPL\include";"C:\Core-Libraries\Cpp-Libs\xcon\include"</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,6 +147,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>"C:\Core-Libraries\Cpp-Libs\core\include";"C:\Core-Libraries\Cpp-Libs\MPL\include";"C:\Core-Libraries\Cpp-Libs\xcon\include"</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -155,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\Core-Libraries\Cpp-Libs\xcon\src\xconsole.cpp" />
     <ClCompile Include="src\FileStream.cpp" />
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\Ball.cpp" />
@@ -174,7 +179,6 @@
     <Text Include="persistant\title.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="headers\defines.h" />
     <ClInclude Include="headers\FileStream.h" />
     <ClInclude Include="headers\Ball.h" />
     <ClInclude Include="headers\GameManager.h" />

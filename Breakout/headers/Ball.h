@@ -1,9 +1,8 @@
 #pragma once
 #include <Windows.h>
 #include <time.h>
-#include "Direction.h"
-#include "posxy.h"
-#include "rectangle.h"
+#include "direction.h"
+#include "containers.h"
 
 class Ball
 {
@@ -11,22 +10,22 @@ private:
 	int originalPosX;
 	int originalPosY;
 
-	eDir ballDir;
-	eDir resetBallDir;
+	core::eDir ballDir;
+	core::eDir resetBallDir;
 
-	posxy* ballPos;
+	core::posxy* ballPos;
 
 public:
-	Ball(posxy* _BallStart);
+	Ball(core::posxy* _BallStart);
 	void Reset();
 
 	void randomDir();
-	inline void chanegDir(eDir d) { ballDir = d; }
+	inline void chanegDir(core::eDir d) { ballDir = d; }
 
 	inline int getX() { return ballPos->x; }
 	inline int getY() { return ballPos->y; }
-	inline posxy getPos() { return (*ballPos); }
-	inline eDir getDirection() { return ballDir; }
+	inline core::posxy getPos() { return (*ballPos); }
+	inline core::eDir getDirection() { return ballDir; }
 
 	void Move();
 };

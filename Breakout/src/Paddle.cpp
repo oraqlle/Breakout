@@ -1,6 +1,6 @@
 #include "..\headers\Paddle.h"
 
-Paddle::Paddle(posxy* _paddleStart)
+Paddle::Paddle(core::posxy* _paddleStart)
 {
 	paddlePos = _paddleStart;
 	originalPosX = _paddleStart->x;

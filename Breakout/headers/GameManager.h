@@ -17,39 +17,39 @@ private:
 	bool fromPauseMenu;
 	bool quit;
 
-	rectangle* _Border;
-	rectangle* _Gameboard;
-	rectangle* _Bricks;
+	core::rectangle<size_t>* _Border;
+	core::rectangle<size_t>* _Gameboard;
+	core::rectangle<size_t>* _Bricks;
 
-	posxy* _null;
-	posxy* _endline;
-	posxy* _midpoint;
+	core::posxy* _null;
+	core::posxy* _endline;
+	core::posxy* _midpoint;
 
-	posxy* _Title;
-	posxy* _StartText1;
+	core::posxy* _Title;
+	core::posxy* _StartText1;
 
-	posxy* _ScorePos;
-	posxy* _StartText2;
+	core::posxy* _ScorePos;
+	core::posxy* _StartText2;
 
-	posxy* _GameOver;
-	posxy* _PlayAgain;
-	posxy* _YesNo;
+	core::posxy* _GameOver;
+	core::posxy* _PlayAgain;
+	core::posxy* _YesNo;
 
-	posxy* _ControlText;
-	posxy* _Line2;
-	posxy* _aLeft;
-	posxy* _dRight;
-	posxy* _ePause;
-	posxy* _qQuit;
+	core::posxy* _ControlText;
+	core::posxy* _Line2;
+	core::posxy* _aLeft;
+	core::posxy* _dRight;
+	core::posxy* _ePause;
+	core::posxy* _qQuit;
 
-	posxy* _PauseText;
-	posxy* _Line1;
-	posxy* _Continue;
-	posxy* _Restart;
-	posxy* _Quit;
+	core::posxy* _PauseText;
+	core::posxy* _Line1;
+	core::posxy* _Continue;
+	core::posxy* _Restart;
+	core::posxy* _Quit;
 
-	posxy* _StartPos;
-	posxy* _BallStart;
+	core::posxy* _StartPos;
+	core::posxy* _BallStart;
 
 	// File Pointers
 	FILE* fTitle;
@@ -67,8 +67,7 @@ private:
 
 	Ball* ball;
 	Paddle* player;
-	ConsoleSettings* Console;
-	BufferStream* Buffer;
+	core::Matrix<char>* Buffer;
 	FileStream* fstream;
 
 

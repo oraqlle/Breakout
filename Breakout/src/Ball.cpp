@@ -1,6 +1,6 @@
 #include "..\headers\Ball.h"
 
-Ball::Ball(posxy* _ballStart)
+Ball::Ball(core::posxy* _ballStart)
 {
 	srand((unsigned int)time(NULL));
 
@@ -8,59 +8,59 @@ Ball::Ball(posxy* _ballStart)
 	originalPosY = _ballStart->y;
 	ballPos = _ballStart;
 
-	ballDir = eDir::STOP;
-	resetBallDir = eDir::STOP;
+	ballDir = core::eDir::STOP;
+	resetBallDir = core::eDir::STOP;
 }
 
 void Ball::Reset()
 {
 	ballPos->x = originalPosX;
 	ballPos->y = originalPosY;
-	ballDir = eDir::STOP;	
+	ballDir = core::eDir::STOP;	
 }
 
 void Ball::randomDir()
 {
-	if (ballDir == eDir::UP)
-		ballDir = eDir::DOWN;
-	else if (ballDir == eDir::UPLEFT)
-		ballDir = eDir::DOWNLEFT;
-	else if (ballDir == eDir::UPRIGHT)
-		ballDir = eDir::DOWNRIGHT;
+	if (ballDir == core::eDir::UP)
+		ballDir = core::eDir::DOWN;
+	else if (ballDir == core::eDir::UPLEFT)
+		ballDir = core::eDir::DOWNLEFT;
+	else if (ballDir == core::eDir::UPRIGHT)
+		ballDir = core::eDir::DOWNRIGHT;
 }
 
 void Ball::Move()
 {
 	switch (ballDir)
 	{
-	case eDir::STOP:
+	case core::eDir::STOP:
 		break;
 
-	case eDir::LEFT:
+	case core::eDir::LEFT:
 		ballPos->x--;
 		break;
 
-	case eDir::RIGHT:
+	case core::eDir::RIGHT:
 		ballPos->x++;
 		return;
 
-	case eDir::UPLEFT:
+	case core::eDir::UPLEFT:
 		ballPos->x--, ballPos->y--;
 		break;
 
-	case eDir::DOWNLEFT:
+	case core::eDir::DOWNLEFT:
 		ballPos->x--; ballPos->y++;
 		break;
 
-	case eDir::UPRIGHT:
+	case core::eDir::UPRIGHT:
 		ballPos->x++; ballPos->y--;
 		break;
 
-	case eDir::DOWNRIGHT:
+	case core::eDir::DOWNRIGHT:
 		ballPos->x++; ballPos->y++;
 		break;
 
-	case eDir::UP:
+	case core::eDir::UP:
 		ballPos->y--;
 		break;
 

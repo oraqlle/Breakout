@@ -4,13 +4,13 @@
 #include <conio.h>
 #include <time.h>
 
-#include "..\headers\ConsoleSettings.h"
-#include "..\headers\BufferStream.h"
-#include "..\headers\Ball.h"
-#include "..\headers\Paddle.h"
+#include "vals_core.h"
+
+#include "mpl.h"
+#include "xconsole.h"
+#include "containers.h"
+#include "matrix.h"
 #include "..\headers\FileStream.h"
 
-#include "..\headers\posxy.h"
-#include "..\headers\rectangle.h"
-
-#include "..\headers\defines.h"
+#include "..\headers\Ball.h"
+#include "..\headers\Paddle.h"

@@ -8,5 +8,7 @@ int main()
 	//Runtime.PrintTest();
 	//Runtime.Test();
 
+	xcon::pause();
+
 	return 0;
 }
