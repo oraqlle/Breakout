@@ -10,6 +10,7 @@ private:
 
 	int s_columns, s_rows;
 
+	bool init;
 	bool runtime;
 	bool main_menu;
 	//bool PressedStart;
@@ -31,30 +32,12 @@ private:
 	core::posxy* _midpoint;
 
 	core::posxy* _Title;
-	core::posxy* _StartText1;
-
 	core::posxy* _ScorePos;
-	core::posxy* _StartText2;
 
-	core::posxy* _GameOver;
-	core::posxy* _PlayAgain;
-	core::posxy* _YesNo;
-
-	core::posxy* _ControlText;
-	core::posxy* _Line2;
-	core::posxy* _aLeft;
-	core::posxy* _dRight;
-	core::posxy* _ePause;
-	core::posxy* _qQuit;
-
-	core::posxy* _PauseText;
-	core::posxy* _Line1;
-	core::posxy* _Continue;
-	core::posxy* _Restart;
-	core::posxy* _Quit;
-
-	core::posxy* _StartPos;
+	core::posxy* _PlayerStart;
 	core::posxy* _BallStart;
+	core::posxy* _StartText;
+	core::posxy* _BricksStart;
 
 	// File Pointers
 	/*FILE* fTitle;
@@ -94,16 +77,6 @@ private:
 		int& _score
 	);
 
-	void StartMenu();
-
-	void GameOver();
-	void Restart();
-	void Restart(
-		const char& _key
-	);
-	void Start();
-	//void Pause();
-
 	void BrickCollision(
 		int& ballX, 
 		int& ballY
@@ -116,11 +89,16 @@ private:
 	);
 
 	void _Init_();
+	void CreateBorder();
+	void CreateBricks();
+	void LoadEntities();
+
 	void Input();
-	void PauseInput();
-	void ClearPause();
-	void ControlMenu();
+	void _Init_Input();
 	void Logic();
+	void _Init_Print(colour_t val);
+	void PrintGame(colour_t val);
+
 
 	void MainMenu(colour_t val);
 	void ControlsMenu(colour_t val);

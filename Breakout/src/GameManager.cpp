@@ -15,6 +15,7 @@ GameManager::GameManager(
 	const int oset = w + 5;
 
 	// Control booleans
+	init = false;
 	runtime = true;
 	main_menu = true;
 	//PressedStart;
@@ -44,40 +45,23 @@ GameManager::GameManager(
 	_Border = new core::rectangle<int>{ w, h };
 	_Gameboard = new core::rectangle<int>{ (w - 3), (h - 2) };
 	_Bricks = new core::rectangle<int>{ (w - 5), (h - 19) };
-
-	// Ball and Player Positions
-	_StartPos = new core::posxy{ ((_Gameboard->w / 2) - 13), (_Gameboard->h - 3) };
-	_BallStart = new core::posxy{ (_Gameboard->w / 2), (_Gameboard->h - 6) };
 	
 	// Endpoints and Midpoint
 	_null = new core::posxy{ 0, 0 };
 	_endline = new core::posxy{ 0, (_Border->h + 1) };
 	_midpoint = new core::posxy{ (w / 2), (h / 2) };
 
+	// Ball and Player Positions
+	_PlayerStart = new core::posxy{ ((_Gameboard->w / 2) - 13), (_Gameboard->h - 3) };
+	_BallStart = new core::posxy{ (_Gameboard->w / 2), (_Gameboard->h - 6) };
+	_StartText = new core::posxy{ oset, (h - 23) };
+	_BricksStart = new core::posxy{ 2, 2 };
+
 	// Start Menu Text Positions
 	_Title = new core::posxy{ 4, 3 };
-	_StartText1 = new core::posxy{ 11, (h / 2) };
 
 	// Text Positions
-	_ScorePos = new core::posxy{ oset, (h- 24) };
-	_StartText2 = new core::posxy{ oset, (h - 23) };
-
-	_GameOver = new core::posxy{ oset, (h - 23) };
-	_PlayAgain = new core::posxy{ oset, (h - 22) };
-	_YesNo = new core::posxy{ oset, (h - 21) };
-
-	_ControlText = new core::posxy{ oset, (h - 19) };
-	_Line2 = new core::posxy{ oset, (h - 18) };
-	_aLeft = new core::posxy{ oset, (h - 17) };
-	_dRight = new core::posxy{ oset, (h - 16) };
-	_ePause = new core::posxy{ oset, (h - 15) };
-	_qQuit = new core::posxy{ oset, (h - 14) };
-
-	_PauseText = new core::posxy{ oset, (h - 12) };
-	_Line1 = new core::posxy{ oset, (h - 11) };
-	_Continue = new core::posxy{ oset, (h - 10) };
-	_Restart = new core::posxy{ oset, (h - 9) };
-	_Quit = new core::posxy{ oset, (h - 8) };
+	_ScorePos = new core::posxy{ oset, (h - 24) };
 
 	//File Names - "C:\Dev\MyGames\Breakout\Breakout\disc\title.txt"
 	nTitle = "./disc/title.txt";
@@ -88,23 +72,20 @@ GameManager::GameManager(
 
 	// External Objects
 	ball = new Ball(_BallStart);
-	player = new Paddle(_StartPos);
+	player = new Paddle(_PlayerStart);
 	//fstream = new FileStream(Buffer);
 
 	Screen = new core::Matrix<char>(100, 100);
 	Border = new core::Matrix<char>(w, h);
-	GameBuff = new core::Matrix<char>( (w - 3), (h - 2) );
-	Bricks = new core::Matrix<char>( (w - 5), (h - 19) );
+	GameBuff = new core::Matrix<char>( _Gameboard->w, _Gameboard->h);
+	Bricks = new core::Matrix<char>(_Bricks->w, _Border->h);
 }
 
 // Destructor
 GameManager::~GameManager()
 {
-	delete _Border, _Gameboard, _StartPos, _BallStart, _null, _endline, 
-		_ScorePos, _StartText1, _StartText2, _GameOver, _PlayAgain, _YesNo, 
-		_ControlText, _Line2, _aLeft, _dRight, _ePause, _qQuit, 
-		_PauseText, _Line1, _Continue, _Restart, _Quit, 
-		ball, player, Screen, Border, Bricks/*, fstream*/;
+	delete _Border, _Gameboard, _PlayerStart, _BallStart, _null, _endline,
+		_ScorePos, ball, player, Screen, Border, Bricks/*, fstream*/;
 }
 
 // Score Tracker
@@ -209,6 +190,16 @@ void GameManager::Input()
 	{
 		char current = _getch();
 
+		while (!init)
+		{
+			if ((current == '\x20') && (ball->getDirection() == core::eDir::STOP))
+			{
+				ball->chanegDir(core::eDir::DOWN);
+				ball->Move();
+				init = true;
+			}
+		}
+
 		if (current == 'a' || current == 'A')
 			if (PlayerX > 0)
 				player->moveLeft();
@@ -236,6 +227,7 @@ void GameManager::Input()
 		}
 	}
 }
+
 
 // Basic Logic for collisions
 void GameManager::Logic()
@@ -268,6 +260,121 @@ void GameManager::Logic()
 	if (ballX == (_Gameboard->w + 1) - _Gameboard->w)
 		ball->chanegDir(ball->getDirection() == core::eDir::UPLEFT ? core::eDir::UPRIGHT : core::eDir::DOWNRIGHT);
 }
+
+
+void GameManager::CreateBorder()
+{
+	int temp = Border->fill('\x20');
+
+	for (int column = 0; column < (_Border->w - 1); column++)
+	{
+		Border->set(column, 0, '\xB2');
+	}
+
+	for (int row = 0; row < _Border->h; row++)
+	{
+		for (int column = 0; column < (_Border->w - 1); column++)
+		{
+			if (column == 0)
+			{
+				Border->set(0, row, '\xB2');
+			}
+
+			if (column == (_Border->w - 2))
+			{
+				Border->set(column, row, '\xB2');
+				int offset = column + 1;
+				Border->set(offset, row, '\n');
+			}
+		}
+	}
+
+	for (int column = 0; column < (_Border->w - 1); column++)
+	{
+		Border->set(column, (_Border->h - 1), '\xB2');
+	}
+}
+
+
+void GameManager::CreateBricks()
+{
+	int temp = Bricks->fill('\x20');
+
+	for (int i = 1; i < _Bricks->h; i++)
+		for (int j = 2; j < _Bricks->w; j++)
+			Bricks->set(j, i, '#');
+}
+
+
+void GameManager::LoadEntities()
+{
+	int ballX = ball->getX();
+	int ballY = ball->getY();
+
+	int playerX = player->getX();
+	int playerY = player->getY();
+
+	for (int i = 0; i < _Gameboard->h; i++)
+	{
+		for (int j = 0; j < _Gameboard->w; j++)
+		{
+            if (ballX == j && ballY == i)
+				GameBuff->set(j, i, 'O');
+            else
+				GameBuff->set(j, i, '\x20');
+            
+
+            for (int Itr = 0; Itr < 27; Itr++)
+            {
+				if ((playerX == (j + Itr)) && (playerY == i))
+					GameBuff->set(j, playerY, '\xDB');
+            }
+		}
+	}
+}
+
+
+void GameManager::_Init_Print(colour_t val)
+{
+	xcon::set_curser(*_null);
+	int temp1 = Border->print("%c");
+
+	xcon::set_curser(*_BricksStart);
+	int temp2 = Bricks->print("%c");
+
+	xcon::f_console_print(*_ScorePos, BLUE, "Score: %d | High Score: %d", score, highscore);
+	xcon::console_print(*_StartText, GREEN, "Press 'Space' to Start");
+}
+
+
+void GameManager::PrintGame(colour_t val)
+{
+	xcon::console_print(*_StartText, BLACK, "Press 'Space'");
+}
+
+
+void GameManager::GameWindow(colour_t val)
+{
+	if (!init)
+	{
+		_Init_Print(val);
+		Input();
+		Logic();
+	}
+	else
+	{
+		Input();
+		Logic();
+		PrintGame(val);
+	}
+}
+
+void GameManager::_Init_()
+{
+	CreateBorder();
+	CreateBricks();
+}
+
 
 void GameManager::MainMenu(colour_t val)
 {
@@ -313,9 +420,9 @@ void GameManager::ControlsMenu(colour_t val)
 	xcon::console_print(((_Screen->w / 2) - 4), (_Screen->h - 18), val, "Controls:");
 	xcon::console_print(((_Screen->w / 2) - 14), (_Screen->h - 17), val, "-----------------------------");
 
-	xcon::console_print(((_Screen->w / 2) - 7), (_Screen->h - 16), val, "Move Left           (A)");
-	xcon::console_print(((_Screen->w / 2) - 7), (_Screen->h - 15), val, "Move Right          (D)");
-	xcon::console_print(((_Screen->w / 2) - 7), (_Screen->h - 14), val, "Pause               (E)");
+	xcon::console_print(((_Screen->w / 2) - 11), (_Screen->h - 16), val, "Move Left           (A)");
+	xcon::console_print(((_Screen->w / 2) - 11), (_Screen->h - 15), val, "Move Right          (D)");
+	xcon::console_print(((_Screen->w / 2) - 11), (_Screen->h - 14), val, "Pause               (E)");
 	xcon::console_print(((_Screen->w / 2) - 11), (_Screen->h - 13), val, "Quit Current Game   (Q)");
 
 	xcon::console_print(((_Screen->w / 2) - 14), (_Screen->h - 10), val, "-----------------------------");
@@ -359,7 +466,8 @@ void GameManager::PauseMenu(colour_t val)
 	xcon::console_print(((_Screen->w / 2) - 3), ((_Screen->h / 2) - 2), val, "Paused:");
 	xcon::console_print(((_Screen->w / 2) - 14), ((_Screen->h / 2) - 1), val, "-----------------------------");
 
-	xcon::f_console_print(((_Screen->w / 2) - 4), val, (_Screen->h / 2), "Score: %d", score);
+	//xcon::f_console_print(((_Screen->w / 2) - 4), (_Screen->h / 2), "\033[21;%dm%s\033[0m\n", aBLACK, score);
+	xcon::f_console_print(((_Screen->w / 2) - 4), (_Screen->h / 2), val, "Score: %d", score);
 
 	xcon::console_print(((_Screen->w / 2) - 5), ((_Screen->h / 2) + 1), val, "Resume (E)");
 	xcon::console_print(((_Screen->w / 2) - 8), ((_Screen->h / 2) + 2), val, "Controls Menu (C)");
@@ -396,6 +504,7 @@ void GameManager::PauseMenu(colour_t val)
 		{
 			pause = false;
 			main_menu = true;
+			init = false;
 		}
 
 		if (current == 'q' || current == 'Q')
@@ -404,16 +513,6 @@ void GameManager::PauseMenu(colour_t val)
 			runtime = false;
 		}
 	}
-}
-
-void GameManager::GameWindow(colour_t val)
-{
-
-}
-
-void GameManager::_Init_()
-{
-
 }
 
 
@@ -462,4 +561,5 @@ void GameManager::Run()
 	// Eventually, load in a Gameover screen
 	xcon::clear_console();
 	xcon::console_print("Game Over!", RED);
+
 }
