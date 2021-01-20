@@ -108,24 +108,6 @@ void GameManager::HighScore(
 	_score > highscore ? highscore = _score : NULL;
 }
 
-// Runs when the player loses or quits
-//void GameManager::GameOver()
-//{
-//	//Buffer->PrintGameBuffer();
-//
-//	xcon::console_print(*_GameOver, RED, "Game Over!");
-//
-//	xcon::console_print(*_PlayAgain, GREEN, "Play Again");
-//
-//	xcon::console_print(*_YesNo, WHITE, "[Y/N]: ");
-//
-//	char playAgain;
-//	#pragma warning(suppress : 4996)
-//	int temp = scanf("%c", &playAgain);
-//
-//	//Restart(playAgain);
-//}
-
 
 // Checks Buffer if their are Bricks at the Ball's location
 void GameManager::BrickCollision(
@@ -342,13 +324,15 @@ void GameManager::LoadEntities()
 		{
             if (ballX == j && ballY == i)
 				GameBuff->set(j, i, 'O');
+			else if (GameBuff->get(j, i) == '#')
+				continue;
             else
 				GameBuff->set(j, i, '\x20');
             
 
-            for (int Itr = 0; Itr < 27; Itr++)
+            for (int Itr = 0; Itr < 26; Itr++)
             {
-				if ((playerX == (j + Itr)) && (playerY == i))
+				if ((j == (playerX + Itr)) && (playerY == i))
 					GameBuff->set(j, playerY, '\xDB');
             }
 		}
@@ -375,6 +359,8 @@ void GameManager::_Init_Print()
 
 void GameManager::PrintGameBoard(core::Matrix<char>* buff)
 {
+	LoadEntities();
+
 	if (!border_init)
 	{
 		xcon::set_curser(*_null);
