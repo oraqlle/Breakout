@@ -11,6 +11,7 @@ private:
 	int s_columns, s_rows;
 
 	bool init;
+	bool border_init;
 	bool runtime;
 	bool main_menu;
 	//bool PressedStart;
@@ -60,6 +61,8 @@ private:
 	core::Matrix<char>* Screen;
 	core::Matrix<char>* Border;
 	core::Matrix<char>* GameBuff;
+	core::Matrix<char>* PrevGameBuff;
+	core::Matrix<char>* EntryBuff;
 	core::Matrix<char>* Bricks;
 
 
@@ -94,22 +97,26 @@ private:
 	void LoadEntities();
 
 	void Input();
-	void _Init_Input();
+	//void _Init_Input();
 	void Logic();
-	void _Init_Print(colour_t val);
-	void PrintGame(colour_t val);
+	void ClearBuffer(core::Matrix<char>* buff, core::rectangle<int>* dim);
+	//void ClearAll();
+	void _Init_Print();
+	void PrintGame();
+	void PrintGameBoard(core::Matrix<char>* buff);
+	void CopyBricks(core::Matrix<char>* buff);
 
 
 	void MainMenu(colour_t val);
 	void ControlsMenu(colour_t val);
 	void LeaderboardMenu(colour_t val);
 	void PauseMenu(colour_t val);
+	void GameWindow();
 	void EndScreen(colour_t val);
-	void GameWindow(colour_t val);
 
 public:
 	void Run();
-	void PrintTest();
-	void Test();
+	//void PrintTest();
+	//void Test();
 };
 

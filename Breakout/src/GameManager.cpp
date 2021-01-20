@@ -16,6 +16,8 @@ GameManager::GameManager(
 
 	// Control booleans
 	init = false;
+	border_init = false;
+
 	runtime = true;
 	main_menu = true;
 	//PressedStart;
@@ -78,6 +80,8 @@ GameManager::GameManager(
 	Screen = new core::Matrix<char>(100, 100);
 	Border = new core::Matrix<char>(w, h);
 	GameBuff = new core::Matrix<char>( _Gameboard->w, _Gameboard->h);
+	PrevGameBuff = new core::Matrix<char>( _Gameboard->w, _Gameboard->h);
+	EntryBuff = new core::Matrix<char>( _Gameboard->w, _Gameboard->h);
 	Bricks = new core::Matrix<char>(_Bricks->w, _Border->h);
 }
 
@@ -191,14 +195,13 @@ void GameManager::Input()
 		char current = _getch();
 
 		while (!init)
-		{
 			if ((current == '\x20') && (ball->getDirection() == core::eDir::STOP))
 			{
 				ball->chanegDir(core::eDir::DOWN);
 				ball->Move();
 				init = true;
+				xcon::console_print(*_StartText, BLACK, "Press 'Space' to Start");
 			}
-		}
 
 		if (current == 'a' || current == 'A')
 			if (PlayerX > 0)
@@ -218,12 +221,14 @@ void GameManager::Input()
 		{
 			quit_game = true;
 			post_game = true;
+			xcon::clear_console();
 		}
 
 		if (current == 'e' || current == 'E')
 		{
 			pause = true;
 			quit_game = true;
+			xcon::clear_console();
 		}
 	}
 }
@@ -296,6 +301,14 @@ void GameManager::CreateBorder()
 }
 
 
+void GameManager::ClearBuffer(core::Matrix<char>* buff, core::rectangle<int>* dim)
+{
+	for (int row = 0; row < dim->h; row++)
+		for (int column = 0; column < dim->w; column++)
+			buff->set(column, row, '\x20');
+}
+
+
 void GameManager::CreateBricks()
 {
 	int temp = Bricks->fill('\x20');
@@ -303,6 +316,15 @@ void GameManager::CreateBricks()
 	for (int i = 1; i < _Bricks->h; i++)
 		for (int j = 2; j < _Bricks->w; j++)
 			Bricks->set(j, i, '#');
+}
+
+
+void GameManager::CopyBricks(core::Matrix<char>* buff)
+{
+	for (int i = 1; i < _Bricks->h; i++)
+		for (int j = 2; j < _Bricks->w; j++)
+			if (Bricks->get(j, i) == '#')
+				buff->set(j, i, Bricks->get(j, i));
 }
 
 
@@ -334,43 +356,87 @@ void GameManager::LoadEntities()
 }
 
 
-void GameManager::_Init_Print(colour_t val)
+void GameManager::_Init_Print()
 {
-	xcon::set_curser(*_null);
-	int temp1 = Border->print("%c");
+	if (!border_init)
+	{
+		xcon::set_curser(*_null);
+		int temp1 = Border->print("%c");
+		border_init = true;
+	}
 
-	xcon::set_curser(*_BricksStart);
-	int temp2 = Bricks->print("%c");
+	CopyBricks(EntryBuff);
+	PrintGameBoard(EntryBuff);
+	//ClearBuffer(EntryBuff, _Gameboard);
 
 	xcon::f_console_print(*_ScorePos, BLUE, "Score: %d | High Score: %d", score, highscore);
-	xcon::console_print(*_StartText, GREEN, "Press 'Space' to Start");
 }
 
 
-void GameManager::PrintGame(colour_t val)
+void GameManager::PrintGameBoard(core::Matrix<char>* buff)
 {
-	xcon::console_print(*_StartText, BLACK, "Press 'Space'");
+	if (!border_init)
+	{
+		xcon::set_curser(*_null);
+		int temp1 = Border->print("%c");
+		border_init = true;
+	}
+
+	for (int row = 0; row < _Gameboard->h; row++)
+	{
+		xcon::set_curser(1, (row + 1), false);
+		for (int column = 0; column < _Gameboard->w; column++)
+		{
+			char z = buff->get(column, row);
+
+			if (z == '#')
+				xcon::f_console_print(PINK, "%c", z);
+			else if (z == 'O')
+				xcon::f_console_print(GREEN, "%c", z);
+			else 
+				xcon::f_console_print(WHITE, "%c", z);
+		}
+	}
 }
 
 
-void GameManager::GameWindow(colour_t val)
+void GameManager::PrintGame()
+{
+
+	CopyBricks(GameBuff);
+	PrintGameBoard(GameBuff);
+	ClearBuffer(GameBuff, _Gameboard);
+
+	xcon::f_console_print(*_ScorePos, BLUE, "Score: %d | High Score: %d", score, highscore);
+}
+
+
+void GameManager::GameWindow()
 {
 	if (!init)
 	{
-		_Init_Print(val);
+		xcon::console_print(*_StartText, GREEN, "Press 'Space' to Start");
+		_Init_Print();
 		Input();
 		Logic();
 	}
 	else
 	{
+		PrintGame();
 		Input();
 		Logic();
-		PrintGame(val);
 	}
 }
 
 void GameManager::_Init_()
 {
+	Screen->fill('\x20');
+	Border->fill('\x20');
+	GameBuff->fill('\x20');
+	EntryBuff->fill('\x20');
+	Bricks->fill('\x20');
+
+
 	CreateBorder();
 	CreateBricks();
 }
@@ -393,40 +459,44 @@ void GameManager::MainMenu(colour_t val)
 		{
 			main_menu = false;
 			quit_game = false;
+			xcon::clear_console();
 		}
 
 		if (current == 'c' || current == 'C')
 		{
 			main_menu = false;
 			c_menu = true;
+			xcon::clear_console();
 		}
 
 		if (current == 'v' || current == 'V')
 		{
 			main_menu = false;
 			l_menu = true;
+			xcon::clear_console();
 		}
 
 		if (current == 'x' || current == 'X')
 		{
 			main_menu = false;
 			runtime = false;
+			xcon::clear_console();
 		}
 	}
 }
 
 void GameManager::ControlsMenu(colour_t val)
 {
-	xcon::console_print(((_Screen->w / 2) - 4), (_Screen->h - 18), val, "Controls:");
-	xcon::console_print(((_Screen->w / 2) - 14), (_Screen->h - 17), val, "-----------------------------");
+	xcon::console_print(((_Screen->w / 2) - 4), (_Screen->h - 18), YELLOW, "Controls:");
+	xcon::console_print(((_Screen->w / 2) - 14), (_Screen->h - 17), YELLOW, "-----------------------------");
 
 	xcon::console_print(((_Screen->w / 2) - 11), (_Screen->h - 16), val, "Move Left           (A)");
 	xcon::console_print(((_Screen->w / 2) - 11), (_Screen->h - 15), val, "Move Right          (D)");
 	xcon::console_print(((_Screen->w / 2) - 11), (_Screen->h - 14), val, "Pause               (E)");
 	xcon::console_print(((_Screen->w / 2) - 11), (_Screen->h - 13), val, "Quit Current Game   (Q)");
 
-	xcon::console_print(((_Screen->w / 2) - 14), (_Screen->h - 10), val, "-----------------------------");
-	xcon::console_print(((_Screen->w / 2) - 5), (_Screen->h - 7), val, "Return  (X)");
+	xcon::console_print(((_Screen->w / 2) - 14), (_Screen->h - 10), YELLOW, "-----------------------------");
+	xcon::console_print(((_Screen->w / 2) - 5), (_Screen->h - 7), RED, "Return  (X)");
 
 	if (_kbhit())
 	{
@@ -436,6 +506,7 @@ void GameManager::ControlsMenu(colour_t val)
 		{
 			c_menu = false;
 			main_menu = true;
+			xcon::clear_console();
 		}
 	}
 }
@@ -444,9 +515,9 @@ void GameManager::ControlsMenu(colour_t val)
 void GameManager::LeaderboardMenu(colour_t val)
 {
 	// code that loads leaderboard from disc
-	xcon::console_print(((_Screen->w / 2) - 5 ), (_Screen->h / 2), val, "Leaderboard");
-	xcon::console_print(((_Screen->w / 2) - 14), ((_Screen->h / 2) + 1), val, "-----------------------------");
-	xcon::console_print(((_Screen->w / 2) - 5), ((_Screen->h / 2) + 2), val, "Return  (X)");
+	xcon::console_print(((_Screen->w / 2) - 5 ), (_Screen->h / 2), CYAN, "Leaderboard");
+	xcon::console_print(((_Screen->w / 2) - 14), ((_Screen->h / 2) + 1), CYAN, "-----------------------------");
+	xcon::console_print(((_Screen->w / 2) - 5), ((_Screen->h / 2) + 2), RED, "Return  (X)");
 
 	if (_kbhit())
 	{
@@ -456,6 +527,7 @@ void GameManager::LeaderboardMenu(colour_t val)
 		{
 			l_menu = false;
 			main_menu = true;
+			xcon::clear_console();
 		}
 	}
 }
@@ -463,20 +535,20 @@ void GameManager::LeaderboardMenu(colour_t val)
 
 void GameManager::PauseMenu(colour_t val)
 {
-	xcon::console_print(((_Screen->w / 2) - 3), ((_Screen->h / 2) - 2), val, "Paused:");
-	xcon::console_print(((_Screen->w / 2) - 14), ((_Screen->h / 2) - 1), val, "-----------------------------");
+	xcon::console_print(((_Screen->w / 2) - 3), ((_Screen->h / 2) - 2), YELLOW, "Paused:");
+	xcon::console_print(((_Screen->w / 2) - 14), ((_Screen->h / 2) - 1), YELLOW, "-----------------------------");
 
 	//xcon::f_console_print(((_Screen->w / 2) - 4), (_Screen->h / 2), "\033[21;%dm%s\033[0m\n", aBLACK, score);
-	xcon::f_console_print(((_Screen->w / 2) - 4), (_Screen->h / 2), val, "Score: %d", score);
+	xcon::f_console_print(((_Screen->w / 2) - 4), (_Screen->h / 2), BLUE, "Score: %d", score);
 
 	xcon::console_print(((_Screen->w / 2) - 5), ((_Screen->h / 2) + 1), val, "Resume (E)");
 	xcon::console_print(((_Screen->w / 2) - 8), ((_Screen->h / 2) + 2), val, "Controls Menu (C)");
 	xcon::console_print(((_Screen->w / 2) - 7), ((_Screen->h / 2) + 3), val, "Leaderboard (V)");
-	xcon::console_print(((_Screen->w / 2) - 7), ((_Screen->h / 2) + 4), val, "Save Game (S)");
+	xcon::console_print(((_Screen->w / 2) - 7), ((_Screen->h / 2) + 4), GREEN, "Save Game (S)");
 
-	xcon::console_print(((_Screen->w / 2) - 14), ((_Screen->h / 2) + 5), val, "-----------------------------");
-	xcon::console_print(((_Screen->w / 2) - 10), ((_Screen->h / 2) + 6), val, "Quit to Main Menu (X)");
-	xcon::console_print(((_Screen->w / 2) - 11), ((_Screen->h / 2) + 7), val, "Quit Current Game (Q)");
+	xcon::console_print(((_Screen->w / 2) - 14), ((_Screen->h / 2) + 5), YELLOW, "-----------------------------");
+	xcon::console_print(((_Screen->w / 2) - 10), ((_Screen->h / 2) + 6), RED, "Quit to Main Menu (X)");
+	xcon::console_print(((_Screen->w / 2) - 10), ((_Screen->h / 2) + 7), RED, "Quit Current Game (Q)");
 
 	if (_kbhit())
 	{
@@ -486,18 +558,22 @@ void GameManager::PauseMenu(colour_t val)
 		{
 			pause = false;
 			quit_game = false;
+			border_init = false;
+			xcon::clear_console();
 		}
 
 		if (current == 'c' || current == 'C')
 		{
 			pause = false;
 			c_menu = true;
+			xcon::clear_console();
 		}
 
 		if (current == 'v' || current == 'V')
 		{
 			main_menu = false;
 			l_menu = true;
+			xcon::clear_console();
 		}
 
 		if (current == 'x' || current == 'X')
@@ -505,12 +581,14 @@ void GameManager::PauseMenu(colour_t val)
 			pause = false;
 			main_menu = true;
 			init = false;
+			xcon::clear_console();
 		}
 
 		if (current == 'q' || current == 'Q')
 		{
 			pause = false;
 			runtime = false;
+			xcon::clear_console();
 		}
 	}
 }
@@ -520,41 +598,41 @@ void GameManager::PauseMenu(colour_t val)
 void GameManager::Run()
 {
 	xcon::clear_console();
-
-	_Init_();
-
+	
+	if (!init)
+		_Init_();
+	
 	do
 	{				
 		while (main_menu)
 		{
 			MainMenu(WHITE);
+			//ClearAll();
 		}
-		MainMenu(BLACK);
 
 		while (c_menu)
 		{
 			ControlsMenu(WHITE);
+			//ClearAll();
 		}
-		ControlsMenu(BLACK);
 
 		while (l_menu)
 		{
 			LeaderboardMenu(WHITE);
+			//ClearAll();
 		}
-		LeaderboardMenu(BLACK);
 
 		while (pause)
 		{
 			PauseMenu(WHITE);
+			//ClearAll();
 		}
-		PauseMenu(BLACK);
 
 		while (!quit_game)
 		{
-			GameWindow(WHITE);
+			GameWindow();
+			//ClearAll();
 		}
-		GameWindow(BLACK);
-
 
 	} while (runtime);
 
