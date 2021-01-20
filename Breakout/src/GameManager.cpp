@@ -122,6 +122,7 @@ void GameManager::BrickCollision(
 			if ((_val == '#') && (_ballX == j && _ballY == i))
 			{
 				GameBuff->set(j, i, '\x20');
+				Bricks->set(j, i, '\x20');
 				ScoreUp();
 				ball->randomDir();
 			}
@@ -283,10 +284,10 @@ void GameManager::CreateBorder()
 }
 
 
-void GameManager::ClearBuffer(core::Matrix<char>* buff, core::rectangle<int>* dim)
+void GameManager::ClearBuffer(core::Matrix<char>* buff, core::rectangle<int>* _size)
 {
-	for (int row = 0; row < dim->h; row++)
-		for (int column = 0; column < dim->w; column++)
+	for (int row = 0; row < _size->h; row++)
+		for (int column = 0; column < _size->w; column++)
 			buff->set(column, row, '\x20');
 }
 
@@ -391,7 +392,7 @@ void GameManager::PrintGame()
 
 	CopyBricks(GameBuff);
 	PrintGameBoard(GameBuff);
-	ClearBuffer(GameBuff, _Gameboard);
+	//ClearBuffer(GameBuff, _Gameboard);
 
 	xcon::f_console_print(*_ScorePos, BLUE, "Score: %d | High Score: %d", score, highscore);
 }
@@ -530,7 +531,7 @@ void GameManager::PauseMenu(colour_t val)
 	xcon::console_print(((_Screen->w / 2) - 5), ((_Screen->h / 2) + 1), val, "Resume (E)");
 	xcon::console_print(((_Screen->w / 2) - 8), ((_Screen->h / 2) + 2), val, "Controls Menu (C)");
 	xcon::console_print(((_Screen->w / 2) - 7), ((_Screen->h / 2) + 3), val, "Leaderboard (V)");
-	xcon::console_print(((_Screen->w / 2) - 7), ((_Screen->h / 2) + 4), GREEN, "Save Game (S)");
+	xcon::console_print(((_Screen->w / 2) - 6), ((_Screen->h / 2) + 4), GREEN, "Save Game (S)");
 
 	xcon::console_print(((_Screen->w / 2) - 14), ((_Screen->h / 2) + 5), YELLOW, "-----------------------------");
 	xcon::console_print(((_Screen->w / 2) - 10), ((_Screen->h / 2) + 6), RED, "Quit to Main Menu (X)");
