@@ -16,6 +16,7 @@ class GameManager
 private:
 	int score;
 	int highscore;
+	int text_offset;
 
 	int s_columns, s_rows;
 

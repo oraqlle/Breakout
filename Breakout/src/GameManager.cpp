@@ -12,7 +12,7 @@ GameManager::GameManager(
 	xcon::set_curser_vis(false);
 
 	// Text offset
-	const int oset = w + 5;
+	text_offset = w + 5;
 
 	prev_screen = MAIN_MENU;
 
@@ -58,14 +58,14 @@ GameManager::GameManager(
 	// Ball and Player Positions
 	_PlayerStart = new core::posxy{ ((_Gameboard->w / 2) - 13), (_Gameboard->h - 3) };
 	_BallStart = new core::posxy{ (_Gameboard->w / 2), (_Gameboard->h - 6) };
-	_StartText = new core::posxy{ oset, (h - 23) };
+	_StartText = new core::posxy{ text_offset, ((_Gameboard->h / 2) - 9) };
 	_BricksStart = new core::posxy{ 2, 2 };
 
 	// Start Menu Text Positions
 	_Title = new core::posxy{ 4, 3 };
 
 	// Text Positions
-	_ScorePos = new core::posxy{ oset, (h - 24) };
+	_ScorePos = new core::posxy{ text_offset, ((_Gameboard->h / 2) - 10) };
 
 	//File Names - "C:\Dev\MyGames\Breakout\Breakout\disc\title.txt"
 	nTitle = "./disc/title.txt";
@@ -532,6 +532,8 @@ void GameManager::LeaderboardMenu()
 				main_menu = true;
 			else if (prev_screen == PAUSE_MENU)
 				pause = true;
+			else if (prev_screen == END_SCREEN)
+				post_game = true;
 
 			l_menu = false;
 			prev_screen = LEADERBOARD_MENU;
@@ -607,11 +609,11 @@ void GameManager::PauseMenu()
 
 void GameManager::EndScreen()
 {
-	xcon::console_print(((_Screen->w / 2) - 6), (_Screen->h / 2), RED, "Game Over!");
-	xcon::console_print(((_Screen->w / 2) - 14), ((_Screen->h / 2) - 1), YELLOW, "-----------------------------");
-	xcon::console_print(((_Screen->w / 2) - 7), ((_Screen->h / 2) - 2), CYAN, "Leaderboard (V)");
-	xcon::console_print(((_Screen->w / 2) - 11), ((_Screen->h / 2) - 3), BLUE, "Quit to Main Menu (X)");
-	xcon::console_print(((_Screen->w / 2) - 9), ((_Screen->h / 2) - 5), PINK, "Quit Game (Space)");
+	xcon::console_print((text_offset + 9), (_Gameboard->h - 6), RED, "Game Over!");
+	xcon::console_print(text_offset, (_Gameboard->h - 5), YELLOW, "-----------------------------");
+	xcon::console_print((text_offset + 7), (_Gameboard->h - 4), CYAN, "Leaderboard (V)");
+	xcon::console_print((text_offset + 4), (_Gameboard->h - 3), BLUE, "Quit to Main Menu (X)");
+	xcon::console_print((text_offset + 6), (_Gameboard->h - 2), PINK, "Quit Game (Space)");
 
 	if (_kbhit())
 	{
