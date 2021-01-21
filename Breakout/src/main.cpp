@@ -1,10 +1,11 @@
-#include "GameManager.h"
+#include "..\headers\GameManager.h"
 
 int main()
 {
 	GameManager Runtime(76, 28);
-	Runtime.Run();
-	//Runtime.PrintTest();
+	int current = Runtime.Run();
 
-	return 0;
+	//xcon::pause();
+
+	return current;
 }
