@@ -3,9 +3,9 @@
 int main()
 {
 	GameManager Runtime(76, 28);
-	Runtime.Run();
+	int current = Runtime.Run();
 
-	xcon::pause();
+	//xcon::pause();
 
-	return 0;
+	return current;
 }

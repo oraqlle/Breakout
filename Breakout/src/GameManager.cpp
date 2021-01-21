@@ -592,6 +592,10 @@ void GameManager::PauseMenu()
 			main_menu = true;
 			init = false;
 			border_init = false;
+
+			ball->Reset();
+			player->Reset();
+
 			xcon::clear_console();
 		}
 
@@ -639,6 +643,10 @@ void GameManager::EndScreen()
 			post_game = false;
 			init = false;
 			border_init = false;
+
+			ball->Reset();
+			player->Reset();
+
 			xcon::clear_console();
 		}
 	}
@@ -648,7 +656,7 @@ void GameManager::EndScreen()
 
 
 // Main Runtime method
-void GameManager::Run()
+int GameManager::Run()
 {
 	xcon::clear_console();
 
@@ -696,6 +704,6 @@ void GameManager::Run()
 
 	// Eventually, load in a Gameover screen
 	xcon::clear_console();
-	xcon::console_print("Game Over!", RED);
 
+	return 0;
 }

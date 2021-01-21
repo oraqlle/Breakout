@@ -127,7 +127,7 @@ private:
 	void EndScreen();
 
 public:
-	void Run();
+	int Run();
 	//void PrintTest();
 	//void Test();
 };
