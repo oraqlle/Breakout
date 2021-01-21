@@ -595,6 +595,8 @@ void GameManager::PauseMenu()
 
 			ball->Reset();
 			player->Reset();
+			
+			score = 0;
 
 			xcon::clear_console();
 		}
@@ -646,6 +648,8 @@ void GameManager::EndScreen()
 
 			ball->Reset();
 			player->Reset();
+
+			score = 0;
 
 			xcon::clear_console();
 		}
