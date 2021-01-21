@@ -2,6 +2,15 @@
 #include "..\include\include.h"
 #include <vector>
 
+#define NO_SCREEN 0
+#define MAIN_MENU 1
+#define CONTROLS_MENU 2
+#define LEADERBOARD_MENU 3
+#define START_SCREEN 4
+#define GAME_SCREEN 5
+#define PAUSE_MENU 6
+#define END_SCREEN 7
+
 class GameManager
 {
 private:
@@ -9,6 +18,8 @@ private:
 	int highscore;
 
 	int s_columns, s_rows;
+
+	int prev_screen;
 
 	bool init;
 	bool border_init;
@@ -21,7 +32,7 @@ private:
 	bool pause;
 	bool post_game;
 	//bool fromPauseMenu;
-	bool quit_game;
+	bool in_game;
 
 	core::rectangle<int>* _Screen;
 	core::rectangle<int>* _Border;
@@ -108,11 +119,11 @@ private:
 
 
 	void MainMenu(colour_t val);
-	void ControlsMenu(colour_t val);
-	void LeaderboardMenu(colour_t val);
-	void PauseMenu(colour_t val);
+	void ControlsMenu();
+	void LeaderboardMenu();
+	void PauseMenu();
 	void GameWindow();
-	void EndScreen(colour_t val);
+	void EndScreen();
 
 public:
 	void Run();
