@@ -16,7 +16,7 @@ private:
 	core::posxy* ballPos;
 
 public:
-	Ball(core::posxy* _BallStart);
+	Ball(core::posxy* _ballStart);
 	void Reset();
 
 	void randomDir();

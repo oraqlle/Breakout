@@ -1,6 +1,6 @@
 #include "..\headers\GameManager.h"
 
-GameManager::GameManager(
+Runtime::Runtime(
 	int w, 
 	int h
 )
@@ -88,14 +88,14 @@ GameManager::GameManager(
 }
 
 // Destructor
-GameManager::~GameManager()
+Runtime::~Runtime()
 {
 	delete _Border, _Gameboard, _PlayerStart, _BallStart, _null, _endline,
 		_ScorePos, ball, player, Screen, Border, Bricks/*, fstream*/;
 }
 
 // Score Tracker
-void GameManager::ScoreUp()
+void Runtime::ScoreUp()
 {
 	score += 10;
 	xcon::f_console_print(*_ScorePos, BLUE, "Score: %d | High Score: %d", score, highscore);
@@ -103,7 +103,7 @@ void GameManager::ScoreUp()
 }
 
 // Highscore Tracker
-void GameManager::HighScore(
+void Runtime::HighScore(
 	int& _score
 )
 {
@@ -112,7 +112,7 @@ void GameManager::HighScore(
 
 
 // Checks Buffer if their are Bricks at the Ball's location
-void GameManager::BrickCollision(
+void Runtime::BrickCollision(
 	int& _ballX, 
 	int& _ballY
 )
@@ -132,7 +132,7 @@ void GameManager::BrickCollision(
 }
 
 // Checks if the ball has collided with the paddle
-void GameManager::PaddleCollision(
+void Runtime::PaddleCollision(
 	int& _ballX, 
 	int& _ballY, 
 	int& _playerX, 
@@ -165,7 +165,7 @@ void GameManager::PaddleCollision(
 }
 
 // User Input
-void GameManager::Input()
+void Runtime::Input()
 {
 	ball->Move();
 
@@ -246,7 +246,7 @@ void GameManager::Input()
 
 
 // Basic Logic for collisions
-void GameManager::Logic()
+void Runtime::Logic()
 {
 	int ballX = ball->getX();
 	int ballY = ball->getY();
@@ -283,7 +283,7 @@ void GameManager::Logic()
 }
 
 
-void GameManager::CreateBorder()
+void Runtime::CreateBorder()
 {
 	int temp = Border->fill('\x20');
 
@@ -317,7 +317,7 @@ void GameManager::CreateBorder()
 }
 
 
-void GameManager::ClearBuffer(core::Matrix<char>* buff, core::rectangle<int>* _size)
+void Runtime::ClearBuffer(core::Matrix<char>* buff, core::rectangle<int>* _size)
 {
 	for (int row = 0; row < _size->h; row++)
 		for (int column = 0; column < _size->w; column++)
@@ -325,7 +325,7 @@ void GameManager::ClearBuffer(core::Matrix<char>* buff, core::rectangle<int>* _s
 }
 
 
-void GameManager::CreateBricks()
+void Runtime::CreateBricks()
 {
 	int temp = Bricks->fill('\x20');
 
@@ -335,7 +335,7 @@ void GameManager::CreateBricks()
 }
 
 
-void GameManager::CopyBricks(core::Matrix<char>* buff)
+void Runtime::CopyBricks(core::Matrix<char>* buff)
 {
 	for (int i = 1; i < _Bricks->h; i++)
 		for (int j = 2; j < _Bricks->w; j++)
@@ -344,7 +344,7 @@ void GameManager::CopyBricks(core::Matrix<char>* buff)
 }
 
 
-void GameManager::LoadEntities()
+void Runtime::LoadEntities()
 {
 	int ballX = ball->getX();
 	int ballY = ball->getY();
@@ -374,7 +374,7 @@ void GameManager::LoadEntities()
 }
 
 
-void GameManager::_Init_Print()
+void Runtime::_Init_Print()
 {
 	if (!border_init)
 	{
@@ -391,7 +391,7 @@ void GameManager::_Init_Print()
 }
 
 
-void GameManager::PrintGameBoard(core::Matrix<char>* buff)
+void Runtime::PrintGameBoard(core::Matrix<char>* buff)
 {
 	LoadEntities();
 
@@ -420,7 +420,7 @@ void GameManager::PrintGameBoard(core::Matrix<char>* buff)
 }
 
 
-void GameManager::PrintGame()
+void Runtime::PrintGame()
 {
 
 	CopyBricks(GameBuff);
@@ -431,7 +431,7 @@ void GameManager::PrintGame()
 }
 
 
-void GameManager::GameWindow()
+void Runtime::GameWindow()
 {
 	if (!init)
 	{
@@ -448,7 +448,7 @@ void GameManager::GameWindow()
 	}
 }
 
-void GameManager::_Init_()
+void Runtime::_Init_()
 {
 	Screen->fill('\x20');
 	Border->fill('\x20');
@@ -462,7 +462,7 @@ void GameManager::_Init_()
 }
 
 
-void GameManager::MainMenu(colour_t val)
+void Runtime::MainMenu(colour_t val)
 {
 	// code that prints title from a *.txt file
 
@@ -507,7 +507,7 @@ void GameManager::MainMenu(colour_t val)
 	prev_screen = MAIN_MENU;
 }
 
-void GameManager::ControlsMenu()
+void Runtime::ControlsMenu()
 {
 	xcon::console_print(((_Screen->w / 2) - 4), (_Screen->h - 18), YELLOW, "Controls:");
 	xcon::console_print(((_Screen->w / 2) - 14), (_Screen->h - 17), YELLOW, "-----------------------------");
@@ -539,7 +539,7 @@ void GameManager::ControlsMenu()
 }
 
 
-void GameManager::LeaderboardMenu()
+void Runtime::LeaderboardMenu()
 {
 	// code that loads leaderboard from disc
 	xcon::console_print(((_Screen->w / 2) - 5 ), (_Screen->h / 2), CYAN, "Leaderboard");
@@ -567,7 +567,7 @@ void GameManager::LeaderboardMenu()
 }
 
 
-void GameManager::PauseMenu()
+void Runtime::PauseMenu()
 {
 	xcon::console_print(((_Screen->w / 2) - 3), ((_Screen->h / 2) - 2), YELLOW, "Paused:");
 	xcon::console_print(((_Screen->w / 2) - 14), ((_Screen->h / 2) - 1), YELLOW, "-----------------------------");
@@ -637,7 +637,7 @@ void GameManager::PauseMenu()
 }
 
 
-void GameManager::EndScreen()
+void Runtime::EndScreen()
 {
 	xcon::console_print((text_offset + 9), (_Gameboard->h - 6), RED, "Game Over!");
 	xcon::console_print(text_offset, (_Gameboard->h - 5), YELLOW, "-----------------------------");
@@ -684,51 +684,19 @@ void GameManager::EndScreen()
 
 
 // Main Runtime method
-int GameManager::Run()
+int Runtime::Run()
 {
 	xcon::clear_console();
 
-	do
-	{	
-		if (!init)
-			_Init_();
+	engine->ChangeState(MenuState::Instance());
 
-		while (main_menu)
-		{
-			MainMenu(WHITE);
-			//ClearAll();
-		}
+	while (engine->Running())
+	{
+		/*if (!init)
+			_Init_();*/
 
-		while (c_menu)
-		{
-			ControlsMenu();
-			//ClearAll();
-		}
 
-		while (l_menu)
-		{
-			LeaderboardMenu();
-			//ClearAll();
-		}
-
-		while (pause)
-		{
-			PauseMenu();
-			//ClearAll();
-		}
-
-		while (in_game)
-		{
-			GameWindow();
-			//ClearAll();
-		}
-
-		while (post_game)
-		{
-			EndScreen();
-		}
-
-	} while (runtime);
+	}
 
 	// Eventually, load in a Gameover screen
 	xcon::clear_console();

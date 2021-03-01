@@ -161,8 +161,10 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Core-Libraries\Cpp-Libs\xcon\src\xconsole.cpp" />
     <ClCompile Include="src\FileStream.cpp" />
+    <ClCompile Include="src\GameEngine.cpp" />
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\Ball.cpp" />
+    <ClCompile Include="src\MenuState.cpp" />
     <ClCompile Include="src\Paddle.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
@@ -181,7 +183,10 @@
   <ItemGroup>
     <ClInclude Include="headers\FileStream.h" />
     <ClInclude Include="headers\Ball.h" />
+    <ClInclude Include="headers\GameEngine.h" />
     <ClInclude Include="headers\GameManager.h" />
+    <ClInclude Include="headers\GameState.h" />
+    <ClInclude Include="headers\MenuState.h" />
     <ClInclude Include="headers\Paddle.h" />
     <ClInclude Include="include\include.h" />
   </ItemGroup>
