@@ -2,10 +2,10 @@
 #include "GameState.h"
 #include "GameEngine.h"
 
-class MenuState : public GameState
+class MainGameState : public GameState
 {
 public:
-	void Init(DIM* _dim);
+	void Init(DIM* dim);
 	void CleanUp();
 
 	void Pause();
@@ -15,14 +15,15 @@ public:
 	void Update(GameEngine* engine);
 	void Draw(GameEngine* engine);
 
-	static MenuState* Instance() {
-		return &m_MenuState;
+	static MainGameState* Instance() {
+		return &m_MainGameState;
 	}
 
 protected:
-	MenuState() { }
+	MainGameState() { }
+
 	DIM* dim;
 
 private:
-	static MenuState m_MenuState;
+	static MainGameState m_MainGameState;
 };

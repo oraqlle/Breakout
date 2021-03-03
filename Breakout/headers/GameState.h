@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameEngine.h"
+#include "val.h"
 
 class GameState
 {
@@ -8,7 +9,7 @@ protected:
     GameState() { }
 
 public:
-    virtual void Init() = 0;
+    virtual void Init(DIM* _dim) = 0;
     virtual void CleanUp() = 0;
 
     virtual void Pause() = 0;

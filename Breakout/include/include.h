@@ -19,5 +19,8 @@
 #include "..\headers\GameEngine.h"
 #include "..\headers\GameState.h"
 
+// Value Stuct(s)
+#include "..\headers\val.h"
+
 // Game States:
 #include "..\headers\MenuState.h"

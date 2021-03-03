@@ -2,7 +2,7 @@
 
 #include "../include/include.h"
 
-
+// Move each of these into their respective state header files
 #define NO_SCREEN 0
 #define MAIN_MENU 1
 #define CONTROLS_MENU 2
@@ -28,55 +28,23 @@ private:
 	int text_offset;
 
 	int s_columns, s_rows;
-	int prev_screen;
 	bool init;
 
-	core::rectangle<int>* _Screen;
-	core::rectangle<int>* _Border;
-	core::rectangle<int>* _Gameboard;
+public:
+	DIM dim;
+	int prev_screen;
+
 	core::rectangle<int>* _Bricks;
-
-	core::posxy* _null;
-	core::posxy* _endline;
-	core::posxy* _midpoint;
-
-	core::posxy* _Title;
-	core::posxy* _ScorePos;
-
-	core::posxy* _PlayerStart;
-	core::posxy* _BallStart;
-	core::posxy* _StartText;
-	core::posxy* _BricksStart;
-
-	// File Pointers
-	/*FILE* fTitle;
-	FILE* fTemp;
-	FILE* fBaseLevel;
-	FILE* fLevel_1;
-	FILE* fHighScore;*/
-
-	//File Names
-	cstring nTitle;
-	cstring nTemp;
-	cstring nBaselevel;
-	cstring nLevel_1;
-	cstring nHighScore;
-
 	Ball* ball;
 	Paddle* player;
 	//FileStream* fstream;
-	GameEngine* engine;
+	//GameEngine* engine;
 
-	core::Matrix<char>* Screen;
-	core::Matrix<char>* Border;
-	core::Matrix<char>* GameBuff;
 	core::Matrix<char>* PrevGameBuff;
 	core::Matrix<char>* EntryBuff;
 	core::Matrix<char>* Bricks;
 
 private:
-
-
 	void ScoreUp();
 	void HighScore(
 		int& _score
@@ -115,14 +83,15 @@ private:
 	void GameWindow();
 	void EndScreen();
 
+	void PushState(GameState* state);
+	void PopState();
 
 public:
+	~GameEngine();
 	void Init(int w, int h);
 	void CleanUp();
 
 	void ChangeState(GameState* state);
-	void PushState(GameState* state);
-	void PopState();
 
 	void HandleEvents();
 	void Update();
