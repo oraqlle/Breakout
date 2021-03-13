@@ -1,9 +1,18 @@
-#include "..\headers\GameManager.h"
+#include "..\headers\GameEngine.h"
+#include "..\headers\StartMenuState.h"
 
 int main()
 {
-	GameManager Runtime(76, 28);
-	int current = Runtime.Run();
+	GameEngine Runtime;
+	Runtime.Init(76, 28);
+	Runtime.ChangeState(StartMenuState::Instance());
 
-	return current;
+	while (Runtime.Running())
+	{
+		Runtime.HandleEvents();
+		Runtime.Update();
+		Runtime.Draw();
+	}
+
+	return 0;
 }

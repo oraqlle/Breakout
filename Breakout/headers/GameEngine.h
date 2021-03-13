@@ -3,86 +3,27 @@
 #include "../include/include.h"
 
 // Move each of these into their respective state header files
-#define NO_SCREEN 0
-#define MAIN_MENU 1
-#define CONTROLS_MENU 2
-#define LEADERBOARD_MENU 3
-#define START_SCREEN 4
-#define GAME_SCREEN 5
-#define PAUSE_MENU 6
-#define END_SCREEN 7
 
+struct DIM
+{
+	int w, h;
+};
 
 class GameEngine
 {
 private:
+	bool m_running;
+	int s_columns, s_rows;
+
 	// the stack of states
 	std::vector<GameState*> states;
-
-	bool m_running;
-
-
-private:
-	int score;
-	int highscore;
-	int text_offset;
-
-	int s_columns, s_rows;
-	bool init;
+	core::rectangle<int>* _Screen;
+	core::Matrix<char>* Screen;
 
 public:
-	DIM dim;
-	int prev_screen;
-
-	core::rectangle<int>* _Bricks;
-	Ball* ball;
-	Paddle* player;
-	//FileStream* fstream;
-	//GameEngine* engine;
-
-	core::Matrix<char>* PrevGameBuff;
-	core::Matrix<char>* EntryBuff;
-	core::Matrix<char>* Bricks;
+	DIM* game_dim;
 
 private:
-	void ScoreUp();
-	void HighScore(
-		int& _score
-	);
-
-	void BrickCollision(
-		int& ballX,
-		int& ballY
-	);
-	void PaddleCollision(
-		int& ballX,
-		int& ballY,
-		int& playerX,
-		int& playerY
-	);
-
-	void _Init_();
-	void CreateBorder();
-	void CreateBricks();
-	void LoadEntities();
-
-	void Input();
-	//void _Init_Input();
-	void Logic();
-	void ClearBuffer(core::Matrix<char>* buff, core::rectangle<int>* dim);
-	//void ClearAll();
-	void _Init_Print();
-	void PrintGame();
-	void PrintGameBoard(core::Matrix<char>* buff);
-	void CopyBricks(core::Matrix<char>* buff);
-
-	void MainMenu(colour_t val);
-	void ControlsMenu();
-	void LeaderboardMenu();
-	void PauseMenu();
-	void GameWindow();
-	void EndScreen();
-
 	void PushState(GameState* state);
 	void PopState();
 

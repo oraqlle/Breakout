@@ -3,10 +3,9 @@
 
 StartMenuState StartMenuState::m_StartMenuState;
 
-void StartMenuState::Init(DIM* _dim)
+void StartMenuState::Init(GameEngine* engine)
 {
 	xcon::clear_console();
-	dim = _dim;
 }
 
 void StartMenuState::CleanUp()
@@ -32,29 +31,25 @@ void StartMenuState::HandleEvents(GameEngine* engine)
 
 		if (current == '\x20')
 		{
-			main_menu = false;
-			in_game = true;
+			engine->ChangeState(MainGameState::Instance());
 			xcon::clear_console();
 		}
 
 		if (current == 'c' || current == 'C')
 		{
-			main_menu = false;
-			c_menu = true;
+			engine->ChangeState(ControlMenuState::Instance());
 			xcon::clear_console();
 		}
 
 		if (current == 'v' || current == 'V')
 		{
-			main_menu = false;
-			l_menu = true;
+			engine->ChangeState(LeaderboardMenuState::Instance());
 			xcon::clear_console();
 		}
 
 		if (current == 'x' || current == 'X')
 		{
-			main_menu = false;
-			runtime = false;
+			engine->ChangeState(QuitState::Instance());
 			xcon::clear_console();
 		}
 	}
@@ -62,13 +57,13 @@ void StartMenuState::HandleEvents(GameEngine* engine)
 
 void StartMenuState::Update(GameEngine* engine)
 {
-	engine->prev_screen = MAIN_MENU;
+	
 }
 
 void StartMenuState::Draw(GameEngine* engine)
 {
-	xcon::console_print(((dim->_Screen->w / 2) - 6), (dim->_Screen->h - 10), WHITE, "Start (Space)");
-	xcon::console_print(((dim->_Screen->w / 2) - 8), (dim->_Screen->h - 9), WHITE, "Controls Menu (C)");
-	xcon::console_print(((dim->_Screen->w / 2) - 7), (dim->_Screen->h - 8), WHITE, "Leaderboard (V)");
-	xcon::console_print(((dim->_Screen->w / 2) - 6), (dim->_Screen->h - 7), WHITE, "Quit Game (X)");
+	xcon::console_print(((engine->game_dim->w / 2) - 6), (engine->game_dim->h - 10), WHITE, "Start (Space)");
+	xcon::console_print(((engine->game_dim->w / 2) - 8), (engine->game_dim->h - 9), WHITE, "Controls Menu (C)");
+	xcon::console_print(((engine->game_dim->w / 2) - 7), (engine->game_dim->h - 8), WHITE, "Leaderboard (V)");
+	xcon::console_print(((engine->game_dim->w / 2) - 6), (engine->game_dim->h - 7), WHITE, "Quit Game (X)");
 }

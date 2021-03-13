@@ -5,7 +5,7 @@
 class StartMenuState : public GameState
 {
 public:
-	void Init(DIM* dim);
+	void Init(GameEngine* engine);
 	void CleanUp();
 
 	void Pause();
@@ -21,6 +21,7 @@ public:
 
 protected:
 	StartMenuState() { }
+	StartMenuState(DIM* _dim);
 
 	DIM* dim;
 

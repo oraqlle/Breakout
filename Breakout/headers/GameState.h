@@ -1,7 +1,12 @@
 #pragma once
 
 #include "GameEngine.h"
-#include "val.h"
+#include "StartMenuState.h"
+#include "ControlMenuState.h"
+#include "LeaderboardMenuState.h"
+#include "PauseMenuState.h"
+#include "MainGameState.h"
+#include "QuitState.h"
 
 class GameState
 {
@@ -9,7 +14,7 @@ protected:
     GameState() { }
 
 public:
-    virtual void Init(DIM* _dim) = 0;
+    virtual void Init(GameEngine* engine) = 0;
     virtual void CleanUp() = 0;
 
     virtual void Pause() = 0;

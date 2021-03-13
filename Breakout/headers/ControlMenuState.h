@@ -5,7 +5,7 @@
 class ControlMenuState : public GameState
 {
 public:
-	void Init(DIM* _dim);
+	void Init();
 	void CleanUp();
 
 	void Pause();
@@ -21,6 +21,7 @@ public:
 
 protected:
 	ControlMenuState() { }
+	ControlMenuState(DIM* _dim);
 
 	DIM* dim;
 
