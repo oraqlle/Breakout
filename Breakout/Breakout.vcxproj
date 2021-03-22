@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Core-Libraries\Cpp-Libs\xcon\src\xconsole.cpp" />
+    <ClCompile Include="headers\state_list.h" />
     <ClCompile Include="src\ControlsMenuState.cpp" />
     <ClCompile Include="src\FileStream.cpp" />
     <ClCompile Include="src\GameEngine.cpp" />
@@ -201,7 +202,6 @@
     <ClInclude Include="headers\MenuState.h" />
     <ClInclude Include="headers\Paddle.h" />
     <ClInclude Include="headers\StartMenuState.h" />
-    <ClInclude Include="headers\val.h" />
     <ClInclude Include="include\include.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -31,46 +31,28 @@ void PauseMenuState::HandleEvents(GameEngine* engine)
 
 		if (current == 'e' || current == 'E')
 		{
-			pause = false;
-			in_game = true;
-			border_init = false;
-			xcon::clear_console();
+			engine->PopState();
 		}
 
 		if (current == 'c' || current == 'C')
 		{
-			pause = false;
-			c_menu = true;
-			xcon::clear_console();
+			engine->PushState(ControlMenuState::Instance());
 		}
 
 		if (current == 'v' || current == 'V')
 		{
-			pause = false;
-			l_menu = true;
-			xcon::clear_console();
+			engine->PushState(LeaderboardMenuState::Instance());
 		}
 
 		if (current == 'x' || current == 'X')
 		{
-			pause = false;
-			main_menu = true;
-			init = false;
-			border_init = false;
-
-			ent->ball->Reset();
-			ent->player->Reset();
-
-			score = 0;
-
-			xcon::clear_console();
+			engine->ChangeState(StartMenuState::Instance());
+			
 		}
 
 		if (current == 'q' || current == 'Q')
 		{
-			pause = false;
-			runtime = false;
-			xcon::clear_console();
+			engine->ChangeState(QuitState::Instance());
 		}
 	}
 }

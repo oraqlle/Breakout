@@ -6,6 +6,7 @@ class MainGameState : public GameState
 {
 public:
 	MainGameState() { }
+	~MainGameState();
 	void Init(GameEngine* engine);
 	void CleanUp();
 
@@ -87,8 +88,8 @@ private:
 	void CreateBricks();
 	void LoadEntities();
 
-	void Input();
-	void Logic();
+	void Input(GameEngine* engine);
+	void Logic(GameEngine* engine);
 	void ClearBuffer(core::Matrix<char>* buff, core::rectangle<int>* dim);
 	void _Init_Print();
 	void PrintGame();
@@ -96,5 +97,5 @@ private:
 	void CopyBricks(core::Matrix<char>* buff);
 
 	void PauseMenu();
-	//void GameWindow();
+
 };

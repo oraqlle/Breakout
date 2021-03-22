@@ -60,6 +60,9 @@
     <ClCompile Include="src\StartMenuState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="headers\state_list.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\Ball.h">
@@ -99,9 +102,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\QuitState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\val.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\StartMenuState.h">

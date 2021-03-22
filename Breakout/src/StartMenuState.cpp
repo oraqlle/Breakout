@@ -32,25 +32,25 @@ void StartMenuState::HandleEvents(GameEngine* engine)
 		if (current == '\x20')
 		{
 			engine->ChangeState(MainGameState::Instance());
-			xcon::clear_console();
+			//xcon::clear_console();
 		}
 
 		if (current == 'c' || current == 'C')
 		{
-			engine->ChangeState(ControlMenuState::Instance());
-			xcon::clear_console();
+			engine->PushState(ControlMenuState::Instance());
+			//xcon::clear_console();
 		}
 
 		if (current == 'v' || current == 'V')
 		{
-			engine->ChangeState(LeaderboardMenuState::Instance());
-			xcon::clear_console();
+			engine->PushState(LeaderboardMenuState::Instance());
+			//xcon::clear_console();
 		}
 
 		if (current == 'x' || current == 'X')
 		{
 			engine->ChangeState(QuitState::Instance());
-			xcon::clear_console();
+			//xcon::clear_console();
 		}
 	}
 }

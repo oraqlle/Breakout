@@ -11,6 +11,10 @@ void GameEngine::Init(int w, int h)
 
 	// Control booleans
 	m_running = true;
+	m_resetting = false;
+
+	//Side Text Offset
+	n_text_offset = w + 5;
 
 	// Creates a container for the current screen size (windows)
 	#ifdef _WIN32
@@ -84,6 +88,10 @@ void GameEngine::PopState()
 	}
 }
 
+void GameEngine::Reset()
+{
+
+}
 
 void GameEngine::HandleEvents()
 {

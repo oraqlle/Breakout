@@ -20,7 +20,7 @@
 #include "..\headers\GameState.h"
 
 // Value Stuct(s)
-#include "..\headers\val.h"
+#include "..\headers\state_list.h"
 
 // Game States:
 #include "..\headers\MenuState.h"

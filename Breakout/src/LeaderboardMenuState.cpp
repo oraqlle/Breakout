@@ -14,12 +14,12 @@ void LeaderboardMenuState::CleanUp()
 
 void LeaderboardMenuState::Pause()
 {
-
+	xcon::clear_console();
 }
 
 void LeaderboardMenuState::Resume()
 {
-
+	xcon::clear_console();
 }
 
 void LeaderboardMenuState::HandleEvents(GameEngine* engine)
@@ -31,14 +31,7 @@ void LeaderboardMenuState::HandleEvents(GameEngine* engine)
 
 		if (current == 'x' || current == 'X')
 		{
-			if (engine->prev_screen == MAIN_MENU)
-				main_menu = true;
-			else if (engine->prev_screen == PAUSE_MENU)
-				pause = true;
-			else if (engine->prev_screen == END_SCREEN)
-				post_game = true;
-
-			l_menu = false;
+			engine->PopState();
 			xcon::clear_console();
 		}
 	}
@@ -46,12 +39,12 @@ void LeaderboardMenuState::HandleEvents(GameEngine* engine)
 
 void LeaderboardMenuState::Update(GameEngine* engine)
 {
-	engine->prev_screen = LEADERBOARD_MENU;
+
 }
 
 void LeaderboardMenuState::Draw(GameEngine* engine)
 {
-	xcon::console_print(((dim->_Screen->w / 2) - 5), (dim->_Screen->h / 2), CYAN, "Leaderboard");
-	xcon::console_print(((dim->_Screen->w / 2) - 14), ((dim->_Screen->h / 2) + 1), CYAN, "-----------------------------");
-	xcon::console_print(((dim->_Screen->w / 2) - 5), ((dim->_Screen->h / 2) + 2), RED, "Return  (X)");
+	xcon::console_print(((engine->game_dim->w / 2) - 5), (engine->game_dim->h / 2), CYAN, "Leaderboard");
+	xcon::console_print(((engine->game_dim->w / 2) - 14), ((engine->game_dim->h / 2) + 1), CYAN, "-----------------------------");
+	xcon::console_print(((engine->game_dim->w / 2) - 5), ((engine->game_dim->h / 2) + 2), RED, "Return  (X)");
 }

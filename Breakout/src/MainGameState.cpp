@@ -5,8 +5,6 @@ MainGameState MainGameState::m_MainGameState;
 
 void MainGameState::Init(GameEngine* engine)
 {
-	xcon::clear_console();
-
 	w = engine->game_dim->w;
 	h = engine->game_dim->h;
 
@@ -16,7 +14,7 @@ void MainGameState::Init(GameEngine* engine)
 
 	//Init checks
 	init = false;
-	border_init;
+	border_init = false;
 
 	_Border = new core::rectangle<int>{ w, h };
 	_Gameboard = new core::rectangle<int>{ (w - 3), (h - 2) };
@@ -55,8 +53,26 @@ void MainGameState::Init(GameEngine* engine)
 
 }
 
+MainGameState::~MainGameState()
+{
+	delete ball, player, Border, GameBuff, EntryBuff, Bricks, _Border, _Gameboard,
+		_Bricks, _PlayerStart, _BallStart, _StartText, _BricksStart, _Title, _ScorePos;
+}
+
 void MainGameState::CleanUp()
 {
+	init = false;
+	border_init = false;
+
+	ball->Reset();
+	player->Reset();
+
+	Border->fill('\x20');
+	GameBuff->fill('\x20');
+	EntryBuff->fill('\x20');
+	Bricks->fill('\x20');
+
+	score = 0;
 	xcon::clear_console();
 }
 
@@ -72,12 +88,12 @@ void MainGameState::Resume()
 
 void MainGameState::HandleEvents(GameEngine* engine)
 {
-	Input();
+	Input(engine);
 }
 
 void MainGameState::Update(GameEngine* engine)
 {
-	Logic();
+	Logic(engine);
 }
 
 void MainGameState::Draw(GameEngine* engine)
@@ -164,7 +180,7 @@ void MainGameState::PaddleCollision(
 }
 
 // User Input
-void MainGameState::Input()
+void MainGameState::Input(GameEngine* engine)
 {
 	ball->Move();
 
@@ -227,23 +243,19 @@ void MainGameState::Input()
 
 		if (current == 'q' || current == 'Q')
 		{
-			in_game = false;
-			post_game = true;
-			xcon::clear_console();
+			engine->ChangeState(QuitState::Instance());
 		}
 
 		if (current == 'e' || current == 'E')
 		{
-			pause = true;
-			in_game = false;
-			xcon::clear_console();
+			engine->PushState(PauseMenuState::Instance());
 		}
 	}
 }
 
 
 // Basic Logic for collisions
-void MainGameState::Logic()
+void MainGameState::Logic(GameEngine* engine)
 {
 	int ballX = ball->getX();
 	int ballY = ball->getY();
@@ -260,9 +272,7 @@ void MainGameState::Logic()
 	// Bottom wall collision
 	if (ballY == _Gameboard->h)
 	{
-		in_game = false;
-		post_game = true;
-
+		engine->ChangeState(QuitState::Instance())
 	}
 
 	// Top wall collision
