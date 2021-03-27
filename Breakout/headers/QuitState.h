@@ -1,5 +1,4 @@
 #pragma once
-#include "GameEngine.h"
 #include "GameState.h"
 
 class QuitState : public GameState

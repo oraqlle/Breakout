@@ -1,5 +1,8 @@
+#include "../headers/GameEngine.h"
+#include "../headers/GameState.h"
 #include "../headers/MainGameState.h"
-#include "../headers/MainGameState.h"
+#include "../headers/PauseMenuState.h"
+#include "../headers/QuitState.h"
 
 MainGameState MainGameState::m_MainGameState;
 
@@ -26,6 +29,11 @@ void MainGameState::Init(GameEngine* engine)
 	_BallStart = new core::posxy{ (_Gameboard->w / 2), (_Gameboard->h - 6) };
 	_StartText = new core::posxy{ text_offset, ((_Gameboard->h / 2) - 9) };
 	_BricksStart = new core::posxy{ 2, 2 };
+
+	// Base Positions
+	_null = new core::posxy{ 0, 0 };
+	_endline = new core::posxy{ 0, (_Border->h + 1) };
+	_midpoint = new core::posxy{ (w / 2), (h / 2) };
 
 	// Start Menu Text Positions
 	_Title = new core::posxy{ 4, 3 };
@@ -272,7 +280,7 @@ void MainGameState::Logic(GameEngine* engine)
 	// Bottom wall collision
 	if (ballY == _Gameboard->h)
 	{
-		engine->ChangeState(QuitState::Instance())
+		engine->ChangeState(QuitState::Instance());
 	}
 
 	// Top wall collision

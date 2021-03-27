@@ -1,5 +1,4 @@
 #pragma once
-
 #include "../include/include.h"
 
 // Move each of these into their respective state header files
@@ -9,7 +8,7 @@ struct DIM
 	int w, h;
 };
 
-enum class state_amount;
+class GameState;
 
 class GameEngine
 {
@@ -26,10 +25,12 @@ private:
 
 public:
 	DIM* game_dim;
-	eStates* state_list;
-
+	// temporary solution going to write to a (binary or text ) 
+	// file that can be read from any class. 
+	int g_score;
+	
 	~GameEngine();
-	void Init(int w, int h);
+	void Init(int w = 76, int h = 28);
 	void CleanUp();
 
 	void PushState(GameState* state);

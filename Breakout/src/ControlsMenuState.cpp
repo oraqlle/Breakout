@@ -1,3 +1,5 @@
+#include "../headers/GameEngine.h"
+#include "../headers/GameState.h"
 #include "../headers/ControlMenuState.h"
 
 ControlMenuState ControlMenuState::m_ControlMenuState;

@@ -1,5 +1,10 @@
-#include "../headers/StartMenuState.h"
 #include "../headers/GameEngine.h"
+#include "../headers/GameState.h"
+#include "../headers/MainGameState.h"
+#include "../headers/LeaderboardMenuState.h"
+#include "../headers/ControlMenuState.h"
+#include "../headers/QuitState.h"
+#include "../headers/StartMenuState.h"
 
 StartMenuState StartMenuState::m_StartMenuState;
 

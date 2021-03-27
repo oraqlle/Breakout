@@ -1,4 +1,5 @@
 #include "../headers/GameEngine.h"
+#include "../headers/GameState.h"
 
 // Management Methods
 void GameEngine::Init(int w, int h)
@@ -12,6 +13,8 @@ void GameEngine::Init(int w, int h)
 	// Control booleans
 	m_running = true;
 	m_resetting = false;
+
+	g_score = 0;
 
 	//Side Text Offset
 	n_text_offset = w + 5;

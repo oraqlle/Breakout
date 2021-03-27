@@ -13,14 +13,14 @@
 #include "containers.h"
 #include "matrix.h"
 
-// Class Objects
+// Entity Headers
 #include "..\headers\Ball.h"
 #include "..\headers\Paddle.h"
-#include "..\headers\GameEngine.h"
-#include "..\headers\GameState.h"
 
-// Value Stuct(s)
-#include "..\headers\state_list.h"
-
-// Game States:
-#include "..\headers\MenuState.h"
+//Game Class Instances
+//#include "..\headers\ControlMenuState.h"
+//#include "..\headers\StartMenuState.h"
+//#include "..\headers\LeaderboardMenuState.h"
+//#include "..\headers\PauseMenuState.h"
+//#include "..\headers\QuitState.h"
+//#include "..\headers\MainGameState.h"

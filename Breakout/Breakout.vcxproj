@@ -160,7 +160,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Core-Libraries\Cpp-Libs\xcon\src\xconsole.cpp" />
-    <ClCompile Include="headers\state_list.h" />
     <ClCompile Include="src\ControlsMenuState.cpp" />
     <ClCompile Include="src\FileStream.cpp" />
     <ClCompile Include="src\GameEngine.cpp" />
@@ -170,11 +169,9 @@
     <ClCompile Include="src\QuitState.cpp" />
     <ClCompile Include="src\Runtime.cpp" />
     <ClCompile Include="src\Ball.cpp" />
-    <ClCompile Include="src\MenuState.cpp" />
     <ClCompile Include="src\Paddle.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\StartMenuState.cpp" />
-    <ClCompile Include="src\val.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="disc\Base_Layout.txt" />
@@ -199,7 +196,6 @@
     <ClInclude Include="headers\QuitState.h" />
     <ClInclude Include="headers\Runtime.h" />
     <ClInclude Include="headers\GameState.h" />
-    <ClInclude Include="headers\MenuState.h" />
     <ClInclude Include="headers\Paddle.h" />
     <ClInclude Include="headers\StartMenuState.h" />
     <ClInclude Include="include\include.h" />

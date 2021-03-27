@@ -1,4 +1,8 @@
+#include "../headers/GameEngine.h"
+#include "../headers/GameState.h"
 #include "../headers/QuitState.h"
+#include "../headers/StartMenuState.h"
+#include "../headers/LeaderboardMenuState.h"
 
 QuitState QuitState::m_QuitState;
 

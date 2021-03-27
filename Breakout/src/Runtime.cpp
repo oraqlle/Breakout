@@ -1,9 +1,10 @@
 #include "..\headers\Runtime.h"
+#include "..\headers\StartMenuState.h"
 
 
 // Constructor
 Runtime::Runtime(int _w, int _h)
-	:  w(_w), h(_h)
+	:  w(_w), h(_h), engine()
 { }
 
 
@@ -20,7 +21,7 @@ int Runtime::Run()
 	xcon::clear_console();
 
 	engine->Init(w, h);
-	engine->ChangeState(MenuState::Instance());
+	engine->ChangeState(StartMenuState::Instance());
 
 	while (engine->Running())
 	{

@@ -1,3 +1,5 @@
+#include "../headers/GameEngine.h"
+#include "../headers/GameState.h"
 #include "../headers/LeaderboardMenuState.h"
 
 LeaderboardMenuState LeaderboardMenuState::m_LeaderboardMenuState;

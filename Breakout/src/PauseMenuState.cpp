@@ -1,5 +1,10 @@
-#include "../headers/PauseMenuState.h"
 #include "../headers/GameEngine.h"
+#include "../headers/GameState.h"
+#include "../headers/PauseMenuState.h"
+#include "../headers/LeaderboardMenuState.h"
+#include "../headers/ControlMenuState.h"
+#include "../headers/QuitState.h"
+#include "../headers/StartMenuState.h"
 
 PauseMenuState PauseMenuState::m_PauseMenuState;
 
@@ -68,7 +73,7 @@ void PauseMenuState::Draw(GameEngine* engine)
 	xcon::console_print(((engine->game_dim->w / 2) - 14), ((engine->game_dim->h / 2) - 1), YELLOW, "-----------------------------");
 
 	//xcon::f_console_print(((_Screen->w / 2) - 4), (_Screen->h / 2), "\033[21;%dm%s\033[0m\n", aBLACK, score);
-	xcon::f_console_print(((engine->game_dim->w / 2) - 4), (engine->game_dim->h / 2), BLUE, "Score: %d", score);
+	xcon::f_console_print(((engine->game_dim->w / 2) - 4), (engine->game_dim->h / 2), BLUE, "Score: %d", engine->g_score);
 
 	xcon::console_print(((engine->game_dim->w / 2) - 5), ((engine->game_dim->h / 2) + 1), WHITE, "Resume (E)");
 	xcon::console_print(((engine->game_dim->w / 2) - 8), ((engine->game_dim->h / 2) + 2), WHITE, "Controls Menu (C)");

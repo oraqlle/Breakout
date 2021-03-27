@@ -1,12 +1,5 @@
 #pragma once
-
 #include "GameEngine.h"
-#include "StartMenuState.h"
-#include "ControlMenuState.h"
-#include "LeaderboardMenuState.h"
-#include "PauseMenuState.h"
-#include "MainGameState.h"
-#include "QuitState.h"
 
 class GameState
 {

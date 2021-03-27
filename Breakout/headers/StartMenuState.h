@@ -1,6 +1,5 @@
 #pragma once
 #include "GameState.h"
-#include "GameEngine.h"
 
 class StartMenuState : public GameState
 {
@@ -21,9 +20,6 @@ public:
 
 protected:
 	StartMenuState() { }
-	StartMenuState(DIM* _dim);
-
-	DIM* dim;
 
 private:
 	static StartMenuState m_StartMenuState;

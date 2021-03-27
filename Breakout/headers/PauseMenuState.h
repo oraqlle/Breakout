@@ -1,7 +1,5 @@
 #pragma once
 #include "GameState.h"
-#include "GameEngine.h"
-#include "MainGameState.h"
 
 class PauseMenuState : public GameState
 {
