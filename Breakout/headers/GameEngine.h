@@ -25,6 +25,7 @@ private:
 
 public:
 	DIM* game_dim;
+	DIM* screen_dim;
 	// temporary solution going to write to a (binary or text ) 
 	// file that can be read from any class. 
 	int g_score;

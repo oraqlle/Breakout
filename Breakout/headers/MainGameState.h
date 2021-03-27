@@ -21,10 +21,10 @@ public:
 	}
 
 protected:
-	int score;
+	int* p_score;
 	int highscore;
 	int text_offset;
-	int w, h;
+	int w, h, s_w, s_h;
 	bool init;
 	bool border_init;
 	
@@ -34,8 +34,9 @@ protected:
 	core::rectangle<int>* _EntryBuff;
 
 	core::posxy* _null;
-	core::posxy* _endline;
-	core::posxy* _midpoint;
+	core::posxy* g_endline;
+	core::posxy* g_midpoint;
+	core::posxy* s_midpoint;
 
 	// Entity starting positions
 	core::posxy*_PlayerStart;

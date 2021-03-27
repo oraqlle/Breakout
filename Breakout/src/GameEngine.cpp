@@ -35,7 +35,7 @@ void GameEngine::Init(int w, int h)
 	Screen->fill('\x20');
 
 	game_dim = new DIM{ w, h };
-
+	screen_dim = new DIM{ s_columns, s_rows };
 }
 
 GameEngine::~GameEngine()

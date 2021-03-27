@@ -11,8 +11,11 @@ void MainGameState::Init(GameEngine* engine)
 	w = engine->game_dim->w;
 	h = engine->game_dim->h;
 
+	s_w = engine->screen_dim->h;
+	s_h = engine->screen_dim->h;
+
 	// scores
-	score = 00;
+	p_score = &engine->g_score;
 	highscore = 00;
 
 	//Init checks
@@ -32,8 +35,9 @@ void MainGameState::Init(GameEngine* engine)
 
 	// Base Positions
 	_null = new core::posxy{ 0, 0 };
-	_endline = new core::posxy{ 0, (_Border->h + 1) };
-	_midpoint = new core::posxy{ (w / 2), (h / 2) };
+	g_endline = new core::posxy{ 0, (_Border->h + 1) };
+	g_midpoint = new core::posxy{ (w / 2), (h / 2) };
+	s_midpoint = new core::posxy{ (s_w / 2), (s_h / 2) };
 
 	// Start Menu Text Positions
 	_Title = new core::posxy{ 4, 3 };
@@ -58,7 +62,6 @@ void MainGameState::Init(GameEngine* engine)
 	GameBuff = new core::Matrix<char>(_Gameboard->w, _Gameboard->h);
 	EntryBuff = new core::Matrix<char>(_Gameboard->w, _Gameboard->h);
 	Bricks = new core::Matrix<char>(_Bricks->w, _Border->h);
-
 }
 
 MainGameState::~MainGameState()
@@ -80,7 +83,7 @@ void MainGameState::CleanUp()
 	EntryBuff->fill('\x20');
 	Bricks->fill('\x20');
 
-	score = 0;
+	*p_score = 0;
 	xcon::clear_console();
 }
 
@@ -120,9 +123,9 @@ void MainGameState::Draw(GameEngine* engine)
 
 void MainGameState::ScoreUp()
 {
-	score += 10;
-	xcon::f_console_print(*_ScorePos, BLUE, "Score: %d | High Score: %d", score, highscore);
-	HighScore(score);
+	*p_score += 10;
+	xcon::f_console_print(*_ScorePos, BLUE, "Score: %d | High Score: %d", *p_score, highscore);
+	HighScore(*p_score);
 }
 
 // Highscore Tracker
@@ -401,7 +404,7 @@ void MainGameState::_Init_Print()
 	PrintGameBoard(EntryBuff);
 	//ClearBuffer(EntryBuff, _Gameboard);
 
-	xcon::f_console_print(*_ScorePos, BLUE, "Score: %d | High Score: %d", score, highscore);
+	xcon::f_console_print(*_ScorePos, BLUE, "Score: %d | High Score: %d", *p_score, highscore);
 }
 
 
@@ -441,7 +444,7 @@ void MainGameState::PrintGame()
 	PrintGameBoard(GameBuff);
 	//ClearBuffer(GameBuff, _Gameboard);
 
-	xcon::f_console_print(*_ScorePos, BLUE, "Score: %d | High Score: %d", score, highscore);
+	xcon::f_console_print(*_ScorePos, BLUE, "Score: %d | High Score: %d", *p_score, highscore);
 }
 
 
@@ -468,7 +471,6 @@ void MainGameState::_Init_()
 	GameBuff->fill('\x20');
 	EntryBuff->fill('\x20');
 	Bricks->fill('\x20');
-
 
 	CreateBorder();
 	CreateBricks();
