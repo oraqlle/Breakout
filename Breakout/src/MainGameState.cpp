@@ -14,6 +14,8 @@ void MainGameState::Init(GameEngine* engine)
 	s_w = engine->screen_dim->h;
 	s_h = engine->screen_dim->h;
 
+	text_offset = w + 5;
+
 	// scores
 	p_score = &engine->g_score;
 	highscore = 00;
@@ -111,6 +113,7 @@ void MainGameState::Draw(GameEngine* engine)
 {
 	if (!init)
 	{
+		_Init_();
 		xcon::console_print(*_StartText, GREEN, "Press 'Space' to Start");
 		_Init_Print();
 	}
