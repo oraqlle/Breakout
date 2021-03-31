@@ -17,10 +17,5 @@
 #include "..\headers\Ball.h"
 #include "..\headers\Paddle.h"
 
-//Game Class Instances
-//#include "..\headers\ControlMenuState.h"
-//#include "..\headers\StartMenuState.h"
-//#include "..\headers\LeaderboardMenuState.h"
-//#include "..\headers\PauseMenuState.h"
-//#include "..\headers\QuitState.h"
-//#include "..\headers\MainGameState.h"
+// Global Variables
+#include "..\headers\global_variables.h"

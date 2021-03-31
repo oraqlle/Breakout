@@ -23,4 +23,7 @@ protected:
 
 private:
 	static PauseMenuState m_PauseMenuState;
+
+	int* p_score;
+	int* p_highscore;
 };

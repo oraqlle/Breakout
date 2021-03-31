@@ -17,7 +17,9 @@ void MainGameState::Init(GameEngine* engine)
 	text_offset = w + 5;
 
 	// scores
-	p_score = &engine->g_score;
+	p_score = &g_val->g_score;
+	p_highscore = &g_val->g_highscore;
+	p_score = 00;
 	highscore = 00;
 
 	//Init checks
@@ -205,26 +207,22 @@ void MainGameState::Input(GameEngine* engine)
 	int PlayerY = player->getY();
 
 
-	if (_kbhit())
+	while (_kbhit())
 	{
 
 		while (!init)
 		{
-			while (_kbhit())
+			char current = _getch();
+
+			if ((current == '\x20') && (ball->getDirection() == core::eDir::STOP))
 			{
-				char current = _getch();
-
-				if ((current == '\x20') && (ball->getDirection() == core::eDir::STOP))
-				{
-					ball->chanegDir(core::eDir::DOWN);
-					ball->Move();
-					init = true;
-					xcon::console_print(*_StartText, BLACK, "Press 'Space' to Start");
-
-				}
-				else
-					current = _getch();
+				ball->chanegDir(core::eDir::DOWN);
+				ball->Move();
+				init = true;
+				xcon::console_print(*_StartText, BLACK, "Press 'Space' to Start");
 			}
+			else
+				current = _getch();
 		}
 
 		char current = _getch();
@@ -262,6 +260,7 @@ void MainGameState::Input(GameEngine* engine)
 
 		if (current == 'e' || current == 'E')
 		{
+			border_init = false;
 			engine->PushState(PauseMenuState::Instance());
 		}
 	}

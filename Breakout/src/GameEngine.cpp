@@ -14,8 +14,6 @@ void GameEngine::Init(int w, int h)
 	m_running = true;
 	m_resetting = false;
 
-	g_score = 0;
-
 	//Side Text Offset
 	n_text_offset = w + 5;
 

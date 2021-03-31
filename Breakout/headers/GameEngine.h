@@ -9,6 +9,7 @@ struct DIM
 };
 
 class GameState;
+typedef struct values values;
 
 class GameEngine
 {
@@ -28,7 +29,7 @@ public:
 	DIM* screen_dim;
 	// temporary solution going to write to a (binary or text ) 
 	// file that can be read from any class. 
-	int g_score;
+	//int g_score;
 	
 	~GameEngine();
 	void Init(int w = 76, int h = 28);

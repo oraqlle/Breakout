@@ -22,12 +22,13 @@ public:
 
 protected:
 	int* p_score;
+	int* p_highscore;
 	int highscore;
 	int text_offset;
 	int w, h, s_w, s_h;
 	bool init;
 	bool border_init;
-	
+
 	core::rectangle<int>* _Border;
 	core::rectangle<int>* _Gameboard;
 	core::rectangle<int>* _Bricks;

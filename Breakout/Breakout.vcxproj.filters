@@ -95,6 +95,9 @@
     <ClInclude Include="headers\StartMenuState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="headers\global_variables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="disc\Test_Layout.txt" />

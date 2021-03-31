@@ -198,6 +198,7 @@
     <ClInclude Include="headers\GameState.h" />
     <ClInclude Include="headers\Paddle.h" />
     <ClInclude Include="headers\StartMenuState.h" />
+    <ClInclude Include="headers\global_variables.h" />
     <ClInclude Include="include\include.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
