@@ -17,10 +17,8 @@ void MainGameState::Init(GameEngine* engine)
 	text_offset = w + 5;
 
 	// scores
-	p_score = &g_val->g_score;
-	p_highscore = &g_val->g_highscore;
-	p_score = 00;
-	highscore = 00;
+	p_score = &engine->g_vars->g_score;
+	p_highscore = &engine->g_vars->g_highscore;
 
 	//Init checks
 	init = false;

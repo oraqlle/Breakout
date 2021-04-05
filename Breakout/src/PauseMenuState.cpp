@@ -12,8 +12,8 @@ PauseMenuState PauseMenuState::m_PauseMenuState;
 void PauseMenuState::Init(GameEngine* engine)
 {
 	xcon::clear_console();
-	p_score = &g_val->g_score;
-	p_highscore = &g_val->g_highscore;
+	p_score = &engine->g_vars->g_score;
+	p_highscore = &engine->g_vars->g_highscore;
 }
 
 void PauseMenuState::CleanUp()

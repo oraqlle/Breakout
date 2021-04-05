@@ -34,6 +34,7 @@ void GameEngine::Init(int w, int h)
 
 	game_dim = new DIM{ w, h };
 	screen_dim = new DIM{ s_columns, s_rows };
+	g_vars = new global_vars;
 }
 
 GameEngine::~GameEngine()
