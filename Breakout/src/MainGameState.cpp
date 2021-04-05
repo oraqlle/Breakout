@@ -302,7 +302,11 @@ void MainGameState::Logic(GameEngine* engine)
 
 void MainGameState::CreateBorder()
 {
-	int temp = Border->fill('\x20');
+	#ifdef _WIN64
+		unsigned __int64 temp = Border->print("%c");
+	#else
+		unsigned int temp = Border->print("%c");
+	#endif
 
 	for (int column = 0; column < (_Border->w - 1); column++)
 	{
@@ -344,7 +348,11 @@ void MainGameState::ClearBuffer(core::Matrix<char>* buff, core::rectangle<int>* 
 
 void MainGameState::CreateBricks()
 {
-	int temp = Bricks->fill('\x20');
+	#ifdef _WIN64
+		unsigned __int64 temp = Bricks->fill('\x20');
+	#else
+		unsigned int temp = Bricks->fill('\x20');
+	#endif
 
 	for (int i = 1; i < _Bricks->h; i++)
 		for (int j = 2; j < _Bricks->w; j++)
@@ -396,7 +404,13 @@ void MainGameState::_Init_Print()
 	if (!border_init)
 	{
 		xcon::set_curser(*_null);
-		int temp1 = Border->print("%c");
+
+		#ifdef _WIN64
+			unsigned __int64 temp = Border->print("%c");
+		#else
+			unsigned int temp = Border->print("%c");
+		#endif
+
 		border_init = true;
 	}
 
@@ -415,7 +429,13 @@ void MainGameState::PrintGameBoard(core::Matrix<char>* buff)
 	if (!border_init)
 	{
 		xcon::set_curser(*_null);
-		int temp1 = Border->print("%c");
+		
+		#ifdef _WIN64
+			unsigned __int64 temp = Border->print("%c");
+		#else
+			unsigned int temp = Border->print("%c");
+		#endif
+
 		border_init = true;
 	}
 
